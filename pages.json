@@ -23,13 +23,6 @@
 			}
 		},
 		{
-			"path": "pages/attention/attention",
-			"style": {
-				"navigationBarTitleText": "关注",
-				"enablePullDownRefresh" : false
-			}
-		},
-		{
 			"path": "pages/community/community",
 			"style": {
 				"navigationBarTitleText": "社区",
@@ -39,7 +32,8 @@
 	],
 	"tabBar": {
 		"color": "#333333",
-		"selectedColor": "#ff9d00",
+		"selectedColor": "#c5483c",
+		"backgroundColor": "#ffffff",
 		"list": [{
 				"pagePath": "pages/index/index",
 				"text": "发现"
@@ -53,19 +47,15 @@
 				"text": "我的"
 			},
 			{
-				"pagePath": "pages/attention/attention",
-				"text": "关注"
-			},
-			{
 				"pagePath": "pages/community/community",
 				"text": "社区"
 			}
 		]
 	},
 	"globalStyle": {
-		"navigationBarTextStyle": "black",
+		"navigationBarTextStyle": "white",
 		"navigationBarTitleText": "uni-app",
-		"navigationBarBackgroundColor": "#F8F8F8",
+		"navigationBarBackgroundColor": "#c5483c",
 		"backgroundColor": "#F8F8F8"
 	},
 	"uniIdRouter": {}
