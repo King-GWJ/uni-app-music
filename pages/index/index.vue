@@ -8,10 +8,12 @@
 </template>
 
 <script>
+	import { baseUrl } from '../../base/api'
+	console.log(baseUrl);
 	export default {
 		data() {
 			return {
-				title: 'Hello'
+				title: 'Hello123'
 			}
 		},
 		onLoad() {
