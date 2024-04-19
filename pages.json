@@ -35,6 +35,22 @@
 				"navigationBarTitleText": "社区",
 				"enablePullDownRefresh" : false
 			}
+		},
+		{
+			"path" : "pages/songlist/songlist",
+			"style" : 
+			{
+				"navigationBarTitleText" : "歌曲列表",
+				"enablePullDownRefresh" : false
+			}
+		},
+		{
+			"path" : "pages/musicPlay/musicPlay",
+			"style" : 
+			{
+				"navigationBarTitleText" : "播放音乐",
+				"enablePullDownRefresh" : false
+			}
 		}
 	],
 	"tabBar": {

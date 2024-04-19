@@ -18,3 +18,11 @@ export const getLoginCellphone = () => {
 		}
 	})
 }
+
+//
+ // export const playlistDetailApi = (id) => {
+	//   return request({ url: '/playlist/detail', data: { id } })
+	// }
+	export const dragonBalltApi = () => {
+	  return request({ url: '/music_api/homepage/dragon/ball' })
+	}
