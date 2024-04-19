@@ -23,26 +23,16 @@ export const request = ({ url, method = 'GET', data = {}, header = {} }) => {
 	})
 }
 
-//搜索接口
+
+
+//搜索建议接口
+export const searchSuggestApi = (val) =>{
+	return request({url:'/search/suggest',data:{keywords:val}} )
+}
+
+// //搜索接口
 export const searchApi = (val) =>{
-	uni.request({
-		// #ifdef H5
-		url: '/music_api/search/suggest',
-		// #endif
-		// #ifndef H5
-		url: baseUrl + '/music_api/search/suggest',
-		// #endif
-		data:{
-			keywords: val
-		},
-		success:res =>{
-			return res
-		},
-		fail: res => {
-			
-			return res
-		}
-	})
+	return request({url:'/search',data:{keywords:val}})
 }
 
 

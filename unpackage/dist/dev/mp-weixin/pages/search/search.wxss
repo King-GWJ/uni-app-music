@@ -31,6 +31,7 @@
   background: #f4f6f9;
 }
 .box .header.data-v-c10c040c {
+  position: relative;
   height: 80rpx;
   display: flex;
 }
@@ -62,4 +63,18 @@
   line-height: 80rpx;
   text-align: center;
   color: #283248;
+}
+.searchSuggest.data-v-c10c040c {
+  position: absolute;
+  left: 0;
+  top: 90rpx;
+  background-color: white;
+  width: 100%;
+}
+.searchSuggest .suggestItem.data-v-c10c040c {
+  width: 100%;
+  height: 60rpx;
+  line-height: 60rpx;
+  border-bottom: 1px dashed #ccc;
+  padding: 0 20rpx;
 }

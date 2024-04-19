@@ -1,1 +1,1 @@
-<view class="data-v-1cf27b2a"><view class="header data-v-1cf27b2a"><uni-search-bar wx:if="{{a}}" class="data-v-1cf27b2a" u-i="1cf27b2a-0" bind:__l="__l" u-p="{{a}}"/></view></view>
+<view></view>

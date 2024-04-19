@@ -5,6 +5,7 @@ const _sfc_main = {
   __name: "search",
   setup(__props) {
     const searchVal = common_vendor.ref("");
+    const suggestList = common_vendor.ref([]);
     const clear = () => {
       searchVal.value = "";
     };
@@ -12,9 +13,11 @@ const _sfc_main = {
     const search = () => {
       if (timer)
         clearTimeout(timer);
-      timer = setTimeout(() => {
-        console.log(base_api_index.searchApi(searchVal.value));
-      }, 1e3);
+      timer = setTimeout(async () => {
+        const res = await base_api_index.searchApi(searchVal.value);
+        console.log(res.result.songs);
+        suggestList.value = res.result.songs;
+      }, 10);
     };
     return (_ctx, _cache) => {
       return common_vendor.e({
@@ -23,6 +26,15 @@ const _sfc_main = {
         c: searchVal.value.length > 0
       }, searchVal.value.length > 0 ? {
         d: common_vendor.o(clear)
+      } : {}, {
+        e: searchVal.value.length > 0
+      }, searchVal.value.length > 0 ? {
+        f: common_vendor.f(suggestList.value, (item, index, i0) => {
+          return {
+            a: common_vendor.t(item.name),
+            b: index
+          };
+        })
       } : {});
     };
   }
