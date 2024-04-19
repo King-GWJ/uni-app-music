@@ -1,6 +1,7 @@
 export const baseUrl = "http://zyxcl.xyz/music_api"
 
 
+<<<<<<< HEAD
 // 封装请求函数
 export const request = ({ url, method = 'GET', data = {}, header = {} }) => {
 	return new Promise((resolve, reject) => {
@@ -20,6 +21,20 @@ export const request = ({ url, method = 'GET', data = {}, header = {} }) => {
 				reject(err)
 			}
 		})
+=======
+export const getLoginCellphone = () => {
+	console.log('调用接口');
+	uni.request({
+
+		url: baseUrl + '/music_api/login/cellphone',
+
+		success: res => {
+			console.log(res);
+		},
+		fail: err => {
+			console.log(err);
+		}
+>>>>>>> dym
 	})
 }
 
