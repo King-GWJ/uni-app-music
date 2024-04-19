@@ -3,10 +3,65 @@
 		{
 			"path": "pages/index/index",
 			"style": {
-				"navigationBarTitleText": "uni-app"
+				"navigationBarTitleText": "发现",
+				"enablePullDownRefresh" : false
+			}
+		},
+		{
+			"path": "pages/blogs/blogs",
+			"style": {
+				"navigationBarTitleText": "博客",
+				"enablePullDownRefresh" : false
+			}
+		},
+		{
+			"path" : "pages/mine/mine",
+			"style" : 
+			{
+				"navigationBarTitleText" : "我的",
+				"enablePullDownRefresh" : false
+			}
+		},
+		{
+			"path": "pages/attention/attention",
+			"style": {
+				"navigationBarTitleText": "关注",
+				"enablePullDownRefresh" : false
+			}
+		},
+		{
+			"path": "pages/community/community",
+			"style": {
+				"navigationBarTitleText": "社区",
+				"enablePullDownRefresh" : false
 			}
 		}
 	],
+	"tabBar": {
+		"color": "#333333",
+		"selectedColor": "#ff9d00",
+		"list": [{
+				"pagePath": "pages/index/index",
+				"text": "发现"
+			},
+			{
+				"pagePath": "pages/blogs/blogs",
+				"text": "博客"
+			},
+			{
+				"pagePath": "pages/mine/mine",
+				"text": "我的"
+			},
+			{
+				"pagePath": "pages/attention/attention",
+				"text": "关注"
+			},
+			{
+				"pagePath": "pages/community/community",
+				"text": "社区"
+			}
+		]
+	},
 	"globalStyle": {
 		"navigationBarTextStyle": "black",
 		"navigationBarTitleText": "uni-app",
