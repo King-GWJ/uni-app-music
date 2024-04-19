@@ -1,0 +1,43 @@
+{
+  "pages": [
+    "pages/index/index",
+    "pages/blogs/blogs",
+    "pages/mine/mine",
+    "pages/attention/attention",
+    "pages/community/community",
+    "pages/search/search"
+  ],
+  "window": {
+    "navigationBarTextStyle": "black",
+    "navigationBarTitleText": "uni-app",
+    "navigationBarBackgroundColor": "#F8F8F8",
+    "backgroundColor": "#F8F8F8"
+  },
+  "tabBar": {
+    "color": "#333333",
+    "selectedColor": "#ff9d00",
+    "list": [
+      {
+        "pagePath": "pages/index/index",
+        "text": "发现"
+      },
+      {
+        "pagePath": "pages/blogs/blogs",
+        "text": "博客"
+      },
+      {
+        "pagePath": "pages/mine/mine",
+        "text": "我的"
+      },
+      {
+        "pagePath": "pages/attention/attention",
+        "text": "关注"
+      },
+      {
+        "pagePath": "pages/community/community",
+        "text": "社区"
+      }
+    ]
+  },
+  "usingComponents": {}
+}
