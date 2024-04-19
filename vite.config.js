@@ -6,9 +6,10 @@ export default defineConfig({
 	plugins: [uni()],
 	server: {
 		proxy: {
-			'/music_api': {
+			'/api': {
 				target: baseUrl,
-				changeOrigin: true
+				changeOrigin: true,
+				rewrite: (path) => path.replace(/^\/api/, ''),
 			},
 		}
 	}
