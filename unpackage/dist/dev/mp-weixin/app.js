@@ -5,7 +5,6 @@ if (!Math) {
   "./pages/index/index.js";
   "./pages/blogs/blogs.js";
   "./pages/mine/mine.js";
-  "./pages/attention/attention.js";
   "./pages/community/community.js";
   "./pages/search/search.js";
 }

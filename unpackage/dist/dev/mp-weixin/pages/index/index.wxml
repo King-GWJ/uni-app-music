@@ -1,1 +1,1 @@
-<view class="content"><image class="logo" src="/static/logo.png"></image><view class="text-area"><text class="title">{{a}}</text></view></view>
+<view class="data-v-1cf27b2a"><view class="header data-v-1cf27b2a"><uni-search-bar wx:if="{{a}}" class="data-v-1cf27b2a" u-i="1cf27b2a-0" bind:__l="__l" u-p="{{a}}"/></view></view>

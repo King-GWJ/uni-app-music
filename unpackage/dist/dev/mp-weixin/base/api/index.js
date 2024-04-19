@@ -1,6 +1,6 @@
 "use strict";
 const common_vendor = require("../../common/vendor.js");
-const baseUrl = "http://zyxcl.xyz";
+const baseUrl = "http://zyxcl.xyz/music_api";
 const searchApi = (val) => {
   common_vendor.index.request({
     url: baseUrl + "/music_api/search/suggest",
@@ -15,5 +15,4 @@ const searchApi = (val) => {
     }
   });
 };
-exports.baseUrl = baseUrl;
 exports.searchApi = searchApi;

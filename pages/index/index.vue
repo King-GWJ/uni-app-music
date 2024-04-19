@@ -1,54 +1,19 @@
 <template>
-	<view class="content">
-		<image class="logo" src="/static/logo.png"></image>
-		<view class="text-area">
-			<text class="title">{{title}}</text>
-		</view>
-	</view>
+  <view>
+    <view class="header">
+      <uni-search-bar placeholder="搜索" bgColor="#EEEEEE" />
+    </view>
+  </view>
 </template>
+<script setup>
+  import {ref} from "vue";
 
-<script>
-	import { baseUrl } from '../../base/api'
-	console.log(baseUrl);
-	export default {
-		data() {
-			return {
-				title: 'Hello123'
-			}
-		},
-		onLoad() {
-
-		},
-		methods: {
-			
-		}
-	}
+  ref([])
 </script>
 
-<style>
-	.content {
-		display: flex;
-		flex-direction: column;
-		align-items: center;
-		justify-content: center;
-	}
-
-	.logo {
-		height: 200rpx;
-		width: 200rpx;
-		margin-top: 200rpx;
-		margin-left: auto;
-		margin-right: auto;
-		margin-bottom: 50rpx;
-	}
-
-	.text-area {
-		display: flex;
-		justify-content: center;
-	}
-
-	.title {
-		font-size: 36rpx;
-		color: #8f8f94;
-	}
+<style lang="scss" scoped>
+  .header {
+    display: flex;
+    align-items: center;
+  }
 </style>
