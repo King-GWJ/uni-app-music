@@ -3,30 +3,38 @@
 		{
 			"path": "pages/index/index",
 			"style": {
+<<<<<<< HEAD
 				"navigationBarTitleText": "首页",
 				"enablePullDownRefresh" : false
+=======
+				"navigationBarTitleText": "发现",
+				"enablePullDownRefresh": false,
+				"navigationStyle": "custom"
+>>>>>>> dym
 			}
 		},
 		{
 			"path": "pages/blogs/blogs",
 			"style": {
 				"navigationBarTitleText": "博客",
-				"enablePullDownRefresh" : false
+				"enablePullDownRefresh": false,
+				"navigationStyle": "custom"
 			}
 		},
 		{
-			"path" : "pages/mine/mine",
-			"style" : 
-			{
-				"navigationBarTitleText" : "我的",
-				"enablePullDownRefresh" : false
+			"path": "pages/mine/mine",
+			"style": {
+				"navigationBarTitleText": "我的",
+				"enablePullDownRefresh": false,
+				"navigationStyle": "custom"
 			}
 		},
 		{
 			"path": "pages/community/community",
 			"style": {
 				"navigationBarTitleText": "社区",
-				"enablePullDownRefresh" : false
+				"enablePullDownRefresh": false,
+				"navigationStyle": "custom"
 			}
 		},
 		{
