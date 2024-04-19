@@ -3,14 +3,8 @@
 		{
 			"path": "pages/index/index",
 			"style": {
-<<<<<<< HEAD
 				"navigationBarTitleText": "首页",
 				"enablePullDownRefresh" : false
-=======
-				"navigationBarTitleText": "发现",
-				"enablePullDownRefresh": false,
-				"navigationStyle": "custom"
->>>>>>> dym
 			}
 		},
 		{
@@ -22,18 +16,11 @@
 			}
 		},
 		{
-<<<<<<< HEAD
-			"path" : "pages/mine/mine",
-			"style" :	{
-				"navigationBarTitleText" : "我的",
-				"enablePullDownRefresh" : false
-=======
 			"path": "pages/mine/mine",
 			"style": {
 				"navigationBarTitleText": "我的",
 				"enablePullDownRefresh": false,
 				"navigationStyle": "custom"
->>>>>>> 1a7993dd5c3897e78e94741e93d4233a8d135bc1
 			}
 		},
 		{
@@ -44,18 +31,19 @@
 				"navigationStyle": "custom"
 			}
 		},
+    {
+      "path": "pages/community/community",
+      "style": {
+        "navigationBarTitleText": "社区",
+        "enablePullDownRefresh": false,
+        "navigationStyle": "custom"
+      }
+    },
 		{
-<<<<<<< HEAD
 			"path" : "pages/recommended/recommended",
 			"style" : 
 			{
 				"navigationBarTitleText" : "推荐",
-=======
-			"path" : "pages/search/search",
-			"style" : 
-			{
-				"navigationBarTitleText" : "搜索",
->>>>>>> dae45fb736d3bb4c6b07eac8a9904c1ea6471b60
 				"enablePullDownRefresh" : false
 			}
 		}
@@ -80,10 +68,10 @@
 				"pagePath": "pages/community/community",
 				"text": "社区"
 			},
-			{
-				"pagePath": "pages/recommended/recommended",
-				"text": "推荐"
-			}
+      {
+        "pagePath": "pages/recommended/recommended",
+        "text": "推荐"
+      }
 		]
 	},
 	"globalStyle": {

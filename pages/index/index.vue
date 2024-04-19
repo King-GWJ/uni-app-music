@@ -1,26 +1,32 @@
 <script setup>
-<<<<<<< HEAD
-  // import {ref} from "vue";
-
-  // ref([])
-=======
   import {ref} from "vue";
   import {bannerApi} from '/base/api'
 
   const banners = ref([])
 
+  const pageLogin = '/pages/login/login'
+  const pageSearch = '/pages/search/search'
+
   bannerApi().then(res => {
     banners.value = res.banners
   })
 
->>>>>>> dae45fb736d3bb4c6b07eac8a9904c1ea6471b60
+  const link = (url) => {
+    if (!url) {
+      return
+    }
+    uni.navigateTo({
+      url
+    })
+  }
+
 </script>
 
 <template>
   <view class="content">
     <view class="header">
-      <uni-icons class="bars" type="bars" size="24" @click="userDrawer.open()"></uni-icons>
-      <view class="search" @click="uni.navigateTo({url: '/pages/search/search'})">
+      <uni-icons class="bars" type="bars" size="24" @click="link(pageLogin)"></uni-icons>
+      <view class="search" @click="link(pageSearch)">
         <uni-search-bar placeholder="搜索" bgColor="#EEEEEE" readonly />
       </view>
     </view>
@@ -35,10 +41,6 @@
     </view>
   </view>
 </template>
-<<<<<<< HEAD
-
-=======
->>>>>>> dae45fb736d3bb4c6b07eac8a9904c1ea6471b60
 
 <style lang="scss" scoped>
   .content {
