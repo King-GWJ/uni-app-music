@@ -16,8 +16,7 @@
 		},
 		{
 			"path" : "pages/mine/mine",
-			"style" : 
-			{
+			"style" :	{
 				"navigationBarTitleText" : "我的",
 				"enablePullDownRefresh" : false
 			}
@@ -26,6 +25,14 @@
 			"path": "pages/community/community",
 			"style": {
 				"navigationBarTitleText": "社区",
+				"enablePullDownRefresh" : false
+			}
+		},
+		{
+			"path" : "pages/recommended/recommended",
+			"style" : 
+			{
+				"navigationBarTitleText" : "推荐",
 				"enablePullDownRefresh" : false
 			}
 		}
@@ -49,6 +56,10 @@
 			{
 				"pagePath": "pages/community/community",
 				"text": "社区"
+			},
+			{
+				"pagePath": "pages/recommended/recommended",
+				"text": "推荐"
 			}
 		]
 	},

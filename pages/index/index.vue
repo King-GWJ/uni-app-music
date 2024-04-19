@@ -1,3 +1,9 @@
+<script setup>
+  // import {ref} from "vue";
+
+  // ref([])
+</script>
+
 <template>
   <view>
     <view class="header">
@@ -5,11 +11,7 @@
     </view>
   </view>
 </template>
-<script setup>
-  import {ref} from "vue";
 
-  ref([])
-</script>
 
 <style lang="scss" scoped>
   .header {

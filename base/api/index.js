@@ -26,3 +26,13 @@ export const request = ({ url, method = 'GET', data = {}, header = {} }) => {
 export const bannerApi = () => {
 	return request({ url: '/banner' })
 }
+
+//所有榜单
+export const toplistApi = () => {
+	return request({ url: '/toplist' })
+}
+
+//推荐歌单
+export const personalizedApi = (num) => {
+	return request({ url: '/personalized',data:{limit : num} })
+}
