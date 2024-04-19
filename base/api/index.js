@@ -1,5 +1,6 @@
 export const baseUrl = "http://zyxcl.xyz/music_api"
 
+
 // 封装请求函数
 export const request = ({ url, method = 'GET', data = {}, header = {} }) => {
 	return new Promise((resolve, reject) => {
@@ -22,10 +23,24 @@ export const request = ({ url, method = 'GET', data = {}, header = {} }) => {
 	})
 }
 
+
+
+//搜索建议接口
+export const searchSuggestApi = (val) =>{
+	return request({url:'/search/suggest',data:{keywords:val}} )
+}
+
+// //搜索接口
+export const searchApi = (val) =>{
+	return request({url:'/search',data:{keywords:val}})
+}
+
+
 //轮播图
 export const bannerApi = () => {
 	return request({ url: '/banner' })
 }
+<<<<<<< HEAD
 
 //所有榜单
 export const toplistApi = () => {
@@ -36,3 +51,5 @@ export const toplistApi = () => {
 export const personalizedApi = (num) => {
 	return request({ url: '/personalized',data:{limit : num} })
 }
+=======
+>>>>>>> dae45fb736d3bb4c6b07eac8a9904c1ea6471b60
