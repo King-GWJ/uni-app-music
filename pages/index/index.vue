@@ -8,16 +8,28 @@
 
 	const banners = ref([])
 
+	const pageLogin = '/pages/login/login'
+	const pageSearch = '/pages/search/search'
+
 	bannerApi().then(res => {
 		banners.value = res.banners
 	})
+
+	const link = (url) => {
+		if (!url) {
+			return
+		}
+		uni.navigateTo({
+			url
+		})
+	}
 </script>
 
 <template>
 	<view class="content">
 		<view class="header">
-			<uni-icons class="bars" type="bars" size="24" @click="userDrawer.open()"></uni-icons>
-			<view class="search" @click="uni.navigateTo({url: '/pages/search/search'})">
+			<uni-icons class="bars" type="bars" size="24" @click="link(pageLogin)"></uni-icons>
+			<view class="search" @click="link(pageSearch)">
 				<uni-search-bar placeholder="搜索" bgColor="#EEEEEE" readonly />
 			</view>
 		</view>

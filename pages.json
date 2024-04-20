@@ -3,7 +3,7 @@
 		{
 			"path": "pages/index/index",
 			"style": {
-				"navigationBarTitleText": "发现",
+				"navigationBarTitleText": "首页",
 				"enablePullDownRefresh": false,
 				"navigationStyle": "custom"
 			}
@@ -30,6 +30,13 @@
 				"navigationBarTitleText": "社区",
 				"enablePullDownRefresh": false,
 				"navigationStyle": "custom"
+			}
+		},
+		{
+			"path": "pages/search/search",
+			"style": {
+				"navigationBarTitleText": "搜索",
+				"enablePullDownRefresh": false
 			}
 		}
 	],
