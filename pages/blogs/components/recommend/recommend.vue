@@ -44,47 +44,22 @@
 			}
 		}
 
-		.swiper {
-			padding: 50px;
-			height: 40px;
-			position: relative;
-			background-color: #DFE4E0;
-			margin-top: 20px;
 
-			.uni-margin-wrap {
-				padding: 20px;
-				width: 100%;
-			}
+
+
+
+		.uni-margin-wrap {
+			padding: 30rpx;
 
 			.swiper {
-				height: 150px;
-			}
+				border-radius: 20rpx;
+				overflow: hidden;
+				height: 256rpx;
 
-			.swiper-item {
-				display: block;
-				text-align: center;
+				image {
+					width: 100%;
+				}
 			}
-
-			.swiper-list {
-				margin-top: 40rpx;
-				margin-bottom: 0;
-			}
-
-			.uni-common-mt {
-				margin-top: 60rpx;
-				position: relative;
-			}
-
-			.info {
-				position: absolute;
-				right: 20rpx;
-			}
-
-			.uni-padding-wrap {
-				width: 300rpx;
-				padding: 0 100rpx;
-			}
-
 		}
 
 		.type {
@@ -124,8 +99,8 @@
 			<p>宝藏博客</p>
 		</view>
 		<view class="uni-margin-wrap">
-			<swiper class="swiper" circular :indicator-dots="indicatorDots" :autoplay="autoplay" :interval="interval"
-				:duration="duration">
+			<swiper class="swiper" indicator-dots indicator-color="rgba(255, 255, 255, .4)"
+				indicator-active-color="#ffffff" circular autoplay>
 				<swiper-item>
 					<view class="swiper-item uni-bg-red">A</view>
 				</swiper-item>
