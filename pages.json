@@ -31,14 +31,6 @@
 				"navigationStyle": "custom"
 			}
 		},
-    {
-      "path": "pages/community/community",
-      "style": {
-        "navigationBarTitleText": "社区",
-        "enablePullDownRefresh": false,
-        "navigationStyle": "custom"
-      }
-    },
 		{
 			"path" : "pages/recommended/recommended",
 			"style" : 
@@ -46,7 +38,15 @@
 				"navigationBarTitleText" : "推荐",
 				"enablePullDownRefresh" : false
 			}
-		}
+		},
+		{
+			"path" : "pages/search/search",
+			"style" : 
+			{
+				"navigationBarTitleText" : "搜索",
+				"enablePullDownRefresh" : false
+			}
+		},
 	],
 	"tabBar": {
 		"color": "#333333",
@@ -68,10 +68,10 @@
 				"pagePath": "pages/community/community",
 				"text": "社区"
 			},
-      {
-        "pagePath": "pages/recommended/recommended",
-        "text": "推荐"
-      }
+			  {
+				"pagePath": "pages/recommended/recommended",
+				"text": "推荐"
+			  }
 		]
 	},
 	"globalStyle": {
