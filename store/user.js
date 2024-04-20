@@ -1,6 +1,6 @@
 import {defineStore} from 'pinia'
 import {ref} from 'vue'
-import {emailLoginApi, phoneLoginApi, loginStatusApi} from '/base/api'
+import {emailLoginApi, phoneLoginApi, loginStatusApi, anonimousLoginApi} from '/base/api'
 
 export const useUserStore = defineStore('user', () => {
 
@@ -10,21 +10,39 @@ export const useUserStore = defineStore('user', () => {
 
     const getProfile = () => {
         loginStatusApi().then(res => {
-            profile.value = res.data.profile
             profile.value = res.data.account
+            if(res.code === 200 && res.data.profile && res.data.account){
+                anonimousLoginApi().then(res =>{
+                    if(res.code === 200){
+                        uni.setStorageSync('userCookie', res.cookie)
+                        profile.value = res
+                    }
+                })
+            }
         })
     }
 
-    const getLogin = (email, password) => {
-        emailLoginApi(email, password).then(res => {
-            uni.setStorageSync('userCookie', res.cookie)
-            uni.setStorageSync('userToken', res.token)
-            account.value = res.account
-            profile.value = res.profile
-            getProfile()
-        })
+    const getLogin = (type, account, password) => {
+        switch (type) {
+            case 'email':
+                emailLoginApi(account, password).then(res => {
+                    storeData(res)
+                })
+                break;
+            case 'phone':
+                phoneLoginApi(account, password).then(res => {
+                    storeData(res)
+                })
+                break;
+        }
     }
 
+    const storeData = (res) => {
+        uni.setStorageSync('userCookie', res.cookie)
+        uni.setStorageSync('userToken', res.token)
+        account.value = res.account
+        profile.value = res.profile
+    }
 
     return {
         account,

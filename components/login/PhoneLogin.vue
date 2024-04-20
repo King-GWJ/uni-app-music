@@ -29,7 +29,7 @@
 
     const submit = () => {
         form.value.validate().then(res => {
-            console.log("ggg",res)
+            userStore.getLogin("phone",res.phone,res.password)
         }).catch(err => {
             console.log('表单错误信息：', err);
         })

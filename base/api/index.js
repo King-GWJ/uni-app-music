@@ -32,6 +32,14 @@ export const searchApi = (val) => {
     return request({url: '/search', data: {keywords: val}})
 }
 
+// 游客登录
+export const anonimousLoginApi = () => {
+    return request({
+        url: '/register/anonimous',
+        method: 'GET'
+    })
+}
+
 // 邮箱登录
 export const emailLoginApi = (email, password) => {
     return request({
@@ -44,7 +52,7 @@ export const emailLoginApi = (email, password) => {
     })
 }
 
-// 邮箱登录
+// 手机号登录
 export const phoneLoginApi = (phone, password) => {
     return request({
         url: '/login/cellphone',
@@ -52,6 +60,41 @@ export const phoneLoginApi = (phone, password) => {
         data: {
             phone,
             password
+        }
+    })
+}
+
+// 二维码 key 生成接口
+export const qrKeyApi = () => {
+    return request({
+        url: '/login/qr/key',
+        method: 'GET',
+        data: {
+            timestamp: Date.now()
+        }
+    })
+}
+
+// 二维码生成接口
+export const qrCreateApi = (key) => {
+    return request({
+        url: '/login/qr/create',
+        method: 'GET',
+        data: {
+            key,
+            timestamp: Date.now()
+        }
+    })
+}
+
+// 二维码检测扫码状态接口
+export const qrCheckApi = (key) => {
+    return request({
+        url: '/login/qr/check',
+        method: 'GET',
+        data: {
+            key,
+            timestamp: Date.now()
         }
     })
 }
