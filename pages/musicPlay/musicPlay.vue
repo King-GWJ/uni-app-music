@@ -235,10 +235,10 @@
 			border:7px solid #eee;
 			position: absolute;
 			right:rpx(-30);
-			top:rpx(13);
+			top:rpx(25);
 			border-right-color:transparent;
 			border-top-color:transparent;
-			transform:skew(13deg,8deg);
+			transform:skew(5deg,30deg);
 			transform-origin: right top;
 			border-radius: 0 0 30% 0;
 		}
@@ -247,12 +247,17 @@
 	
 	.arm:after{
 		content:'';
-		width:rpx(20);
-		height:rpx(30);
-		backgrounde:gray;
+		width:rpx(10);
+		height:rpx(13);
+		background:#D3D3D3;
 		position:absolute;
-		top:rpx(97);
-		left:rpx(-21);
+		top:rpx(45);
+		left:rpx(26);
+		border-radius:rpx(3);
 		transform:skew(20deg,20deg) roate(75deg);
+		box-shadow: 0px 0px 0px 1px #bebebe,
+                    
+                    0px 0px 0px 1px #eee;
+		z-index: 3;
 	}
 </style>
