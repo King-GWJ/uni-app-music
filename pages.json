@@ -46,6 +46,7 @@
 			}
 		},
 		{
+
 			"path": "pages/songlist/songlist",
 			"style": {
 				"navigationBarTitleText": "歌曲列表",
@@ -65,7 +66,17 @@
 				"navigationBarTitleText": "vip",
 				"enablePullDownRefresh": false
 			}
+		},
+		{
+
+			"path" : "pages/search/search",
+			"style" : 
+			{
+				"navigationBarTitleText" : "搜索",
+				"enablePullDownRefresh" : false
+			}
 		}
+
 	],
 	"tabBar": {
 		"color": "#333333",
@@ -88,10 +99,16 @@
 				"pagePath": "pages/community/community",
 				"text": "社区"
 			},
+
+			{
+				"pagePath": "pages/recommended/recommended",
+				"text": "推荐"
+			},
 			{
 				"pagePath": "pages/recommended/recommended",
 				"text": "推荐"
 			}
+
 		]
 	},
 	"globalStyle": {
