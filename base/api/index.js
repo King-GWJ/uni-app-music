@@ -1,4 +1,4 @@
-export const baseUrl = "http://zyxcl.xyz"
+export const baseUrl = "http://121.89.213.194:5001/"
 
 // 封装请求函数
 export const request = ({url, method = 'GET', data = {}, header = {}}) => {

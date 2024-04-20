@@ -8,7 +8,8 @@ export default defineConfig({
 		proxy: {
 			'/music_api': {
 				target: baseUrl,
-				changeOrigin: true
+				changeOrigin: true,
+				rewrite: (path) => path.replace(/^\/music_api/, ''),
 			},
 		}
 	}
