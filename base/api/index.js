@@ -32,15 +32,25 @@ export const searchApi = (val) => {
     return request({url: '/search', data: {keywords: val}})
 }
 
-// 登录
-export const loginApi = (email, password) => {
-    console.log("ggg", email)
-    console.log("ggg", password)
+// 邮箱登录
+export const emailLoginApi = (email, password) => {
     return request({
         url: '/login',
         method: 'GET',
         data: {
             email,
+            password
+        }
+    })
+}
+
+// 邮箱登录
+export const phoneLoginApi = (phone, password) => {
+    return request({
+        url: '/login/cellphone',
+        method: 'GET',
+        data: {
+            phone,
             password
         }
     })

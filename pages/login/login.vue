@@ -1,50 +1,53 @@
 <script setup>
-  import {useUserStore} from "../../store/user";
-  import {ref} from "vue";
+    import {useUserStore} from "../../store/user";
+    import EmailLogin from "../../components/login/EmailLogin.vue";
+    import {ref} from "vue";
+    import PhoneLogin from "../../components/login/PhoneLogin.vue";
+    import QrCodeLogin from "../../components/login/QrCodeLogin.vue";
 
-  const userStore = useUserStore()
-  const form = ref(null);
-  const rules = {
-    email: {
-      rules: [
-        { required: true, errorMessage: '邮箱不能为空'},
-        { format: 'email', errorMessage: '邮箱格式错误'},
-      ]
-    },
-    password: {
-      rules: [{
-        required: true,
-        errorMessage: '密码不能为空'
-      }]
-    }
-  }
+    const userStore = useUserStore()
 
-  const submit = () => {
-    form.value.validate().then(res => {
-      userStore.getLogin(res.email,res.password)
-    }).catch(err => {
-      console.log('表单错误信息：', err);
-    })
-  }
+    const radio = ref(0)
 
+    const localData = ref([
+        {
+            text: '邮箱',
+            value: 0
+        }, {
+            text: '手机号',
+            value: 1
+        }, {
+            text: '验证码',
+            value: 2
+        }, {
+            text: '二维码',
+            value: 3
+        }
+    ])
 </script>
 
 <template>
-  <view class="login">
-    <uni-forms ref="form" :rules="rules" :modelValue="userStore.formData">
-      <uni-forms-item name="email">
-        <uni-easyinput prefixIcon="email" v-model="userStore.formData.email" placeholder="请输入邮箱" />
-      </uni-forms-item>
-      <uni-forms-item name="password">
-        <uni-easyinput prefixIcon="locked" type="password" v-model="userStore.formData.password" placeholder="请输入密码" />
-      </uni-forms-item>
-    </uni-forms>
-    <button @click="submit">提交</button>
-  </view>
+    <view class="login">
+        <EmailLogin v-if="radio === 0" />
+        <PhoneLogin v-else-if="radio === 1" />
+        <QrCodeLogin v-else-if="radio === 3" />
+        <uni-data-checkbox mode="tag" icon="left" selectedColor="#c5483c" v-model="radio" :localdata="localData"></uni-data-checkbox>
+    </view>
 </template>
 
 <style scoped lang="scss">
-  .login {
-    padding: 30rpx;
-  }
+    .login {
+        display: flex;
+        flex-direction: column;
+        box-sizing: border-box;
+        padding: rpx(15);
+
+        .uni-data-checklist {
+            display: flex;
+            justify-content: center;
+            padding-top: rpx(15);
+
+        }
+    }
+
 </style>
