@@ -10,7 +10,7 @@
 </script>
 
 <style lang="scss">
-  @import "/uni_modules/uni-scss/index.scss";
+  // @import "/uni_modules/uni-scss/index.scss";
   /*每个页面公共css */
   page, uni-page-body {
     height: 100%;

@@ -22,8 +22,6 @@ export const request = ({url, method = 'GET', data = {}, header = {}}) => {
   })
 }
 
-
-
 //搜索建议接口
 export const searchSuggestApi = (val) =>{
 	return request({url:'/search/suggest',data:{keywords:val}} )
@@ -33,7 +31,6 @@ export const searchSuggestApi = (val) =>{
 export const searchApi = (val) =>{
 	return request({url:'/search',data:{keywords:val}})
 }
-
 
 // 登录
 export const loginApi = (email, password) => {
@@ -48,6 +45,7 @@ export const loginApi = (email, password) => {
     }
   })
 }
+
 // 登录状态
 export const loginStatusApi = () => {
   return request({
