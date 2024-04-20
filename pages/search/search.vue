@@ -1,6 +1,6 @@
 <script setup>
 import { ref, watch } from 'vue'
-import { searchSuggestApi,searchApi } from '../../base/api';
+import { searchSuggestApi,searchApi,hotApi } from '../../base/api';
 import HeaderVue from './components/Header.vue';
 
 const searchVal = ref('')
@@ -9,13 +9,22 @@ const suggestShow = ref(false)
 const resultShow = ref(false)
 const searchList = ref([])
 const historyList = ref([])
+const hotList = ref([])
 
+
+//获取本地数据
 historyList.value = JSON.parse(localStorage.getItem('history'))||[]
 
 //清空
 const clear = () =>{
 	searchVal.value=''
 }
+//热搜列表
+hotApi().then(res=>{
+	console.log(res.result.hots)
+	hotList.value=res.result.hots
+})
+
 
 let timer = null
 //开始搜索建议
@@ -128,10 +137,13 @@ document.addEventListener('keypress',(e)=>{
 				纪念
 			</view>
 		</view>
-		
-		
 		<view class="top">
-			
+			<view class="hotTitle">
+				热搜列表
+			</view>
+			<view class="hotItem" v-for="(item,index) in hotList" :key="index">
+				{{item.first}}
+			</view>
 		</view>
 	</view>
 		
@@ -274,6 +286,34 @@ document.addEventListener('keypress',(e)=>{
 	justify-content: space-between;
 	margin-top: rpx(10);
 	padding: 0 rpx(10);
+}
+
+.top{
+	width: rpx(300);
+	height: rpx(420);
+	padding: rpx(20) rpx(20);
+	margin-top: rpx(20);
+	margin-left: rpx(15);
+	background-color: white;
+	border-radius: rpx(30);
+}
+
+.hotTitle{
+	font-size: rpx(20);
+	font-weight: bold;
+	border-bottom: 1px solid #ccc;
+	padding-bottom: rpx(10);
+}
+
+.hotItem{
+	height: rpx(35);
+	line-height: rpx(35);
+	font-size: rpx(17);
+	font-weight:500;
+	margin-top: rpx(3);
+	&:hover{
+		background: #eee;
+	}
 }
 
 </style>

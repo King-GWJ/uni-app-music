@@ -68,3 +68,7 @@ export const personalizedApi = (num) => {
     return request({url: '/personalized', data: {limit: num}})
 }
 
+//热搜列表
+export const hotApi = () =>{
+	return request({url:'/search/hot'})
+}
