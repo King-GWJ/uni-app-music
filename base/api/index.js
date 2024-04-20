@@ -32,16 +32,69 @@ export const searchApi = (val) => {
     return request({url: '/search', data: {keywords: val}})
 }
 
-// 登录
-export const loginApi = (email, password) => {
-    console.log("ggg", email)
-    console.log("ggg", password)
+// 游客登录
+export const anonimousLoginApi = () => {
+    return request({
+        url: '/register/anonimous',
+        method: 'GET'
+    })
+}
+
+// 邮箱登录
+export const emailLoginApi = (email, password) => {
     return request({
         url: '/login',
         method: 'GET',
         data: {
             email,
             password
+        }
+    })
+}
+
+// 手机号登录
+export const phoneLoginApi = (phone, password) => {
+    return request({
+        url: '/login/cellphone',
+        method: 'GET',
+        data: {
+            phone,
+            password
+        }
+    })
+}
+
+// 二维码 key 生成接口
+export const qrKeyApi = () => {
+    return request({
+        url: '/login/qr/key',
+        method: 'GET',
+        data: {
+            timestamp: Date.now()
+        }
+    })
+}
+
+// 二维码生成接口
+export const qrCreateApi = (key) => {
+    return request({
+        url: '/login/qr/create?qrimg',
+        method: 'GET',
+        data: {
+            key,
+            timestamp: Date.now()
+        }
+    })
+}
+
+// 二维码检测扫码状态接口
+export const qrCheckApi = (key) => {
+    return request({
+        url: '/login/qr/check',
+        method: 'GET',
+        data: {
+            key,
+            timestamp: Date.now()
         }
     })
 }
@@ -68,3 +121,7 @@ export const personalizedApi = (num) => {
     return request({url: '/personalized', data: {limit: num}})
 }
 
+//热搜列表
+export const hotApi = () =>{
+	return request({url:'/search/hot'})
+}
