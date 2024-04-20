@@ -1,0 +1,124 @@
+<script setup>
+</script>
+
+<template>
+	<view class="setting">
+	  <view class="showlist">
+	    <view class="showtop">
+	      <view class="text">
+	        <view class="cover"><image/></view>
+			<view class="name">
+				<p>歌曲：</p>
+				<span>111111</span>
+			</view>
+			<view class="vip">vip仅￥0.06/天</view>
+	      </view>
+		  <span class="zhuyi">开通vip畅享千万曲库下载特权</span>
+	    </view>
+		<view class="selectlist">
+			<p class="select"><image src="../../icon/songlist/icon-close.png"/>不感兴趣</p>
+			<p class="select"><image src="../../icon/songlist/icon-close.png"/>赞赏好音乐</p>
+			<p class="select"><image src="../../icon/songlist/icon-close.png"/>下一首播放</p>
+			<p class="select"><image src="../../icon/songlist/icon-close.png"/>收藏到歌单</p>
+			<p class="select"><image src="../../icon/songlist/icon-close.png"/>下载</p>
+			<p class="select"><image src="../../icon/songlist/icon-close.png"/>评论（568）</p>
+			<p class="select"><image src="../../icon/songlist/icon-close.png"/>分享</p>
+			<p class="select"><image src="../../icon/songlist/icon-close.png"/>歌手：范倪</p>
+			<p class="select"><image src="../../icon/songlist/icon-close.png"/>创作者：姜帆/浅紫/常伟</p>
+			<p class="select"><image src="../../icon/songlist/icon-close.png"/>专辑：我都明白</p>
+		</view>
+	  </view>
+	</view>
+</template>
+
+<style lang="scss" scoped>
+	.setting {
+	  position: fixed;
+	  width: 100%;
+	  height: 100%;
+	  left:0;
+	  bottom:0;
+	  background-color: rgba(0, 0, 0, 0.5);
+	  .showlist {
+	    height: rpx(500);
+	    border-radius: 18px 18px 0 0;
+	    background: #fff;
+	    margin-top: rpx(183);
+		display: flex;
+		flex-direction: column;
+	    .showtop {
+	      height: rpx(80);
+	      border-bottom: 1px solid #eee;
+		  display: flex;
+		  flex-direction: column;
+		  padding:rpx(15) rpx(15);
+		  .text{
+			  flex:1;
+			  // background:skyblue;
+			  display: flex;
+			  .cover{
+				  width:rpx(60);
+				  border-radius: rpx(8);
+				  background: royalblue;
+				  image{
+					  width:rpx(55);
+					  height:rpx(55);
+				  }
+			  }
+			  .name{
+				  margin: 0 rpx(5);
+				  width:rpx(160);
+				  // background: cadetblue;
+				  p{
+					font-size: rpx(14);
+					display: flex;
+					flex-wrap: warp;
+				  }
+				  span{
+					  display: block;
+					  font-size: rpx(12);
+					  color:#808080;
+				  }
+			  }
+			  .vip{
+				  font-size: rpx(12);
+				  border:1px solid red;
+				  padding:0 rpx(5);
+				  height:rpx(25);
+				  border-radius: rpx(17);
+				  line-height: rpx(25);
+				  color:red;
+				  margin: rpx(15) 0 0 rpx(2);
+			  }
+		  }
+		  .zhuyi{
+			  height:rpx(20);
+			  line-height:rpx(20);
+			  font-size: rpx(12);
+			  color:#808080;
+			  margin-top: rpx(2);
+			  
+		  }
+	    }
+	  }
+	  .selectlist{
+		  flex:1;
+		  overflow: hidden;
+		  overflow-y: auto;
+	  }
+	  .select{
+		  height:rpx(40);
+		  line-height:rpx(40);
+		  // background: skyblue;
+		  margin:rpx(5) rpx(10);
+		  display: flex;
+		  align-items: center;
+		  image{
+			  width: rpx(25);
+			  height: rpx(25);
+			  margin:0 rpx(5);
+		  }
+	  }
+	}
+	
+</style>

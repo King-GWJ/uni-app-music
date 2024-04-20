@@ -1,111 +1,75 @@
 <script setup>
-	import {
-		ref
-	} from "vue";
-	const data = [{
-			title: "当前播放",
-			text: [123, 321],
-		},
-		{
-			title: "历史播放",
-			text: [789, 567],
-		},
-	];
-	const curIndex = ref(0);
+   import CaurPlay from './curPlay.vue'
+   const showList=false
 </script>
 
 
 <template>
-	<view class="footer">
-		<view class="current">
-			<view class="songCover">
-				<view class="img">
-					<imgage />
-				</view>
+	<view>
+		<view class="footer">
+			<view class="circle">
+				<view class="img"></view>
 			</view>
-			<view class="name">歌曲名称</view>
-			<p>
-				<image src="../../icon/songlist/icon-bf.png" />
-			</p>
-			<p>
-				<image src="../../icon/songlist/icon-lb.png" />
-			</p>
+			<view class="name">1111111111111111111111111111111111</view>
+			<p class="logo"><image src="../../icon/songlist/icon-bf.png"/></p>
+			<p class="logo2" @click=""><image src="../../icon/songlist/icon-shlb.png"/></p>
 		</view>
-		<view class="showlibiao">
-			<view class="curlist">
-				<header>
-					<!-- <p
-            v-for="(item, index) in data"
-            :class="{ active: curIndex === index }"
-            @click="curIndex = index"
-          >
-            {{ item.title }}
-          </p> -->
-				</header>
-				<view class="center">
-					<swiper class="swiper" circular :indicator-dots="indicatorDots" :interval="interval"
-						:duration="duration">
-						<swiper-item>
-							<view class="swiper-item uni-bg-red">
-								<view class="logo">
-									<view class="xunhuan">
-										<p>
-											<image src="../../icon/songlist/icon-light.png" />
-										</p>
-										无限循环
-									</view>
-									<view class="icon">
-										<span class="img">
-											<image src="../../icon/songlist/icon-xiaz.png" />
-										</span>
-										<span class="img">
-											<image src="../../icon/songlist/icon-tjia.png" />
-										</span>
-										<span class="img">
-											<image src="../../icon/songlist/icon-lajit.png" />
-										</span>
-									</view>
-								</view>
-								<view class="listenList">
-									<view class="item">
-										<p class="songName">
-											<image src="../../icon/songlist/icon-lvdong.png" /><span></span>
-										</p>
-										<p class="ly">来源</p>
-										<span><span class="img">
-												<image src="../../icon/songlist/icon-outline.png" />
-											</span></span>
-									</view>
-								</view>
-							</view>
-						</swiper-item>
-						<swiper-item>
-							<view class="swiper-item uni-bg-green">
-								<view>
-									<swiper class="swiper" circular :indicator-dots="indicatorDots" :autoplay="autoplay"
-										:interval="interval" :duration="duration">
-										<swiper-item>
-											<view class="swiper-item uni-bg-red">A</view>
-										</swiper-item>
-										<swiper-item>
-											<view class="swiper-item uni-bg-green">B</view>
-										</swiper-item>
-										<swiper-item>
-											<view class="swiper-item uni-bg-blue">C</view>
-										</swiper-item>
-									</swiper>
-								</view>
-								<view></view>
-								<p></p>
-							</view>
-						</swiper-item>
-					</swiper>
-				</view>
-			</view>
-		</view>
+		<CaurPlay v-if="showList" />
 	</view>
+	
+	
 </template>
 
 
 <style lang="scss" scoped>
+	.footer{
+		height:rpx(46);
+		// background:red;
+		display:flex;
+		align-items: center;
+		padding:0 rpx(15);
+	}
+	
+	.circle{
+		width:rpx(40);
+		height:rpx(40);
+		border-radius: 50%;
+		background: black;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		.img{
+			width:rpx(25);
+			height:rpx(25);
+			border-radius: 50%;
+			background: lightblue;
+		}
+	}
+	
+	.name{
+		flex:1;
+		margin:0 rpx(8);
+		overflow:hidden;
+		white-space: nowrap;
+		text-overflow: ellipsis;
+		-o-text-overflow:ellipsis;
+	}
+	.logo{
+		width:rpx(25);
+		height:rpx(25);
+		margin:0 rpx(15);
+		// 图片
+		image{
+			width:rpx(25);
+			height:rpx(25);
+		}
+	}
+	.logo2{
+		width:rpx(20);
+		height:rpx(25);
+		image{
+			width:rpx(23);
+			height:rpx(23);
+		}
+	}
 </style>

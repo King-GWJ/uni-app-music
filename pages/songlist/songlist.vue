@@ -1,20 +1,22 @@
 
 <script setup>
+import { toplistApi } from '../../base/api/index.js'
 import Showlist from "../../components/showlist/showlist.vue";
+import Seittlist from '../../components/showlist/setting.vue'
 import { ref } from "vue";
 
-const songList = ref([]);
-const id = 19723756;
+const songList = ref([]);  //例表数据
 const VarLists = ref([]);
+const curIndex=ref(0)
+const showlist=false
 
-// import { toplistApi  } from '../../base/api/index.js'
-// toplistApi().then(res=>{
-// 	songList.value = res.list
-// 	console.log(res.list)
-// })
-// console.log(songList[0])
 
-//查找id
+//调接口
+ toplistApi().then(res=>{
+	 songList.value=res.list
+	 console.log(songList[curIndex])
+})
+
 
 //跳转vip界面
 const goVip = () => {
@@ -82,25 +84,10 @@ const goVip = () => {
         </view>
       </view>
     </view>
-    <!--  -->
-    <Showlist />
-    <!--  -->
-    <view class="setting">
-      <view class="showlist">
-        <view class="showtop">
-          <view class="text">
-            <view class="cover"></view>
-            <view>
-              <p></p>
-              <span></span>
-              <p></p>
-            </view>
-            <span></span>
-          </view>
-        </view>
-        <p></p>
-      </view>
-    </view>
+	<!-- 底部 -->
+	<Showlist />
+	<!-- 每首歌曲右侧设置... -->
+	<Seittlist v-if="showlist"/>
   </view>
 </template>
 
@@ -254,27 +241,5 @@ const goVip = () => {
     }
   }
 }
-footer {
-  height: rpx(40);
-  background: red;
-}
-.setting {
-  display: none;
-  position: fixed;
-  width: 100%;
-  height: 100%;
-  top: 0;
-  left: 0;
-  background-color: rgba(0, 0, 0, 0.5);
-  .showlist {
-    height: 75%;
-    border-radius: 18px 18px 0 0;
-    background: #fff;
-    margin-top: rpx(183);
-    .showtop {
-      height: rpx(120);
-      border: 1px solid #eee;
-    }
-  }
-}
+
 </style>
