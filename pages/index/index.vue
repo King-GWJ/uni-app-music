@@ -1,52 +1,92 @@
-<template>
-	<view class="content">
-		<image class="logo" src="/static/logo.png"></image>
-		<view class="text-area">
-			<text class="title">{{title}}</text>
-		</view>
-	</view>
-</template>
+<script setup>
+  import {ref} from "vue";
+  import {bannerApi} from '/base/api'
 
-<script>
-	export default {
-		data() {
-			return {
-				title: 'Hello'
-			}
-		},
-		onLoad() {
+  const banners = ref([])
 
-		},
-		methods: {
+  const pageLogin = '/pages/login/login'
+  const pageSearch = '/pages/search/search'
 
-		}
-	}
+  bannerApi().then(res => {
+    banners.value = res.banners
+  })
+
+  const link = (url) => {
+    if (!url) {
+      return
+    }
+    uni.navigateTo({
+      url
+    })
+  }
+
 </script>
 
-<style>
-	.content {
-		display: flex;
-		flex-direction: column;
-		align-items: center;
-		justify-content: center;
-	}
+<template>
+  <view class="content">
+    <view class="header">
+      <uni-icons class="bars" type="bars" size="24" @click="link(pageLogin)"></uni-icons>
+      <view class="search" @click="link(pageSearch)">
+        <uni-search-bar placeholder="搜索" bgColor="#EEEEEE" readonly />
+      </view>
+    </view>
+    <view class="main">
+      <view class="swiper-wrap">
+        <swiper class="swiper" indicator-dots indicator-color="rgba(255, 255, 255, .4)" indicator-active-color="#ffffff" autoplay circular>
+          <swiper-item v-for="item in banners" :key="item.targetId">
+            <image :src="item.imageUrl" mode="widthFix"></image>
+          </swiper-item>
+        </swiper>
+      </view>
+    </view>
+  </view>
+</template>
 
-	.logo {
-		height: 200rpx;
-		width: 200rpx;
-		margin-top: 200rpx;
-		margin-left: auto;
-		margin-right: auto;
-		margin-bottom: 50rpx;
-	}
+<style lang="scss" scoped>
+  .content {
+    width: 100%;
+    height: 100%;
 
-	.text-area {
-		display: flex;
-		justify-content: center;
-	}
+    .header {
+      padding: 30rpx;
+      display: flex;
+      width: 100%;
+      box-sizing: border-box;
+      align-items: center;
 
-	.title {
-		font-size: 36rpx;
-		color: #8f8f94;
-	}
+      .search {
+        flex: 1;
+        border-radius: 40rpx;
+        margin-left: 20rpx;
+
+        .uni-searchbar {
+          padding: 0;
+        }
+      }
+    }
+
+    .main {
+      width: 100%;
+      height: 100%;
+
+      .swiper-wrap {
+        padding: 30rpx;
+
+        .swiper {
+          border-radius: 20rpx;
+          overflow: hidden;
+          height: 256rpx;
+
+          image {
+            width: 100%;
+          }
+        }
+      }
+
+
+    }
+
+  }
+
+
 </style>

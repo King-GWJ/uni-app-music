@@ -1,0 +1,19 @@
+{
+    "name": "uni-app-music",
+    "version": "1.0.0",
+    "description": "",
+    "main": "main.js",
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/King-GWJ/uni-app-music.git"
+    },
+    "private": true,
+    "dependencies": {
+        "pinia": "^2.1.7",
+        "vite": "^5.2.9",
+        "vue": "^3.4.23"
+    }
+}
