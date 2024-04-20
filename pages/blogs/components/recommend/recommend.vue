@@ -46,17 +46,15 @@
 
 
 
-
-
 		.uni-margin-wrap {
 			padding: 30rpx;
 
 			.swiper {
 				border-radius: 20rpx;
 				overflow: hidden;
-				height: 256rpx;
+				height: 224rpx;
 
-				image {
+				img {
 					width: 100%;
 				}
 			}
@@ -101,19 +99,13 @@
 		<view class="uni-margin-wrap">
 			<swiper class="swiper" indicator-dots indicator-color="rgba(255, 255, 255, .4)"
 				indicator-active-color="#ffffff" circular autoplay>
-				<swiper-item>
-					<view class="swiper-item uni-bg-red">A</view>
-				</swiper-item>
-				<swiper-item>
-					<view class="swiper-item uni-bg-green">B</view>
-				</swiper-item>
-				<swiper-item>
-					<view class="swiper-item uni-bg-blue">C</view>
+				<swiper-item v-for="(item) in banners" :key="item.targetId">
+					<img :src="item.imageUrl" alt="" mode="widthFix">
 				</swiper-item>
 			</swiper>
 		</view>
 		<view class="type">
-			<h1>为你推荐</h1>
+			<h3>新歌新碟></h3>
 			<view class="lists">
 				<view v-for="(item,index) in background" :key="index" class="list">
 					<view>
@@ -133,20 +125,27 @@
 	</view>
 </template>
 
-<script>
-	export default {
-		name: "recommend",
-		data() {
-			return {
-				background: ['color1', 'color2', 'color3'],
-				indicatorDots: true,
-				autoplay: true,
-				interval: 2000,
-				duration: 500
-			}
-		},
-		methods: {
+<script setup>
+	import {
+		ref
+	} from "vue";
+	import {
+		bannerApi,
+		valbumApi
+	} from '/base/api';
 
-		}
-	}
+	const banners = ref([])
+	const valbums = ref([])
+
+	bannerApi().then(res => {
+		banners.value = res.banners
+	})
+
+	valbumApi({
+		limit: 9,
+		offset: 3
+	}).then(res => {
+		console.log(res);
+		// voiceApi.value = res.banners
+	})
 </script>

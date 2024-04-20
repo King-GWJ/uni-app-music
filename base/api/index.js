@@ -72,3 +72,21 @@ export const bannerApi = () => {
 		url: '/banner'
 	})
 }
+
+// 博客列表
+export const voiceApi = () => {
+	return request({
+		url: '/voicelist/search'
+	})
+}
+
+// 数字专辑-新碟上架
+export const valbumApi = (val) => {
+	return request({
+		url: '/album/list',
+		data: {
+			limit: val.limit,
+			offset: val.offset
+		}
+	})
+}
