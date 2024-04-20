@@ -78,7 +78,7 @@ export const qrKeyApi = () => {
 // 二维码生成接口
 export const qrCreateApi = (key) => {
     return request({
-        url: '/login/qr/create',
+        url: '/login/qr/create?qrimg',
         method: 'GET',
         data: {
             key,
