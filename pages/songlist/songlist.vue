@@ -1,17 +1,18 @@
 
 <script setup>
+    import Showlist from "../../components/showlist/showlist.vue"
 	import { ref } from 'vue';
 	
 	const songList=ref([])
 	const id= 19723756
 	const VarLists=ref([])
 	
-	import { toplistApi  } from '../../base/api/index.js'
-	toplistApi().then(res=>{
-		songList.value = res.list
-		console.log(res.list)
-	}) 
-	console.log(songList[0])
+	// import { toplistApi  } from '../../base/api/index.js'
+	// toplistApi().then(res=>{
+	// 	songList.value = res.list
+	// 	console.log(res.list)
+	// }) 
+	// console.log(songList[0])
 	
 	//查找id
 	
@@ -68,20 +69,40 @@
 				<image src="../../icon/songlist/icon-load.png"/>
 				<image src="../../icon/songlist/icon-viplist.png"/>
 			</view>
-			<view class="item" >
-					<P class="num">
-						<span></span>
-						<span></span>
-					</P>
-					<view class="title">
-						<h5></h5>
-						<span></span>
-					</view>
-				<p><image  src="../../icon/songlist/icon-bofanglist.png"/></p>
-				<p><image  src="../../icon/songlist/icon-shengl.png"/></p>
+			<view class="listItem">
+				<view class="item" >
+						<P class="num">
+							<span></span>
+							<span></span>
+						</P>
+						<view class="title">
+							<h5></h5>
+							<span></span>
+						</view>
+					<p><image  src="../../icon/songlist/icon-bofanglist.png"/></p>
+					<p><image  src="../../icon/songlist/icon-shengl.png"/></p>
+				</view>
 			</view>
 		</view>
-		
+		<!--  -->
+		<Showlist />
+		<!--  -->
+		<view class="setting">
+			<view class="showlist">
+				<view class="showtop">
+					<view class="text">
+						<view class="cover"></view>
+						<view>
+							<p></p>
+							<span></span>
+							<p></p>
+						</view>
+						<span></span>
+					</view>
+				</view>
+				<p></p>
+			</view>
+		</view>
 	</view>
 </template>
 
@@ -92,7 +113,7 @@
 	   height:100%;
 	   display:flex;
 	   flex-direction: column;
-	    position: relative;
+	   position: relative;
 		
    }
    
@@ -190,7 +211,11 @@
 	   }
 	   
    }
-   
+   .songList{
+	   display:flex;
+	   flex-direction: column;
+	   flex:1;
+   }
    .allPlay{
 	   margin:rpx(30) 0;
 	   padding:0 rpx(10);
@@ -211,6 +236,9 @@
 		   font-size:14px;
 		   margin: 0 rpx(5);
 	   }
+   }
+   .listItem{
+	   flex:1;
    }
    .item{
 	   display: flex;
@@ -233,5 +261,28 @@
 		   
 	   }
 	   
+   }
+   footer{
+	   height:rpx(40);
+	   background:red;
+   }
+   .setting{
+	   display: none;
+	   position:fixed;
+	   width:100%;
+	   height:100%;
+	   top:0;
+	   left:0;
+	   background-color: rgba(0,0,0,0.5);
+	   .showlist{
+		   height:75%;
+		   border-radius: 18px 18px 0 0 ;
+		   background:#fff;
+		   margin-top:rpx(183);
+		   .showtop{
+			   height:rpx(120);
+			   border:1px solid #eee;
+		   }
+	   }
    }
 </style>

@@ -52,6 +52,14 @@
 				"navigationBarTitleText" : "vip",
 				"enablePullDownRefresh" : false
 			}
+		},
+		{
+			"path" : "components/showlist/showlist",
+			"style" : 
+			{
+				"navigationBarTitleText" : "当前播放列表",
+				"enablePullDownRefresh" : false
+			}
 		}
 	],
 	"tabBar": {

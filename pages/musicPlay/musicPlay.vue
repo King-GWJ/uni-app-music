@@ -28,7 +28,7 @@
 			<p class="talk"><image src="../../icon/songlist/icon-talk.png"/></p>
 		 </view>
 		 <view class="volume">
-			
+			<input type="range" value=0 class="range">
 		 </view>
 		 <view class="play">
 			 <span>
@@ -164,9 +164,15 @@
 	
 	.volume{
 		height:rpx(30);
-		background-color: darkred;
+		padding:0 25px;
+		.range{
+			 // -webkit-appearance:none;
+			 width: 100%;
+			 height:rpx(30);
+		}
 		
 	}
+	
 	.play{
 		height:rpx(100);
 		// background:mediumvioletred;
@@ -235,10 +241,10 @@
 			border:7px solid #eee;
 			position: absolute;
 			right:rpx(-30);
-			top:rpx(13);
+			top:rpx(25);
 			border-right-color:transparent;
 			border-top-color:transparent;
-			transform:skew(13deg,8deg);
+			transform:skew(5deg,22deg);
 			transform-origin: right top;
 			border-radius: 0 0 30% 0;
 		}
@@ -247,12 +253,15 @@
 	
 	.arm:after{
 		content:'';
-		width:rpx(20);
-		height:rpx(30);
-		backgrounde:gray;
+		width:rpx(8);
+		height:rpx(10);
+		background:#DCDCDC;
 		position:absolute;
-		top:rpx(97);
-		left:rpx(-21);
+		top:rpx(48);
+		left:rpx(27);
 		transform:skew(20deg,20deg) roate(75deg);
-	}
+		border-radius: rpx(2);
+		box-shadow:0px 0px 0px 1px #eee,
+                   0px 0px 0px 2px #bebebe;
+		}
 </style>
