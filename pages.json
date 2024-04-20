@@ -71,13 +71,22 @@
             }
         },
         {
+
 			"path" : "components/showlist/showlist",
 			"style" : 
 			{
 				"navigationBarTitleText" : "当前播放列表",
 				"enablePullDownRefresh" : false
 			}
-		}
+		},
+        {
+        	"path" : "pages/acquiesce/acquiesce",
+        	"style" : 
+        	{
+        		"navigationBarTitleText" : "默认推荐",
+        		"enablePullDownRefresh" : false
+        	}
+        }
     ],
     "tabBar": {
         "color": "#333333",

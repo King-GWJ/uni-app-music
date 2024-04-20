@@ -59,7 +59,7 @@
                 </view>
             </uni-section>
         </view>
-        <uni-drawer ref="showLeft" mode="left" width="70%">
+        <uni-drawer ref="showLeft" mode="left" :width="300">
             <view class="close">
                 <button @click="()=>{
                     link(pageLogin)
