@@ -67,3 +67,4 @@ export const toplistApi = () => {
 export const personalizedApi = (num) => {
     return request({url: '/personalized', data: {limit: num}})
 }
+
