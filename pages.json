@@ -31,7 +31,7 @@
         {
             "path": "pages/recommended/recommended",
             "style": {
-                "navigationBarTitleText": "发现",
+                "navigationBarTitleText": "推荐",
                 "enablePullDownRefresh": false
             }
         },
@@ -86,10 +86,6 @@
         "list": [
             {
                 "pagePath": "pages/index/index",
-                "text": "推荐"
-            },
-            {
-                "pagePath": "pages/recommended/recommended",
                 "text": "发现"
             },
             {
@@ -97,12 +93,16 @@
                 "text": "博客"
             },
             {
+                "pagePath": "pages/mine/mine",
+                "text": "我的"
+            },
+            {
                 "pagePath": "pages/community/community",
                 "text": "社区"
             },
             {
-                "pagePath": "pages/mine/mine",
-                "text": "我的"
+                "pagePath": "pages/recommended/recommended",
+                "text": "推荐"
             }
         ]
     },

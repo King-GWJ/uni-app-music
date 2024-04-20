@@ -125,3 +125,8 @@ export const personalizedApi = (num) => {
 export const hotApi = () =>{
 	return request({url:'/search/hot'})
 }
+
+//推荐歌曲
+export const recommendedMusicApi = () =>{
+	return request({url:'/personalized/newsong'})
+}
