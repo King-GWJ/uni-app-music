@@ -1,6 +1,6 @@
 # 配置git的忽略文件
-/uni_modules/
 /node_modules
+/unpackage
 /.idea/
 /.hbuilderx
 /.idea
