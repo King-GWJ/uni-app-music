@@ -10,3 +10,6 @@ export function createApp() {
         Pinia
     }
 }
+
+
+//测试
