@@ -1,6 +1,13 @@
 import {defineStore} from 'pinia'
 import {ref} from 'vue'
-import {emailLoginApi, phoneLoginApi, loginStatusApi, anonimousLoginApi} from '/base/api'
+import {
+    emailLoginApi,
+    phoneLoginApi,
+    loginStatusApi,
+    anonimousLoginApi,
+    qrKeyApi,
+    qrCreateApi
+} from '/base/api'
 
 export const useUserStore = defineStore('user', () => {
 
@@ -8,12 +15,14 @@ export const useUserStore = defineStore('user', () => {
     const account = ref(null)
     const profile = ref(null)
 
+
     const getProfile = () => {
         loginStatusApi().then(res => {
-            profile.value = res.data.account
-            if(res.code === 200 && res.data.profile && res.data.account){
-                anonimousLoginApi().then(res =>{
-                    if(res.code === 200){
+            account.value = res.data.account
+            profile.value = res.data.profile
+            if (res.code === 200 && res.data.profile && res.data.account) {
+                anonimousLoginApi().then(res => {
+                    if (res.code === 200) {
                         uni.setStorageSync('userCookie', res.cookie)
                         profile.value = res
                     }
@@ -48,6 +57,6 @@ export const useUserStore = defineStore('user', () => {
         account,
         profile,
         getProfile,
-        getLogin
+        getLogin,
     }
 });

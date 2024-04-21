@@ -20,7 +20,7 @@
 			官方榜
 		</view>
 		<view class="musicList">
-			<view class="music" key="item.name" v-for="(item,index) in list">
+			<view class="music" key="item.name" v-for="(item,index) in list" @click="skip(item)">
 				<view class="authorityList">
 					<view class="listLeft">
 						{{item.name}}
@@ -52,6 +52,7 @@
 	const header = ref(['官方','精选','曲风','全球','语种','特别','数组'])
 	const list = ref([])
 	toplistApi().then(res => {
+		console.log(res.list);
 		list.value = res.list
 	})
 	const data = ref([])
@@ -59,6 +60,12 @@
 		console.log(res);
 		data.value = res.result
 	})
+	const skip = (item) => {
+		console.log(item.id);
+		uni.redirectTo({
+			url: `/pages/songlist/songlist?id=${item.id}`,
+		});
+	}
 	
 
 </script>

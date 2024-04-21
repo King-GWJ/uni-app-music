@@ -17,11 +17,8 @@
             text: '手机号',
             value: 1
         }, {
-            text: '验证码',
-            value: 2
-        }, {
             text: '二维码',
-            value: 3
+            value: 2
         }
     ])
 </script>
@@ -30,7 +27,7 @@
     <view class="login">
         <EmailLogin v-if="radio === 0" />
         <PhoneLogin v-else-if="radio === 1" />
-        <QrCodeLogin v-else-if="radio === 3" />
+        <QrCodeLogin v-else-if="radio === 2" />
         <uni-data-checkbox mode="tag" icon="left" selectedColor="#c5483c" v-model="radio" :localdata="localData"></uni-data-checkbox>
     </view>
 </template>

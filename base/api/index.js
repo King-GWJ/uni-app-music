@@ -78,7 +78,7 @@ export const qrKeyApi = () => {
 // 二维码生成接口
 export const qrCreateApi = (key) => {
     return request({
-        url: '/login/qr/create',
+        url: '/login/qr/create?qrimg',
         method: 'GET',
         data: {
             key,
@@ -124,4 +124,9 @@ export const personalizedApi = (num) => {
 //热搜列表
 export const hotApi = () =>{
 	return request({url:'/search/hot'})
+}
+
+//推荐歌曲
+export const recommendedMusicApi = () =>{
+	return request({url:'/personalized/newsong'})
 }
