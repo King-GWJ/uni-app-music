@@ -1,6 +1,7 @@
 <script setup>
 import { ref, watch } from 'vue'
-import { searchSuggestApi, searchApi, hotApi } from '../../base/api';
+import { searchSuggestApi, searchApi, hotApi } from '../../base/api'
+
 
 const searchVal = ref('')
 const suggestList = ref([])
@@ -75,6 +76,11 @@ document.addEventListener('keypress', (e) => {
 	}
 })
 
+const goPlay = (id) =>{
+	uni.navigateTo({
+		url:`/pages/musicPlay/musicPlay?id=${id}`
+	})
+} 
 
 </script>
 
@@ -100,7 +106,7 @@ document.addEventListener('keypress', (e) => {
 					<view class="resultContent">
 						{{ item.name }}
 					</view>
-					<view class="playIcon"></view>
+					<view class="playIcon" @click="goPlay(item.id)"></view>
 					<view class="detailIcon"></view>
 				</view>
 			</view>
