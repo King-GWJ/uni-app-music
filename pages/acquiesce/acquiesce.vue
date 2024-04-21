@@ -68,37 +68,17 @@
 </template>
 
 <script setup>
-
-	// uni.setNavigationBarColor({
-	// 	frontColor: '#ffffff',
-	// 	    backgroundColor: '#ff0000',
-	// 	    animation: {
-	// 	        duration: 400,
-	// 	        timingFunc: 'easeIn'
-	// 	    }
-	// })
 	import { onReady } from '@dcloudio/uni-app'
 	import { ref } from 'vue'
-	import { recommendedMusicApi } from '../../base/api/index.js'
+	import { personalizedApi } from '../../base/api/index.js'
 	const list = ref([])
-	recommendedMusicApi().then(res => {
+	personalizedApi().then(res => {
 		list.value = res.result
 		console.log(res.result);
 	})
 	const currentDate = new Date()
 	const month = currentDate.getMonth() + 1
 	const day = currentDate.getDate()
-	onReady(() => {
-		uni.setNavigationBarTitle({
-			title: ['新的标题','123'],
-			frontColor: '#ffffff',
-			backgroundColor: '#ff0000',
-			animation: {
-			    duration: 400,
-			    timingFunc: 'easeIn'
-			}
-		});
-	})
 
 </script>
 
@@ -157,8 +137,8 @@
 		align-items: center;
 		justify-content: space-between;
 		.allImg{
-			width: rpx(40);
-			height: rpx(40);
+			width: rpx(20);
+			height: rpx(20);
 			margin-right: rpx(10);
 			>image{
 				width: 100%;
@@ -182,9 +162,10 @@
 				padding: rpx(2);
 				border: solid rpx(1) #E5D1AA;
 				border-radius: rpx(6);
-				font-size: rpx(12);
+				font-size: rpx(10);
 				color: #D3A03B;
 				font-weight: bold;
+				margin-left: rpx(10);
 			}
 		}
 	}
@@ -194,7 +175,6 @@
 		.music{
 			width: 100%;
 			margin-top: rpx(10);
-			// background-color: #ccc;
 			display: flex;
 			align-items: center;
 			justify-content: space-between;
