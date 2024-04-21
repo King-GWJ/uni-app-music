@@ -105,7 +105,7 @@
 			</swiper>
 		</view>
 		<view class="type">
-			<h3>新歌新碟></h3>
+			<h3>新歌新碟的></h3>
 			<view class="lists">
 				<view v-for="(item,index) in background" :key="index" class="list">
 					<view>
