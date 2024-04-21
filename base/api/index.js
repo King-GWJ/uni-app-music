@@ -1,34 +1,6 @@
 export const baseUrl = "http://121.89.213.194:5001/"
 
 // 封装请求函数
-<<<<<<< HEAD
-export const request = ({
-	url,
-	method = 'GET',
-	data = {},
-	header = {}
-}) => {
-	return new Promise((resolve, reject) => {
-		uni.request({
-			url: baseUrl + url,
-			method,
-			data: {
-				cookie: uni.getStorageSync('curCookie') || '',
-				...data
-			},
-			header,
-			withCredentials: true, // 跨域请求携带 cookie
-			success: res => {
-				resolve(res.data)
-			},
-			fail: err => {
-				reject(err)
-			}
-		})
-	})
-
-}
-
 export const getLoginCellphone = () => {
 	console.log('调用接口');
 	uni.request({
@@ -42,7 +14,7 @@ export const getLoginCellphone = () => {
 			console.log(err);
 		}
 	})
-=======
+}
 export const request = ({url, method = 'GET', data = {}, header = {}}) => {
     return new Promise((resolve, reject) => {
         uni.request({
@@ -62,12 +34,12 @@ export const request = ({url, method = 'GET', data = {}, header = {}}) => {
             }
         })
     })
->>>>>>> foreshow
+
 }
 
 //搜索建议接口
 export const searchSuggestApi = (val) => {
-<<<<<<< HEAD
+
 	return request({
 		url: '/search/suggest',
 		data: {
@@ -77,21 +49,9 @@ export const searchSuggestApi = (val) => {
 }
 
 // //搜索接口
-export const searchApi = (val) => {
-	return request({
-		url: '/search',
-		data: {
-			keywords: val
-		}
-	})
-=======
-    return request({url: '/search/suggest', data: {keywords: val}})
-}
-
-// //搜索接口
 export const searchApi = (val,offset) => {
     return request({url: '/search', data: {keywords: val,offset:offset}})
->>>>>>> foreshow
+
 }
 
 // 游客登录
@@ -170,11 +130,6 @@ export const loginStatusApi = () => {
 
 //轮播图
 export const bannerApi = () => {
-<<<<<<< HEAD
-	return request({
-		url: '/banner'
-	})
-=======
     return request({url: '/banner'})
 }
 
@@ -196,7 +151,7 @@ export const hotApi = () =>{
 //推荐歌曲
 export const recommendedMusicApi = () =>{
 	return request({url:'/personalized/newsong'})
->>>>>>> foreshow
+
 }
 
 // 博客列表
