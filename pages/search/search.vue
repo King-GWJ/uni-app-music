@@ -39,7 +39,6 @@ const searchSuggest =  () =>{
 //开始搜索
 const search = async (val = searchVal.value) =>{
 	searchVal.value=val
-	
 	suggestShow.value = false
 	const res = await searchApi(val)
 	console.log(res)
@@ -98,8 +97,12 @@ document.addEventListener('keypress',(e)=>{
 			</view>
 			<view class="searchResult" v-if="resultShow">
 				<view class="resultItem" v-for="(item,index) in searchList" :key="index">
-					{{item.name}}
+					
+					<view class="resultContent">
+						{{item.name}}
+					</view>
 					<view class="playIcon"></view>
+					<view class="detailIcon"></view>
 				</view>
 			</view>
 		</view>
@@ -121,9 +124,7 @@ document.addEventListener('keypress',(e)=>{
 				<view class="">
 					猜你喜欢
 				</view>
-				<view  class="fresh">
-					
-				</view>
+				<view  class="fresh"></view>
 			</view>
 			<view class="like">
 				<view class="likeItem" @click="search('起风了')">
@@ -205,6 +206,7 @@ document.addEventListener('keypress',(e)=>{
 	top: rpx(45);
 	background-color: white;
 	width: 100%;
+	color: rgb(40,50,72);
 	.suggestItem{
 		display: flex;
 		width: 100%;
@@ -227,7 +229,7 @@ document.addEventListener('keypress',(e)=>{
 
 .searchResult{
 	position: absolute;
-	height: rpx(560);
+	height: rpx(565);
 	overflow-y: auto;
 	overflow-x: hidden;
 	padding-right:rpx(50);
@@ -235,6 +237,9 @@ document.addEventListener('keypress',(e)=>{
 	top: rpx(45);
 	background-color: white;
 	width: 100%;
+	&:last-child{
+		border-bottom: none;
+	}
 	.resultItem{
 		display: flex;
 		justify-content: space-between;
@@ -304,7 +309,7 @@ document.addEventListener('keypress',(e)=>{
 
 .top{
 	width: rpx(300);
-	height: rpx(320);
+	// height: rpx(320);
 	padding: rpx(20) rpx(20);
 	margin-top: rpx(20);
 	margin-left: rpx(15);
@@ -343,7 +348,7 @@ document.addEventListener('keypress',(e)=>{
 }
 
 .hotItemWrap{
-	height: rpx(300);
+	// height: rpx(300);
 	overflow: auto;
 	&::-webkit-scrollbar{width:0px} ;
 }
