@@ -145,3 +145,20 @@ export const valbumApi = (val) => {
 		}
 	})
 }
+
+//所有榜单
+export const toplistApi = () => {
+	return request({
+		url: '/toplist'
+	})
+}
+
+//推荐歌单
+export const personalizedApi = (num) => {
+	return request({
+		url: '/personalized',
+		data: {
+			limit: num
+		}
+	})
+}
