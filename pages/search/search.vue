@@ -1,6 +1,6 @@
 <script setup>
 import { ref, watch } from 'vue'
-import { searchSuggestApi,searchApi } from '../../base/api';
+import { searchSuggestApi,searchApi,hotApi } from '../../base/api';
 import HeaderVue from './components/Header.vue';
 
 const searchVal = ref('')
@@ -9,11 +9,22 @@ const suggestShow = ref(false)
 const resultShow = ref(false)
 const searchList = ref([])
 const historyList = ref([])
+const hotList = ref([])
+
+
+//获取本地数据
+historyList.value = JSON.parse(localStorage.getItem('history'))||[]
 
 //清空
 const clear = () =>{
 	searchVal.value=''
 }
+//热搜列表
+hotApi().then(res=>{
+	console.log(res.result.hots)
+	hotList.value=res.result.hots
+})
+
 
 let timer = null
 //开始搜索建议
@@ -28,18 +39,29 @@ const searchSuggest =  () =>{
 
 //开始搜索
 const search = async (val = searchVal.value) =>{
+	searchVal.value=val
+	
 	suggestShow.value = false
 	const res = await searchApi(val)
 	console.log(res)
-	// console.log(res.result.songs)
+	console.log(res.result.songs)
 	searchList.value = res.result.songs
-	resultShow.value=true
-	historyList.value.push(val)
+	setTimeout(()=>{
+		resultShow.value=true
+	},20)
+	
+	const index = historyList.value.findIndex(v=>v===val)
+	if(index===-1){
+		historyList.value.push(val)
+		localStorage.setItem('history',JSON.stringify(historyList.value))
+	}
+	
 }
 
 //删除历史
-const clearHistory = (ind)=>{
-	historyList.value.splice(ind,1)
+const clearHistory = ()=>{
+	historyList.value=[]
+	localStorage.removeItem('history')
 }
 
 watch(searchVal,(v)=>{
@@ -86,16 +108,42 @@ document.addEventListener('keypress',(e)=>{
 		<view class="type">
 			
 		</view>
+		<view class="historyTitle" v-if="historyList.length>0">
+			<view class="">
+				搜索历史
+			</view>
+			<view class="clearHistory" @click="clearHistory">
+				清空
+			</view>
+		</view>
 		<view class="history">
-			<view class="historyItem" @click="clearHistory(index)" v-for="(item,index) in historyList" :key="index">
+			<view class="historyItem" @click="search(item)" v-for="(item,index) in historyList" :key="index">
 				{{item}}
 			</view>
 		</view>
+		<view class="likeTitle">
+			<view class="">
+				猜你喜欢
+			</view>
+			<view class="clearHistory" @click="clearHistory">
+				刷新
+			</view>
+		</view>
 		<view class="like">
-			
+			<view class="likeItem" @click="search('起风了')">
+				起风了
+			</view>
+			<view class="likeItem" @click="search('纪念')">
+				纪念
+			</view>
 		</view>
 		<view class="top">
-			
+			<view class="hotTitle">
+				热搜列表
+			</view>
+			<view class="hotItem" v-for="(item,index) in hotList" :key="index">
+				{{item.first}}
+			</view>
 		</view>
 	</view>
 		
@@ -114,6 +162,7 @@ document.addEventListener('keypress',(e)=>{
 	background: rgb(244,246,249);
 	.header{
 		position: relative;
+		margin-top: rpx(10);
 		height: rpx(40);
 		display: flex;
 		.inp-wrap{
@@ -198,16 +247,73 @@ document.addEventListener('keypress',(e)=>{
 }
 
 .history{
-	margin-top: rpx(20);
+	margin-top: rpx(5);
 	display: flex;
 	flex-wrap: wrap;
 	.historyItem{
+		display: flex;
 		padding: rpx(10) rpx(20);
 		background: #ccc;
 		border-radius: rpx(20);
 		margin-top: rpx(10);
+		margin-right: rpx(10);
 	}
 }
 
+.historyTitle{
+	display: flex;
+	justify-content: space-between;
+	margin-top: rpx(10);
+	padding: 0 rpx(10);
+}
+
+.like{
+	margin-top: rpx(5);
+	display: flex;
+	flex-wrap: wrap;
+	.likeItem{
+		display: flex;
+		padding: rpx(10) rpx(20);
+		background: #ccc;
+		border-radius: rpx(20);
+		margin-top: rpx(10);
+		margin-right: rpx(10);
+	}
+}
+
+.likeTitle{
+	display: flex;
+	justify-content: space-between;
+	margin-top: rpx(10);
+	padding: 0 rpx(10);
+}
+
+.top{
+	width: rpx(300);
+	height: rpx(420);
+	padding: rpx(20) rpx(20);
+	margin-top: rpx(20);
+	margin-left: rpx(15);
+	background-color: white;
+	border-radius: rpx(30);
+}
+
+.hotTitle{
+	font-size: rpx(20);
+	font-weight: bold;
+	border-bottom: 1px solid #ccc;
+	padding-bottom: rpx(10);
+}
+
+.hotItem{
+	height: rpx(35);
+	line-height: rpx(35);
+	font-size: rpx(17);
+	font-weight:500;
+	margin-top: rpx(3);
+	&:hover{
+		background: #eee;
+	}
+}
 
 </style>
