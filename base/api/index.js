@@ -1,7 +1,7 @@
 export const baseUrl = "http://121.89.213.194:5001/"
 
 // 封装请求函数
-export const request = ({url, method = 'GET', data = {}, header = {}}) => {
+export const request = ({ url, method = 'GET', data = {}, header = {} }) => {
     return new Promise((resolve, reject) => {
         uni.request({
             url: "/music_api" + url,
@@ -24,12 +24,12 @@ export const request = ({url, method = 'GET', data = {}, header = {}}) => {
 
 //搜索建议接口
 export const searchSuggestApi = (val) => {
-    return request({url: '/search/suggest', data: {keywords: val}})
+    return request({ url: '/search/suggest', data: { keywords: val } })
 }
 
 // //搜索接口
-export const searchApi = (val,offset) => {
-    return request({url: '/search', data: {keywords: val,offset:offset}})
+export const searchApi = (val, offset) => {
+    return request({ url: '/search', data: { keywords: val, offset: offset } })
 }
 
 // 游客登录
@@ -108,30 +108,30 @@ export const loginStatusApi = () => {
 
 //轮播图
 export const bannerApi = () => {
-    return request({url: '/banner'})
+    return request({ url: '/banner' })
 }
 
 //所有榜单
 export const toplistApi = () => {
-    return request({url: '/toplist'})
+    return request({ url: '/toplist' })
 }
 
 //推荐歌单
 export const personalizedApi = (num) => {
-    return request({url: '/personalized', data: {limit: num}})
+    return request({ url: '/personalized', data: { limit: num } })
 }
 
 //热搜列表
-export const hotApi = () =>{
-	return request({url:'/search/hot'})
+export const hotApi = () => {
+    return request({ url: '/search/hot' })
 }
 
 //推荐歌曲
-export const recommendedMusicApi = () =>{
-	return request({url:'/personalized/newsong'})
+export const recommendedMusicApi = () => {
+    return request({ url: '/personalized/newsong' })
 }
 
 //歌单详情
 export const detailApi = (id) => {
-  return request({ url: '/playlist/detail', data: { id } })
+    return request({ url: '/playlist/detail', data: { id } })
 }
