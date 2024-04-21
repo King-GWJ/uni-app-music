@@ -19,7 +19,7 @@
 						</view>
 					</swiper-item>
 				</swiper>
-				
+
 			</uni-swiper-dot>
 		</view>
 		<view class="authority">

@@ -25,7 +25,6 @@ hotApi().then(res=>{
 	hotList.value=res.result.hots
 })
 
-
 let timer = null
 //开始搜索建议
 const searchSuggest =  () =>{
@@ -40,7 +39,6 @@ const searchSuggest =  () =>{
 //开始搜索
 const search = async (val = searchVal.value) =>{
 	searchVal.value=val
-	
 	suggestShow.value = false
 	const res = await searchApi(val)
 	console.log(res)
@@ -55,7 +53,6 @@ const search = async (val = searchVal.value) =>{
 		historyList.value.push(val)
 		localStorage.setItem('history',JSON.stringify(historyList.value))
 	}
-	
 }
 
 //删除历史
@@ -100,54 +97,60 @@ document.addEventListener('keypress',(e)=>{
 			</view>
 			<view class="searchResult" v-if="resultShow">
 				<view class="resultItem" v-for="(item,index) in searchList" :key="index">
-					{{item.name}}
+					
+					<view class="resultContent">
+						{{item.name}}
+					</view>
 					<view class="playIcon"></view>
+					<view class="detailIcon"></view>
 				</view>
 			</view>
 		</view>
-		<view class="type">
+		<view class="contentWrap">
+			<view class="historyTitle" v-if="historyList.length>0">
+				<view class="">
+					搜索历史
+				</view>
+				<view class="clearHistory" @click="clearHistory">
+					
+				</view>
+			</view>
+			<view class="history">
+				<view class="historyItem" @click="search(item)" v-for="(item,index) in historyList" :key="index">
+					{{item}}
+				</view>
+			</view>
+			<view class="likeTitle">
+				<view class="">
+					猜你喜欢
+				</view>
+				<view  class="fresh"></view>
+			</view>
+			<view class="like">
+				<view class="likeItem" @click="search('起风了')">
+					起风了
+				</view>
+				<view class="likeItem" @click="search('纪念')">
+					纪念
+				</view>
+			</view>
+			<view class="top">
+				<view class="hotTitle">
+					热搜列表
+				</view>
+				<view class="hotItemWrap">
+					<view :class="{'hotItem':1,'itemActive':index<3}" @click="search(item.first)" v-for="(item,index) in hotList" :key="index">
+						<view :class="{'order':1,'active':index<3}">
+							{{index+1}}
+						</view> {{item.first}}
+					</view>
+				</view>
+				
+			</view>
 			
 		</view>
-		<view class="historyTitle" v-if="historyList.length>0">
-			<view class="">
-				搜索历史
-			</view>
-			<view class="clearHistory" @click="clearHistory">
-				清空
-			</view>
-		</view>
-		<view class="history">
-			<view class="historyItem" @click="search(item)" v-for="(item,index) in historyList" :key="index">
-				{{item}}
-			</view>
-		</view>
-		<view class="likeTitle">
-			<view class="">
-				猜你喜欢
-			</view>
-			<view class="clearHistory" @click="clearHistory">
-				刷新
-			</view>
-		</view>
-		<view class="like">
-			<view class="likeItem" @click="search('起风了')">
-				起风了
-			</view>
-			<view class="likeItem" @click="search('纪念')">
-				纪念
-			</view>
-		</view>
-		<view class="top">
-			<view class="hotTitle">
-				热搜列表
-			</view>
-			<view class="hotItem" v-for="(item,index) in hotList" :key="index">
-				{{item.first}}
-			</view>
-		</view>
+
 	</view>
-		
-		
 </template>
 
 
@@ -203,6 +206,7 @@ document.addEventListener('keypress',(e)=>{
 	top: rpx(45);
 	background-color: white;
 	width: 100%;
+	color: rgb(40,50,72);
 	.suggestItem{
 		display: flex;
 		width: 100%;
@@ -218,9 +222,14 @@ document.addEventListener('keypress',(e)=>{
 	}
 }
 
+.contentWrap{
+	flex: 1;
+	overflow: auto;
+}
+
 .searchResult{
 	position: absolute;
-	height: rpx(745);
+	height: rpx(565);
 	overflow-y: auto;
 	overflow-x: hidden;
 	padding-right:rpx(50);
@@ -228,6 +237,9 @@ document.addEventListener('keypress',(e)=>{
 	top: rpx(45);
 	background-color: white;
 	width: 100%;
+	&:last-child{
+		border-bottom: none;
+	}
 	.resultItem{
 		display: flex;
 		justify-content: space-between;
@@ -252,11 +264,12 @@ document.addEventListener('keypress',(e)=>{
 	flex-wrap: wrap;
 	.historyItem{
 		display: flex;
-		padding: rpx(10) rpx(20);
-		background: #ccc;
+		padding: rpx(5) rpx(20);
+		background: white;
 		border-radius: rpx(20);
 		margin-top: rpx(10);
 		margin-right: rpx(10);
+		color: rgb(100,107,123);
 	}
 }
 
@@ -265,6 +278,8 @@ document.addEventListener('keypress',(e)=>{
 	justify-content: space-between;
 	margin-top: rpx(10);
 	padding: 0 rpx(10);
+	color: rgb(40,50,72);
+	font-weight: 900;
 }
 
 .like{
@@ -273,11 +288,13 @@ document.addEventListener('keypress',(e)=>{
 	flex-wrap: wrap;
 	.likeItem{
 		display: flex;
-		padding: rpx(10) rpx(20);
-		background: #ccc;
+		padding: rpx(5) rpx(20);
+		background: white;
 		border-radius: rpx(20);
 		margin-top: rpx(10);
 		margin-right: rpx(10);
+		color: rgb(100,107,123);
+		
 	}
 }
 
@@ -286,16 +303,19 @@ document.addEventListener('keypress',(e)=>{
 	justify-content: space-between;
 	margin-top: rpx(10);
 	padding: 0 rpx(10);
+	color:rgb(40,50,72);
+	font-weight: 900;
 }
 
 .top{
 	width: rpx(300);
-	height: rpx(420);
+	// height: rpx(320);
 	padding: rpx(20) rpx(20);
 	margin-top: rpx(20);
 	margin-left: rpx(15);
 	background-color: white;
 	border-radius: rpx(30);
+
 }
 
 .hotTitle{
@@ -303,17 +323,48 @@ document.addEventListener('keypress',(e)=>{
 	font-weight: bold;
 	border-bottom: 1px solid #ccc;
 	padding-bottom: rpx(10);
+	color: rgb(41,51,73);
 }
 
 .hotItem{
+	display: flex;
 	height: rpx(35);
 	line-height: rpx(35);
 	font-size: rpx(17);
-	font-weight:500;
 	margin-top: rpx(3);
-	&:hover{
-		background: #eee;
+	color:rgb(40,50,72);
+	&.itemActive{
+		font-weight: 500;
 	}
+	.order{
+		padding: 0 rpx(15);
+		color: rgb(126,132,145);
+		&.active{
+			color: rgb(255,58,58);
+			font-weight:900;
+		}	
+	}
+
+}
+
+.hotItemWrap{
+	// height: rpx(300);
+	overflow: auto;
+	&::-webkit-scrollbar{width:0px} ;
+}
+
+.clearHistory{
+	width: rpx(20);
+	height: rpx(20);
+	background: url(../../icon/clear.svg) no-repeat center;
+	background-size: contain;
+}
+
+.fresh{
+	width: rpx(20);
+	height: rpx(20);
+	background: url(../../icon/fresh.svg) no-repeat center;
+	background-size: contain;
 }
 
 </style>

@@ -67,6 +67,10 @@
                 }">
                     <text class="word-btn-white">登录</text>
                 </button>
+                <button @click="()=>{
+                }">
+                    <text class="word-btn-white">退出登录</text>
+                </button>
             </view>
         </uni-drawer>
     </view>
