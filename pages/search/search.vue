@@ -25,7 +25,6 @@ hotApi().then(res=>{
 	hotList.value=res.result.hots
 })
 
-
 let timer = null
 //开始搜索建议
 const searchSuggest =  () =>{
@@ -55,7 +54,6 @@ const search = async (val = searchVal.value) =>{
 		historyList.value.push(val)
 		localStorage.setItem('history',JSON.stringify(historyList.value))
 	}
-	
 }
 
 //删除历史
@@ -146,8 +144,6 @@ document.addEventListener('keypress',(e)=>{
 			</view>
 		</view>
 	</view>
-		
-		
 </template>
 
 
