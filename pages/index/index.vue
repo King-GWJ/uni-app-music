@@ -100,6 +100,8 @@
             width: 100%;
             height: 100%;
 
+
+
             .swiper-wrap {
                 padding: 30rpx;
 
@@ -141,6 +143,6 @@
         }
 
     }
-
+// 测试
 
 </style>
