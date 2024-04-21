@@ -1,48 +1,6 @@
 export const baseUrl = "http://121.89.213.194:5001/"
 
 // 封装请求函数
-<<<<<<< HEAD
-export const request = ({
-	url,
-	method = 'GET',
-	data = {},
-	header = {}
-}) => {
-	return new Promise((resolve, reject) => {
-		uni.request({
-			url: baseUrl + url,
-			method,
-			data: {
-				cookie: uni.getStorageSync('curCookie') || '',
-				...data
-			},
-			header,
-			withCredentials: true, // 跨域请求携带 cookie
-			success: res => {
-				resolve(res.data)
-			},
-			fail: err => {
-				reject(err)
-			}
-		})
-	})
-
-}
-
-export const getLoginCellphone = () => {
-	console.log('调用接口');
-	uni.request({
-
-		url: baseUrl + '/music_api/login/cellphone',
-
-		success: res => {
-			console.log(res);
-		},
-		fail: err => {
-			console.log(err);
-		}
-	})
-=======
 export const request = ({url, method = 'GET', data = {}, header = {}}) => {
     return new Promise((resolve, reject) => {
         uni.request({
@@ -62,7 +20,6 @@ export const request = ({url, method = 'GET', data = {}, header = {}}) => {
             }
         })
     })
->>>>>>> foreshow
 }
 
 //搜索建议接口
