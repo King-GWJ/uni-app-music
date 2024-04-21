@@ -1,4 +1,5 @@
 {
+<<<<<<< HEAD
 	"pages": [ //pages数组中第一项表示应用启动页，参考：https://uniapp.dcloud.io/collocation/pages
 		{
 			"path": "pages/index/index",
@@ -69,4 +70,120 @@
 		"backgroundColor": "#F8F8F8"
 	},
 	"uniIdRouter": {}
+=======
+    "pages": [
+        {
+            "path": "pages/index/index",
+            "style": {
+                "navigationBarTitleText": "首页",
+                "enablePullDownRefresh": false
+            }
+        },
+        {
+            "path": "pages/blogs/blogs",
+            "style": {
+                "navigationBarTitleText": "博客",
+                "enablePullDownRefresh": false
+            }
+        },
+        {
+            "path": "pages/mine/mine",
+            "style": {
+                "navigationBarTitleText": "我的",
+                "enablePullDownRefresh": false
+            }
+        },
+        {
+            "path": "pages/community/community",
+            "style": {
+                "navigationBarTitleText": "社区",
+                "enablePullDownRefresh": false
+            }
+        },
+        {
+            "path": "pages/recommended/recommended",
+            "style": {
+                "navigationBarTitleText": "推荐",
+                "enablePullDownRefresh": false
+            }
+        },
+        {
+            "path": "pages/songlist/songlist",
+            "style": {
+                "navigationBarTitleText": "歌曲列表",
+                "enablePullDownRefresh": false
+            }
+        },
+        {
+            "path": "pages/musicPlay/musicPlay",
+            "style": {
+                "navigationBarTitleText": "播放音乐",
+                "enablePullDownRefresh": false
+            }
+        },
+        {
+            "path": "pages/vippage/vippage",
+            "style": {
+                "navigationBarTitleText": "vip",
+                "enablePullDownRefresh": false
+            }
+        },
+        {
+            "path": "pages/search/search",
+            "style": {
+                "navigationBarTitleText": "搜索",
+                "enablePullDownRefresh": false
+            }
+        },
+        {
+            "path": "pages/login/login",
+            "style": {
+                "navigationBarTitleText": "登录",
+                "enablePullDownRefresh": false
+            }
+        },
+        {
+        	"path" : "pages/acquiesce/acquiesce",
+        	"style" : 
+        	{
+        		"navigationBarTitleText" : "我的",
+        		"enablePullDownRefresh" : false
+        	}
+        }
+    ],
+    "tabBar": {
+        "color": "#333333",
+        "selectedColor": "#c5483c",
+        "backgroundColor": "#ffffff",
+        "list": [
+            {
+                "pagePath": "pages/index/index",
+                "text": "发现"
+            },
+            {
+                "pagePath": "pages/blogs/blogs",
+                "text": "博客"
+            },
+            {
+                "pagePath": "pages/acquiesce/acquiesce",
+                "text": "我的"
+            },
+            {
+                "pagePath": "pages/community/community",
+                "text": "社区"
+            },
+            {
+                "pagePath": "pages/recommended/recommended",
+                "text": "推荐"
+            }
+        ]
+    },
+    "globalStyle": {
+        "navigationBarTextStyle": "white",
+        "navigationBarTitleText": "uni-app",
+        "navigationBarBackgroundColor": "#c5483c",
+        "backgroundColor": "#F8F8F8"
+    },
+    "uniIdRouter": {}
+>>>>>>> foreshow
 }
