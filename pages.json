@@ -69,6 +69,14 @@
                 "navigationBarTitleText": "登录",
                 "enablePullDownRefresh": false
             }
+        },
+        {
+        	"path" : "pages/acquiesce/acquiesce",
+        	"style" : 
+        	{
+        		"navigationBarTitleText" : "默认推荐",
+        		"enablePullDownRefresh" : false
+        	}
         }
     ],
     "tabBar": {
