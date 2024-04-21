@@ -24,7 +24,6 @@ export const request = ({url, method = 'GET', data = {}, header = {}}) => {
 
 //搜索建议接口
 export const searchSuggestApi = (val) => {
-<<<<<<< HEAD
 	return request({
 		url: '/search/suggest',
 		data: {
@@ -41,14 +40,6 @@ export const searchApi = (val) => {
 			keywords: val
 		}
 	})
-=======
-    return request({url: '/search/suggest', data: {keywords: val}})
-}
-
-// //搜索接口
-export const searchApi = (val,offset) => {
-    return request({url: '/search', data: {keywords: val,offset:offset}})
->>>>>>> foreshow
 }
 
 // 游客登录
@@ -127,33 +118,9 @@ export const loginStatusApi = () => {
 
 //轮播图
 export const bannerApi = () => {
-<<<<<<< HEAD
 	return request({
 		url: '/banner'
 	})
-=======
-    return request({url: '/banner'})
-}
-
-//所有榜单
-export const toplistApi = () => {
-    return request({url: '/toplist'})
-}
-
-//推荐歌单
-export const personalizedApi = (num) => {
-    return request({url: '/personalized', data: {limit: num}})
-}
-
-//热搜列表
-export const hotApi = () =>{
-	return request({url:'/search/hot'})
-}
-
-//推荐歌曲
-export const recommendedMusicApi = () =>{
-	return request({url:'/personalized/newsong'})
->>>>>>> foreshow
 }
 
 // 博客列表
