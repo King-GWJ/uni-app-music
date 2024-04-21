@@ -1,7 +1,6 @@
 <script setup>
 import { ref, watch } from 'vue'
 import { searchSuggestApi,searchApi,hotApi } from '../../base/api';
-import HeaderVue from './components/Header.vue';
 
 const searchVal = ref('')
 const suggestList = ref([])
@@ -147,9 +146,8 @@ document.addEventListener('keypress',(e)=>{
 				</view>
 				
 			</view>
-			
+		
 		</view>
-
 	</view>
 </template>
 
