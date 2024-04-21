@@ -1,6 +1,6 @@
 <script setup>
 import { ref, watch } from 'vue'
-import { searchSuggestApi,searchApi,hotApi } from '../../base/api';
+import { searchSuggestApi, searchApi, hotApi } from '../../base/api';
 
 const searchVal = ref('')
 const suggestList = ref([])
@@ -12,67 +12,67 @@ const hotList = ref([])
 
 
 //获取本地数据
-historyList.value = JSON.parse(localStorage.getItem('history'))||[]
+historyList.value = JSON.parse(localStorage.getItem('history')) || []
 
 //清空
-const clear = () =>{
-	searchVal.value=''
+const clear = () => {
+	searchVal.value = ''
 }
 //热搜列表
-hotApi().then(res=>{
+hotApi().then(res => {
 	console.log(res.result.hots)
-	hotList.value=res.result.hots
+	hotList.value = res.result.hots
 })
 
 let timer = null
 //开始搜索建议
-const searchSuggest =  () =>{
-	if(timer) clearTimeout(timer)
-	timer = setTimeout(async ()=>{
-	 const res = await searchSuggestApi(searchVal.value)
-	 console.log(res)
-	 suggestList.value=res.result.songs
-	},10)
+const searchSuggest = () => {
+	if (timer) clearTimeout(timer)
+	timer = setTimeout(async () => {
+		const res = await searchSuggestApi(searchVal.value)
+		console.log(res)
+		suggestList.value = res.result.songs
+	}, 10)
 }
 
 //开始搜索
-const search = async (val = searchVal.value) =>{
-	searchVal.value=val
+const search = async (val = searchVal.value) => {
+	searchVal.value = val
 	suggestShow.value = false
 	const res = await searchApi(val)
 	console.log(res)
 	console.log(res.result.songs)
 	searchList.value = res.result.songs
-	setTimeout(()=>{
-		resultShow.value=true
-	},20)
-	
-	const index = historyList.value.findIndex(v=>v===val)
-	if(index===-1){
+	setTimeout(() => {
+		resultShow.value = true
+	}, 20)
+
+	const index = historyList.value.findIndex(v => v === val)
+	if (index === -1) {
 		historyList.value.push(val)
-		localStorage.setItem('history',JSON.stringify(historyList.value))
+		localStorage.setItem('history', JSON.stringify(historyList.value))
 	}
 }
 
 //删除历史
-const clearHistory = ()=>{
-	historyList.value=[]
+const clearHistory = () => {
+	historyList.value = []
 	localStorage.removeItem('history')
 }
 
-watch(searchVal,(v)=>{
-	if(v.length>0){
+watch(searchVal, (v) => {
+	if (v.length > 0) {
 		suggestShow.value = true
-	}else{
+	} else {
 		suggestShow.value = false
 	}
-	resultShow.value=false
+	resultShow.value = false
 })
 
-document.addEventListener('keypress',(e)=>{
-	if(e.keyCode===13){
+document.addEventListener('keypress', (e) => {
+	if (e.keyCode === 13) {
 		search()
-	} 
+	}
 })
 
 
@@ -83,22 +83,22 @@ document.addEventListener('keypress',(e)=>{
 		<view class="header">
 			<view class="inp-wrap">
 				<view class="search-icon"></view>
-				<input class="inp" @input="searchSuggest" v-model="searchVal" type="text" placeholder="请输入搜索内容"/>
-				<view class="close-icon" @click="clear" v-if="searchVal.length>0"></view>
+				<input class="inp" @input="searchSuggest" v-model="searchVal" type="text" placeholder="请输入搜索内容" />
+				<view class="close-icon" @click="clear" v-if="searchVal.length > 0"></view>
 			</view>
 			<view class="search" @click="search(searchVal)">
 				搜索
 			</view>
 			<view class="searchSuggest" v-if="suggestShow">
-				<view @click="search(item.name)" class="suggestItem" v-for="(item,index) in suggestList" :key="index">
-					<view class="suggestIcon"></view> {{item.name}}
+				<view @click="search(item.name)" class="suggestItem" v-for="(item, index) in suggestList" :key="index">
+					<view class="suggestIcon"></view> {{ item.name }}
 				</view>
 			</view>
 			<view class="searchResult" v-if="resultShow">
-				<view class="resultItem" v-for="(item,index) in searchList" :key="index">
-					
+				<view class="resultItem" v-for="(item, index) in searchList" :key="index">
+
 					<view class="resultContent">
-						{{item.name}}
+						{{ item.name }}
 					</view>
 					<view class="playIcon"></view>
 					<view class="detailIcon"></view>
@@ -106,24 +106,24 @@ document.addEventListener('keypress',(e)=>{
 			</view>
 		</view>
 		<view class="contentWrap">
-			<view class="historyTitle" v-if="historyList.length>0">
+			<view class="historyTitle" v-if="historyList.length > 0">
 				<view class="">
 					搜索历史
 				</view>
 				<view class="clearHistory" @click="clearHistory">
-					
+
 				</view>
 			</view>
 			<view class="history">
-				<view class="historyItem" @click="search(item)" v-for="(item,index) in historyList" :key="index">
-					{{item}}
+				<view class="historyItem" @click="search(item)" v-for="(item, index) in historyList" :key="index">
+					{{ item }}
 				</view>
 			</view>
 			<view class="likeTitle">
 				<view class="">
 					猜你喜欢
 				</view>
-				<view  class="fresh"></view>
+				<view class="fresh"></view>
 			</view>
 			<view class="like">
 				<view class="likeItem" @click="search('起风了')">
@@ -138,15 +138,16 @@ document.addEventListener('keypress',(e)=>{
 					热搜列表
 				</view>
 				<view class="hotItemWrap">
-					<view :class="{'hotItem':1,'itemActive':index<3}" @click="search(item.first)" v-for="(item,index) in hotList" :key="index">
-						<view :class="{'order':1,'active':index<3}">
-							{{index+1}}
-						</view> {{item.first}}
+					<view :class="{ 'hotItem': 1, 'itemActive': index < 3 }" @click="search(item.first)"
+						v-for="(item, index) in hotList" :key="index">
+						<view :class="{ 'order': 1, 'active': index < 3 }">
+							{{ index + 1 }}
+						</view> {{ item.first }}
 					</view>
 				</view>
-				
+
 			</view>
-		
+
 		</view>
 	</view>
 </template>
@@ -154,64 +155,71 @@ document.addEventListener('keypress',(e)=>{
 
 
 <style lang="scss" scoped>
-
-.box{
+.box {
 	width: 100%;
 	height: 100%;
 	display: flex;
 	flex-direction: column;
-	background: rgb(244,246,249);
-	.header{
+	background: rgb(244, 246, 249);
+
+	.header {
 		position: relative;
 		margin-top: rpx(10);
 		height: rpx(40);
 		display: flex;
-		.inp-wrap{
+
+		.inp-wrap {
 			display: flex;
 			background-color: white;
 			border-radius: rpx(40);
 			width: rpx(320);
 			padding: 0 rpx(5);
-			.search-icon{
-				width:rpx(40);
+
+			.search-icon {
+				width: rpx(40);
 				height: rpx(40);
 				background: url(../../icon/search.svg) no-repeat center;
 				background-size: rpx(15);
 			}
-			.inp{
+
+			.inp {
 				width: 100%;
 				height: 100%;
 			}
-			.close-icon{
+
+			.close-icon {
 				width: rpx(40);
 				height: rpx(40);
 				background: url(../../icon/close.svg) no-repeat center;
 				background-size: rpx(20);
 			}
 		}
-		.search{
+
+		.search {
 			flex: 1;
 			line-height: rpx(40);
 			text-align: center;
-			color: rgb(40,50,72);
+			color: rgb(40, 50, 72);
 		}
 	}
 }
 
-.searchSuggest{
+.searchSuggest {
 	position: absolute;
 	left: 0;
 	top: rpx(45);
 	background-color: white;
 	width: 100%;
-	color: rgb(40,50,72);
-	.suggestItem{
+	color: rgb(40, 50, 72);
+
+	.suggestItem {
 		display: flex;
 		width: 100%;
 		height: rpx(30);
 		line-height: rpx(30);
 		border-bottom: 1px dashed #ccc;
-		.suggestIcon{
+
+		.suggestIcon {
 			width: rpx(30);
 			height: rpx(30);
 			background: url(../../icon/search.svg) no-repeat center;
@@ -220,25 +228,27 @@ document.addEventListener('keypress',(e)=>{
 	}
 }
 
-.contentWrap{
+.contentWrap {
 	flex: 1;
 	overflow: auto;
 }
 
-.searchResult{
+.searchResult {
 	position: absolute;
 	height: rpx(565);
 	overflow-y: auto;
 	overflow-x: hidden;
-	padding-right:rpx(50);
+	padding-right: rpx(50);
 	left: 0;
 	top: rpx(45);
 	background-color: white;
 	width: 100%;
-	&:last-child{
+
+	&:last-child {
 		border-bottom: none;
 	}
-	.resultItem{
+
+	.resultItem {
 		display: flex;
 		justify-content: space-between;
 		padding: 0 rpx(20);
@@ -247,7 +257,8 @@ document.addEventListener('keypress',(e)=>{
 		line-height: rpx(50);
 		border-bottom: 1px dashed #ccc;
 		padding: 0 rpx(10);
-		.playIcon{
+
+		.playIcon {
 			width: rpx(50);
 			height: rpx(50);
 			background: url(../../icon/play.svg) no-repeat center;
@@ -256,56 +267,58 @@ document.addEventListener('keypress',(e)=>{
 	}
 }
 
-.history{
+.history {
 	margin-top: rpx(5);
 	display: flex;
 	flex-wrap: wrap;
-	.historyItem{
+
+	.historyItem {
 		display: flex;
 		padding: rpx(5) rpx(20);
 		background: white;
 		border-radius: rpx(20);
 		margin-top: rpx(10);
 		margin-right: rpx(10);
-		color: rgb(100,107,123);
+		color: rgb(100, 107, 123);
 	}
 }
 
-.historyTitle{
+.historyTitle {
 	display: flex;
 	justify-content: space-between;
 	margin-top: rpx(10);
 	padding: 0 rpx(10);
-	color: rgb(40,50,72);
+	color: rgb(40, 50, 72);
 	font-weight: 900;
 }
 
-.like{
+.like {
 	margin-top: rpx(5);
 	display: flex;
 	flex-wrap: wrap;
-	.likeItem{
+
+	.likeItem {
 		display: flex;
 		padding: rpx(5) rpx(20);
 		background: white;
 		border-radius: rpx(20);
 		margin-top: rpx(10);
 		margin-right: rpx(10);
-		color: rgb(100,107,123);
-		
+		color: rgb(100, 107, 123);
+
 	}
 }
 
-.likeTitle{
+.likeTitle {
 	display: flex;
 	justify-content: space-between;
 	margin-top: rpx(10);
 	padding: 0 rpx(10);
-	color:rgb(40,50,72);
+	color: rgb(40, 50, 72);
 	font-weight: 900;
 }
 
-.top{
+.top {
 	width: rpx(300);
 	// height: rpx(320);
 	padding: rpx(20) rpx(20);
@@ -316,53 +329,60 @@ document.addEventListener('keypress',(e)=>{
 
 }
 
-.hotTitle{
+.hotTitle {
 	font-size: rpx(20);
 	font-weight: bold;
 	border-bottom: 1px solid #ccc;
 	padding-bottom: rpx(10);
-	color: rgb(41,51,73);
+	color: rgb(41, 51, 73);
 }
 
-.hotItem{
+.hotItem {
 	display: flex;
 	height: rpx(35);
 	line-height: rpx(35);
 	font-size: rpx(17);
 	margin-top: rpx(3);
-	color:rgb(40,50,72);
-	&.itemActive{
+	color: rgb(40, 50, 72);
+
+	&.itemActive {
 		font-weight: 500;
 	}
-	.order{
+
+	.order {
 		padding: 0 rpx(15);
-		color: rgb(126,132,145);
-		&.active{
-			color: rgb(255,58,58);
-			font-weight:900;
-		}	
+		color: rgb(126, 132, 145);
+
+		&.active {
+			color: rgb(255, 58, 58);
+			font-weight: 900;
+		}
 	}
 
 }
 
-.hotItemWrap{
+.hotItemWrap {
 	// height: rpx(300);
 	overflow: auto;
-	&::-webkit-scrollbar{width:0px} ;
+
+	&::-webkit-scrollbar {
+		width: 0px
+	}
+
+	;
 }
 
-.clearHistory{
+.clearHistory {
 	width: rpx(20);
 	height: rpx(20);
 	background: url(../../icon/clear.svg) no-repeat center;
 	background-size: contain;
 }
 
-.fresh{
+.fresh {
 	width: rpx(20);
 	height: rpx(20);
 	background: url(../../icon/fresh.svg) no-repeat center;
 	background-size: contain;
 }
-
 </style>
