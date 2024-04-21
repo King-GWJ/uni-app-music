@@ -5,6 +5,8 @@
 			 <view class="bangdan"></view>
 			 <p><image src="../../icon/songlist/icon-fenxiang.png"/></p>
 		 </view>
+		 <!-- 蒙层 -->
+		 <view class="mask"></view>
 		 <view class="circle">
 			<view class="outer">
 				<view class="undertone">
@@ -15,9 +17,12 @@
 		 </view>
 		 <!-- 压唱片的部分 -->
 		 <view class="fixed">
-			 <view class="bases">
-				 <view class="arm"></view>
-			 </view>
+			 <image src="../../icon/songlist/needle-ab.png"></image>
+			 <!-- <view class="bases">
+				 <view class="arm">
+					 
+				 </view>
+			 </view> -->
 		 </view>
 		 <view class="title">
 			 <view class="songTitle">
@@ -72,6 +77,7 @@
 		display: flex;
 		align-items: center;
 		padding:0 15px;
+		z-index: 1;
 		p{
 			width:rpx(27);
 			height:rpx(27);
@@ -83,6 +89,16 @@
 		.bangdan{
 			flex:1;
 		}
+	}
+	// 蒙层
+	.mask{
+		position: fixed;
+		top:0;
+		left:0;
+		width:100%;
+		height:100%;
+		background: rgba(0,0,0,.2);
+		backdrop-filter: blur(7px);
 	}
 	.circle{
 		flex:1;
@@ -222,46 +238,55 @@
 	
 	// 压唱片的部分
 	.fixed{
-		width:rpx(18);
-		height:rpx(18);
-		border-radius: 50%;
-		background:#eee;
 		position: absolute;
-		top:rpx(60);
-		left:50%;
-		.basea{
-			position: relative;
-			width:rpx(10);
-			height:rpx(10);
-			background:#bebebe;
+		top:rpx(30);
+		right:32%;
+		image{
+			width:rpx(80);
+			height:rpx(130);
 		}
-		.arm{
-			width:rpx(30);
-			height:rpx(50);
-			border:7px solid #eee;
-			position: absolute;
-			right:rpx(-30);
-			top:rpx(25);
-			border-right-color:transparent;
-			border-top-color:transparent;
-			transform:skew(5deg,22deg);
-			transform-origin: right top;
-			border-radius: 0 0 30% 0;
-		}
-		
 	}
+	// .fixed{
+	// 	width:rpx(18);
+	// 	height:rpx(18);
+	// 	border-radius: 50%;
+	// 	background:#eee;
+	// 	position: absolute;
+	// 	top:rpx(60);
+	// 	left:50%;
+		// .basea{
+		// 	position: relative;
+		// 	width:rpx(10);
+		// 	height:rpx(10);
+		// 	background:#bebebe;
+		// }
+		// .arm{
+		// 	width:rpx(30);
+		// 	height:rpx(50);
+		// 	border:7px solid #eee;
+		// 	position: absolute;
+		// 	right:rpx(-30);
+		// 	top:rpx(25);
+		// 	border-right-color:transparent;
+		// 	border-top-color:transparent;
+		// 	transform:skew(5deg,22deg);
+		// 	transform-origin: right top;
+		// 	border-radius: 0 0 30% 0;
+		// }
+		
+	// }
 	
-	.arm:after{
-		content:'';
-		width:rpx(8);
-		height:rpx(10);
-		background:#DCDCDC;
-		position:absolute;
-		top:rpx(48);
-		left:rpx(27);
-		transform:skew(20deg,20deg) roate(75deg);
-		border-radius: rpx(2);
-		box-shadow:0px 0px 0px 1px #eee,
-                   0px 0px 0px 2px #bebebe;
-		}
+	// .arm:after{
+	// 	content:'';
+	// 	width:rpx(8);
+	// 	height:rpx(10);
+	// 	background:#DCDCDC;
+	// 	position:absolute;
+	// 	top:rpx(48);
+	// 	left:rpx(27);
+	// 	transform:skew(20deg,20deg) roate(75deg);
+	// 	border-radius: rpx(2);
+	// 	box-shadow:0px 0px 0px 1px #eee,
+ //                   0px 0px 0px 2px #bebebe;
+	// 	}
 </style>

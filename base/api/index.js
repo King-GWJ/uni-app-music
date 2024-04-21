@@ -130,3 +130,8 @@ export const hotApi = () =>{
 export const recommendedMusicApi = () =>{
 	return request({url:'/personalized/newsong'})
 }
+
+//歌单详情
+export const detailApi = (id) => {
+  return request({ url: '/playlist/detail', data: { id } })
+}

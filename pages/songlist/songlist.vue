@@ -1,22 +1,31 @@
 
 <script setup>
-import { toplistApi } from '../../base/api/index.js'
+import {onLoad} from '@dcloudio/uni-app'
+import { detailApi } from '../../base/api/index.js'
 import Showlist from "../../components/showlist/showlist.vue";
 import Seittlist from '../../components/showlist/setting.vue'
 import { ref } from "vue";
 
-const songList = ref([]);  //例表数据
-const VarLists = ref([]);
-const curIndex=ref(0)
-const showlist=false
+const songList = ref([]);  //接受传过来的数据
+const curIndex=ref(0)  //当前下标
+// const arr=ref([]) //接受传过来的数据
+const showlist=false //显示隐藏
+const optionId=ref(0)
 
 
-//调接口
- toplistApi().then(res=>{
-	 songList.value=res.list
-	 console.log(songList[curIndex])
+ 
+//获取id
+onLoad((options)=>{
+	console.log(options)
+	// optionId.value=options.id
+	// console.log(optionId)
+	//获取详情歌单数据
+	detailApi(options.id).then(res=>{
+		songList.value=res.playlist
+		console.log(res.playlist)
+		console.log(songList)
+	})
 })
-
 
 //跳转vip界面
 const goVip = () => {
@@ -33,11 +42,11 @@ const goVip = () => {
 <template>
   <view class="musiclist">
     <view class="header">
-      <image scr="" />
+     <image :src="songList.coverImgUrl"></image>
       <view class="search">
         <p class="back"></p>
         <view class="inp">
-          <input type="text" />
+          <!-- <input type="text" /> -->
           <p class="logo">
             <image src="../../icon/songlist/icon-sousuo.png" />
           </p>
@@ -47,8 +56,8 @@ const goVip = () => {
     </view>
     <view class="nav">
       <p><image src="../../icon/songlist/icon-tianjia.png" /></p>
-      <p><image src="../../icon/songlist/icon-xiaoxi.png" /></p>
-      <p><image src="../../icon/songlist/icon-fenxiang2.png" /></p>
+      <p><image src="../../icon/songlist/icon-xiaoxi.png" />{{songList.commentCount/100/10}}</p>
+      <p><image src="../../icon/songlist/icon-fx.png" />{{songList.shareCount}}</p>
     </view>
     <view class="vip">
       <image src="../../icon/songlist/icon-vip.png" />
@@ -65,11 +74,11 @@ const goVip = () => {
     <view class="songList">
       <view class="allPlay">
         <image class="bofang" src="../../icon/songlist/red-bofang.png" />
-        <p>播放全部</p>
+        <p>播放全部({{songList.trackCount}})</p>
         <image src="../../icon/songlist/icon-load.png" />
         <image src="../../icon/songlist/icon-viplist.png" />
       </view>
-      <view class="listItem">
+      <view class="listItem" >
         <view class="item">
           <P class="num">
             <span></span>
@@ -82,6 +91,8 @@ const goVip = () => {
           <p><image src="../../icon/songlist/icon-bofanglist.png" /></p>
           <p><image src="../../icon/songlist/icon-shengl.png" /></p>
         </view>
+
+		
       </view>
     </view>
 	<!-- 底部 -->
@@ -102,8 +113,12 @@ const goVip = () => {
 }
 
 .header {
-  height: rpx(150);
-  background: #eee;
+  height: rpx(160);
+  background: skyblue;
+  image{
+	  width:100%;
+	  height:100%;
+  }
   .search {
     height: rpx(35);
     display: flex;
@@ -142,7 +157,7 @@ const goVip = () => {
   border-radius: 60px;
   background: #fff;
   position: absolute;
-  top: rpx(130);
+  top: rpx(140);
   left: 15%;
   display: flex;
   align-items: center;
@@ -151,6 +166,9 @@ const goVip = () => {
     flex: 1;
     border-right: 1px solid #bebebe;
     text-align: center;
+	display: flex;
+	justify-content: center;
+	font-size:rpx(12);
     image {
       width: rpx(18);
       height: rpx(18);
@@ -219,7 +237,9 @@ const goVip = () => {
   }
 }
 .listItem {
-  flex: 1;
+  flex:1;
+  overflow: hidden;
+  overflow-y: out;
 }
 .item {
   display: flex;
