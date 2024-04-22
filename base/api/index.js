@@ -129,9 +129,13 @@ export const bannerApi = () => {
 }
 
 // 博客列表
-export const voiceApi = () => {
+export const voiceApi = (val) => {
 	return request({
-		url: '/voicelist/search'
+		url: '/voicelist/search',
+		data: {
+			limit:val.limit,
+			offset:val.offset
+		}
 	})
 }
 
@@ -143,5 +147,12 @@ export const valbumApi = (val) => {
 			limit: val.limit,
 			offset: val.offset
 		}
+	})
+}
+
+// 最新专辑
+export const newest = () => {
+	return request({
+		url: '/album/newest',
 	})
 }
