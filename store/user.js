@@ -15,20 +15,14 @@ export const useUserStore = defineStore('user', () => {
 
     const getProfile = () => {
         loginStatusApi().then(res => {
-            account.value = res.data.account
-            profile.value = res.data.profile
-            if (res.code === 200 && res.data.profile && res.data.account) {
-                anonimousLoginApi().then(res => {
-                    if (res.code === 200) {
-                        uni.setStorageSync('userCookie', res.cookie)
-                        profile.value = res
-                    }
-                })
+            if (res.code === 200) {
+                account.value = res.data.account
+                profile.value = res.data.profile
             }
         })
     }
 
-    const getLogin = (type, account, password) => {
+    const getLogin = (type, account = '', password = '') => {
         switch (type) {
             case 'email':
                 emailLoginApi(account, password).then(res => {
@@ -40,17 +34,26 @@ export const useUserStore = defineStore('user', () => {
                     storeData(res)
                 })
                 break;
+            case 'anonimous':
+                anonimousLoginApi().then(res => {
+                    if (res.code === 200) {
+                        uni.setStorageSync('curCookie', res.cookie)
+                        profile.value = res
+                        uni.navigateBack()
+                    }
+                })
+                break;
+
         }
     }
 
     const getCheckQr = (key) => {
         const interval = setInterval(() => {
-            console.log("ggg","getCheckQr")
             qrCheckApi(key).then(res => {
-                console.log("ggg",res)
-                if (res.code === 200) {
-                    storeData(res)
+                if (res.code === 803) {
+                    uni.setStorageSync('curCookie', res.cookie)
                     clearInterval(interval)
+                    uni.navigateBack()
                 }
             })
         }, 2000);
@@ -59,15 +62,12 @@ export const useUserStore = defineStore('user', () => {
             if (interval) {
                 clearInterval(interval)
             }
-        }, 10000)
-
+        }, 30000)
     }
 
     const storeData = (res) => {
         if (res.code === 200) {
-            uni.setStorageSync('userCookie', res.cookie)
-            //判断当前是否登录
-            uni.setStorageSync('userToken', res.token)
+            uni.setStorageSync('curCookie', res.cookie)
             account.value = res.account
             profile.value = res.profile
             uni.navigateBack()
