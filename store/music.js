@@ -45,6 +45,7 @@ export const useMusicstore=defineStore("musicStore",()=>{
 	const musicUrl = watch(musicIndex,(newValue,oldValue) => {
 		songUrlApi(musicList.value[musicIndex.value].id,'standard').then(res => {
 			musicBack.value = res.data[0].url
+			console.log(musicBack);
 		})
 	})
 	

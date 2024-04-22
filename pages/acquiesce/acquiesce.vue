@@ -86,6 +86,7 @@
 	const day = currentDate.getDate()
 	const toggle = (l,t,i) => {
 		useStore.musicAllList(l,t,i)
+		console.log(useStore.musicAllList);
 		uni.navigateTo({
 			url: `/pages/musicPlay/musicPlay?id=${t.id}`,
 		});
