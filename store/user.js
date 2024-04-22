@@ -5,8 +5,6 @@ import {
     phoneLoginApi,
     loginStatusApi,
     anonimousLoginApi,
-    qrKeyApi,
-    qrCreateApi
 } from '/base/api'
 
 export const useUserStore = defineStore('user', () => {
@@ -14,7 +12,6 @@ export const useUserStore = defineStore('user', () => {
     //用户信息
     const account = ref(null)
     const profile = ref(null)
-
 
     const getProfile = () => {
         loginStatusApi().then(res => {

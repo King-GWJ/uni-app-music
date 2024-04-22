@@ -121,6 +121,14 @@ export const loginStatusApi = () => {
 	})
 }
 
+// 退出登录
+export const logoutApi = () => {
+	return request({
+		url: '/logout',
+		method: 'GET'
+	})
+}
+
 //轮播图
 export const bannerApi = () => {
 	return request({

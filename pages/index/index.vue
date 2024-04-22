@@ -1,11 +1,14 @@
 <script setup>
+    import {onShow} from '@dcloudio/uni-app'
     import {ref} from "vue";
-    import {bannerApi} from '/base/api'
+    import {bannerApi,logoutApi} from '/base/api'
     import {link} from '/base/utils'
     import navIcons from "/base/data/navIcons";
 
     const banners = ref([])
     const showLeft = ref(null);
+    const isLogin = ref(false)
+
 
     const pageLogin = '/pages/login/login'
     const pageSearch = '/pages/search/search'
@@ -20,6 +23,25 @@
     const closeDrawer = () => {
         showLeft.value.close()
     }
+
+    const userCookie = uni.getStorageSync("userCookie");
+
+    onShow(()=>{
+        isLogin.value = !!userCookie;
+    })
+
+    //退出登录
+    const getLogout = () => {
+        logoutApi().then(res=>{
+            if(res.code === 200){
+                uni.setStorageSync('userCookie', "")
+                uni.setStorageSync('userToken', "")
+                isLogin.value = false
+                closeDrawer()
+            }
+        })
+    }
+
 </script>
 
 <template>
@@ -61,14 +83,14 @@
         </view>
         <uni-drawer ref="showLeft" mode="left" :width="300">
             <view class="close">
-                <button @click="()=>{
+                <button v-show="!isLogin" @click="()=>{
                     link(pageLogin)
                     closeDrawer()
                 }">
                     <text class="word-btn-white">登录</text>
                 </button>
-                <button @click="()=>{
-                }">
+
+                <button v-show="isLogin" @click="getLogout">
                     <text class="word-btn-white">退出登录</text>
                 </button>
             </view>
