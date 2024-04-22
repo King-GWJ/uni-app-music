@@ -190,8 +190,27 @@ export const hotApi = () => {
 
 
 // 最新专辑
-export const newest = () => {
+export const newestApi = () => {
 	return request({
 		url: '/album/newest',
 	})
 }
+
+
+// 电台banner
+export const djBannerApi = () => {
+	return request({
+		url: '/dj/banner',
+	})
+}
+
+// 电台推荐
+export const personalizeApi = (val) => {
+	return request({
+		url: '/dj/personalize/recommend',
+		data: {
+			limit:val
+		}
+	})
+}
+
