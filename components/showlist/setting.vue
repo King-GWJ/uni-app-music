@@ -1,4 +1,22 @@
 <script setup>
+	import {onLoad} from '@dcloudio/uni-app'
+	import { SongdetailApi } from '../../base/api/index.js'
+	import Showlist from "../../components/showlist/showlist.vue"
+	import Setting from "../../components/showlist/setting.vue"
+	import { ref ,defineProps } from "vue";
+	import { useMusicstore } from '../../store/music.js'
+	
+	const data=ref({})
+	
+	const props = defineProps({
+	  itemSong: Object,
+	});
+
+	console.log(props.itemSong)
+	
+	
+	
+	
 </script>
 
 <template>
@@ -16,16 +34,16 @@
 		  <span class="zhuyi">开通vip畅享千万曲库下载特权</span>
 	    </view>
 		<view class="selectlist">
-			<p class="select"><image src="../../icon/songlist/icon-fenxiang.png"/>不感兴趣</p>
-			<p class="select"><image src="../../icon/songlist/icon-bfang.png"/>赞赏好音乐</p>
+			<p class="select"><image src="../../icon/songlist/icon-close.png"/>不感兴趣</p>
+			<p class="select"><image src="../../icon/songlist/icon-zan.png"/>赞赏好音乐</p>
 			<p class="select"><image src="../../icon/songlist/icon-bfang.png"/>下一首播放</p>
-			<p class="select"><image src="../../icon/songlist/icon-bfang.png"/>收藏到歌单</p>
-			<p class="select"><image src="../../icon/songlist/icon-bfang.png"/>下载</p>
-			<p class="select"><image src="../../icon/songlist/icon-bfang.png"/>评论（568）</p>
-			<p class="select"><image src="../../icon/songlist/icon-bfang.png"/>分享</p>
-			<p class="select"><image src="../../icon/songlist/icon-bfang.png"/>歌手：范倪</p>
-			<p class="select"><image src="../../icon/songlist/icon-bfang.png"/>创作者：姜帆/浅紫/常伟</p>
-			<p class="select"><image src="../../icon/songlist/icon-bfang.png"/>专辑：我都明白</p>
+			<p class="select"><image src="../../icon/songlist/icon-tianjia.png"/>收藏到歌单</p>
+			<p class="select"><image src="../../icon/songlist/icon-load.png"/>下载</p>
+			<p class="select"><image src="../../icon/songlist/icon-xiaoxi.png"/>评论（568）</p>
+			<p class="select"><image src="../../icon/songlist/icon-fx.png"/>分享</p>
+			<p class="select"><image src="../../icon/songlist/icon-singer.png"/>歌手：范倪</p>
+			<p class="select"><image src="../../icon/songlist/icon-create.png"/>创作者：姜帆/浅紫/常伟</p>
+			<p class="select"><image src="../../icon/songlist/icon-icon-zhuanji"/>专辑：我都明白</p>
 		</view>
 	  </view>
 	</view>
@@ -39,6 +57,7 @@
 	  left:0;
 	  bottom:0;
 	  background-color: rgba(0, 0, 0, 0.5);
+	  z-index: 1;
 	  .showlist {
 	    height: rpx(500);
 	    border-radius: 18px 18px 0 0;
@@ -105,6 +124,7 @@
 		  flex:1;
 		  overflow: hidden;
 		  overflow-y: auto;
+		  padding:3px 0;
 	  }
 	  .select{
 		  height:rpx(40);

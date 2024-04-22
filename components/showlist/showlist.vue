@@ -1,6 +1,23 @@
 <script setup>
+	import { defineProps } from 'vue';
    import CaurPlay from './curplay.vue'
-   const showList=false
+   import {onLoad} from '@dcloudio/uni-app'
+   import { SongdetailApi } from '../../base/api/index.js'
+   import Showlist from "../../components/showlist/showlist.vue"
+   import Setting from "../../components/showlist/setting.vue"
+   import { ref } from "vue";
+   import { useMusicstore } from '../../store/music.js'
+   
+   const showList=false //例表显示隐藏
+   const selectSong=ref([])
+   
+   
+   const props = defineProps({
+     clickItem: Array
+   })
+   
+   
+   
 </script>
 
 
@@ -24,15 +41,15 @@
 
 <style lang="scss" scoped>
 	.footer{
-		height:rpx(46);
+		height:rpx(40);
 		display:flex;
 		align-items: center;
-		padding:0 rpx(15);
+		padding:0 rpx(10);
 	}
 	
 	.circle{
-		width:rpx(40);
-		height:rpx(40);
+		width:rpx(39);
+		height:rpx(39);
 		border-radius: 50%;
 		background: black;
 		display: flex;
