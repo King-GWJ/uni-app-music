@@ -21,7 +21,7 @@ const navIcons = [
         "id": -3,
         "name": "排行榜",
         "iconUrl": "http://p1.music.126.net/SDFC6A3X2wzUCavYyeGIOg==/109951163986649670.jpg",
-        "url": "/pages/toplist/toplist"
+        "url": "/pages/recommended/recommended"
     },
     {
         "id": 1025001,

@@ -38,13 +38,8 @@ export const searchSuggestApi = (val) => {
 }
 
 // //搜索接口
-export const searchApi = (val) => {
-	return request({
-		url: '/search',
-		data: {
-			keywords: val
-		}
-	})
+export const searchApi = (val, offset) => {
+    return request({ url: '/search', data: { keywords: val, offset:offset } })
 }
 
 // 游客登录
@@ -137,9 +132,13 @@ export const bannerApi = () => {
 }
 
 // 博客列表
-export const voiceApi = () => {
+export const voiceApi = (val) => {
 	return request({
-		url: '/voicelist/search'
+		url: '/voicelist/search',
+		data: {
+			limit:val.limit,
+			offset:val.offset
+		}
 	})
 }
 
@@ -171,6 +170,16 @@ export const personalizedApi = (num) => {
 	})
 }
 
+//推荐新音乐
+export const newsongApi = (num) => {
+    return request({
+        url: '/personalized/newsong',
+        data: {
+            limit: num
+        }
+    })
+}
+
 //每日推荐歌曲
 export const songsApi = () => {
 	return request({
@@ -186,6 +195,7 @@ export const hotApi = () => {
 }
 
 
+
 //获取歌单所有歌曲
 export const trackAllApi = (id, limit, offset) => {
 	return request({
@@ -197,3 +207,57 @@ export const trackAllApi = (id, limit, offset) => {
 		}
 	}, )
 }
+
+
+// 最新专辑
+export const newest = () => {
+	return request({
+		url: '/album/newest',
+	})
+}
+
+// 歌单详情
+export const SongdetailApi= (id) => {
+  return request({ url: '/playlist/detail', data: { id } })
+}
+
+// 歌曲详情
+export const songDetailApi = (ids) => {
+  return request({
+    url: '/song/detail',
+    data: {
+      ids
+    }
+  })
+}
+
+// 歌词
+export const lyricApi = (id) => {
+  return request({
+    url: '/lyric',
+    data: {
+      id
+    }
+  })
+}
+
+// 音乐url
+export const songUrlApi = (id) => {
+  return request({
+    url: '/song/url',
+    data: {
+      id
+    }
+  })
+}
+
+// 评论
+export const commentApi = (type, id) => {
+  return request({
+    url: `/comment/${type}`,
+    data: {
+      id
+    }
+  })
+}
+

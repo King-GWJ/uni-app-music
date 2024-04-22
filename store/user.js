@@ -4,7 +4,7 @@ import {
     emailLoginApi,
     phoneLoginApi,
     loginStatusApi,
-    anonimousLoginApi,
+    anonimousLoginApi, qrCheckApi,
 } from '/base/api'
 
 export const useUserStore = defineStore('user', () => {
@@ -43,9 +43,30 @@ export const useUserStore = defineStore('user', () => {
         }
     }
 
+    const getCheckQr = (key) => {
+        const interval = setInterval(() => {
+            console.log("ggg","getCheckQr")
+            qrCheckApi(key).then(res => {
+                console.log("ggg",res)
+                if (res.code === 200) {
+                    storeData(res)
+                    clearInterval(interval)
+                }
+            })
+        }, 2000);
+
+        setTimeout(() => {
+            if (interval) {
+                clearInterval(interval)
+            }
+        }, 10000)
+
+    }
+
     const storeData = (res) => {
-        if(res.code === 200){
+        if (res.code === 200) {
             uni.setStorageSync('userCookie', res.cookie)
+            //判断当前是否登录
             uni.setStorageSync('userToken', res.token)
             account.value = res.account
             profile.value = res.profile
@@ -58,5 +79,6 @@ export const useUserStore = defineStore('user', () => {
         profile,
         getProfile,
         getLogin,
+        getCheckQr
     }
 });

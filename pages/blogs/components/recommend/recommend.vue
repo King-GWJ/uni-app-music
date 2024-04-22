@@ -2,6 +2,7 @@
 	.recommend {
 		padding: 20px;
 		box-sizing: border-box;
+		list-style: none;
 		background-color: #F8F9FD;
 
 		.search {
@@ -62,22 +63,40 @@
 
 		.type {
 			display: flex;
-			flex-direction: column;
+			overflow-x: auto;
+			flex-direction: row;
 
-			.lists {
+			.list {
+				margin-top: 5px;
+				width: 100%;
 				display: flex;
+				flex-shrink: 0;
+				flex-direction: row;
 				justify-content: space-around;
-				algin-items: center;
 
-				.list {
-					width: calc(100%/3 - 60px);
+				.li {
+					width: 28%;
 
-					img {
+					.img {
 						width: 100%;
-						height: 40px;
-						border: 1px solid #eee;
+						height: 80px;
+						border-radius: 5px;
+					}
+
+					text {
+						height: 20px;
+						font-size: 12px;
+						line-height: 20px;
+						display: inline-block;
+						-webkit-box-orient: vertical;
+						white-space: nowrap;
+						overflow: hidden;
+						width: 100%;
+						text-overflow: ellipsis;
+						text-align: center;
 					}
 				}
+
 			}
 		}
 	}
@@ -104,20 +123,12 @@
 				</swiper-item>
 			</swiper>
 		</view>
+		<h3>新专辑</h3>
 		<view class="type">
-			<h3>新歌新碟的></h3>
-			<view class="lists">
-				<view v-for="(item,index) in background" :key="index" class="list">
-					<view>
-						<view>
-							<view class="img">
-								sadas
-							</view>
-							<view class="txt">
-								{{item}}
-							</view>
-						</view>
-					</view>
+			<view v-for="(item,index) in newests" :key="index" class="list">
+				<view v-for="(li) in item" :key="index" class="li">
+					<image :src="li.picUrl" mode="" class="img"></image>
+					<text>{{li.name}}</text>
 				</view>
 			</view>
 		</view>
@@ -131,21 +142,30 @@
 	} from "vue";
 	import {
 		bannerApi,
-		valbumApi
+		voiceApi,
+		newest
 	} from '/base/api';
 
 	const banners = ref([])
 	const valbums = ref([])
+	const newests = ref([])
 
 	bannerApi().then(res => {
 		banners.value = res.banners
 	})
 
-	valbumApi({
+	voiceApi({
 		limit: 9,
 		offset: 3
 	}).then(res => {
 		console.log(res);
 		// voiceApi.value = res.banners
+	})
+
+	newest().then(res => {
+		console.log(res.albums);
+		for (let i = 0; i < res.albums.length; i + 3) {
+			newests.value.push(res.albums.splice(i, i + 3))
+		}
 	})
 </script>
