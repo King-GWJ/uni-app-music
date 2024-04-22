@@ -170,6 +170,16 @@ export const personalizedApi = (num) => {
 	})
 }
 
+//推荐新音乐
+export const newsongApi = (num) => {
+    return request({
+        url: '/personalized/newsong',
+        data: {
+            limit: num
+        }
+    })
+}
+
 //每日推荐歌曲
 export const songsApi = () => {
 	return request({
