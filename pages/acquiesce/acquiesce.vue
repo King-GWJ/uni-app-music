@@ -1,8 +1,5 @@
 <template>
 	<view class="box">
-		<!-- <view class="custom-navigation">
-		  <text>自定义标题</text>
-		</view> -->
 		<view class="header">
 			<view class="date">
 				<view class="dateNumber">
@@ -45,7 +42,7 @@
 			</view>
 		</view>
 		<view class="musicList">
-			<view class="music" v-for="(item,index) in list" :key="item.id" @click="toggle(item)">
+			<view class="music" v-for="(item,index) in list" :key="item.id" @click="toggle(list,item,index)">
 				<view class="musicImg">
 					<image :src="item.al.picUrl" mode=""></image>
 				</view>
@@ -81,21 +78,28 @@
 	import { onReady,onLoad } from '@dcloudio/uni-app'
 	import { ref } from 'vue'
 	import { songsApi, loginStatusApi,trackAllApi } from '../../base/api/index.js'
+	import { useMusicstore } from '../../store/music.js'
+	const useStore = useMusicstore()
 	const list = ref([])
 	const currentDate = new Date()
 	const month = currentDate.getMonth() + 1
 	const day = currentDate.getDate()
-	const toggle = (item) => {
-		console.log(item.id);
+	const toggle = (l,t,i) => {
+		useStore.musicAllList(l,t,i)
 		uni.navigateTo({
-			url: `/pages/musicPlay/musicPlay?id=${item.id}`,
+			url: `/pages/musicPlay/musicPlay?id=${t.id}`,
 		});
 	}
 	onLoad((options) => {
-		console.log(options.id);
-		trackAllApi(options.id,50,0).then(res => {
-			list.value = res.songs
-		})
+		if(options.id){
+			trackAllApi(options.id,50,0).then(res => {
+				list.value = res.songs
+			})
+		}else{
+			songsApi().then(res => {
+				list.value = res.data.dailySongs
+			})
+		}	
 	})
 
 </script>

@@ -3,25 +3,18 @@
 	import {onLoad} from '@dcloudio/uni-app'
 	import { SongdetailApi } from '../../base/api/index.js'
 	import Showlist from "../../components/showlist/showlist.vue"
-	// import Seittlist from "../../components/showlist/setting.vue"
 	import { ref } from "vue";
-	import { useMusicstore } from '../../store/music.js'
 
 	const songList = ref([]);  //接受传过来的数据
 	const curIndex=ref(0)  //当前下标
 	const showlist=false //显示隐藏
 	const optionId=ref(0)
-	const store = useMusicstore()
 	// store.changeList
 	//获取id
 	onLoad((options)=>{
 		//获取详情歌单数据
 		SongdetailApi(options.id).then(res=>{
 			songList.value=res.playlist
-			store.changeList = res.playlist.tracks
-			console.log(res.playlist)
-			console.log(songList)
-			console.log(store.changeList);
 		})
 	})
 

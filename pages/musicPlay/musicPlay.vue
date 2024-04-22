@@ -4,22 +4,13 @@
 	import {watch ,computed ,ref} from "vue"
 	import { useMusicstore } from '../../store/music.js'
 	
-	const musicStore=useMusicstore()
-	
-	
-	onLoad((options)=>{
-		console.log(options.id)
-		SongdetailApi(options.id).then(res=>{
-			// songList.value=res.playlist
-			musicStore.changeList = res.playlist.tracks
-			musicStore.curIndex = options.index
-			console.log(musicStore.curIndex)
-			console.log(res.playlist)
-			// console.log(songList)
-			console.log(musicStore.changeList);
-		})
-	})
-
+	const useStore = useMusicstore()
+	console.log(useStore.musicList); // 音乐全部数组
+	console.log(useStore.musicIndex); //  当前音乐下标
+	console.log(useStore.musicLove); // 当前音乐
+	const subtract = (num) => {  // 上一首/下一首
+		useStore.musicSubtract(num)
+	}
 </script>
 
 
@@ -67,9 +58,9 @@
 			 	<image src="../../icon/songlist/icon-danquxunhuan.png"/>
 			 </span>
 			 <view class="code">
-				 <p><image src="../../icon/songlist/icon-shangyishou.png"/></p>
+				 <p @click="subtract(-1)"><image src="../../icon/songlist/icon-shangyishou.png"/></p>
 				 <p><image src="../../icon/songlist/icon-bofang.png"/></p>
-				 <p><image src="../../icon/songlist/icon-next.png"/></p>
+				 <p @click="subtract(1)"><image src="../../icon/songlist/icon-next.png"/></p>
 			 </view>
 			 <span>
 			 	<image src="../../icon/songlist/icon-liebiao.png"/>

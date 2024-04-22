@@ -242,22 +242,23 @@ export const lyricApi = (id) => {
   })
 }
 
-// 音乐url
-export const songUrlApi = (id) => {
-  return request({
-    url: '/song/url',
-    data: {
-      id
-    }
-  })
-}
-
 // 评论
 export const commentApi = (type, id) => {
   return request({
     url: `/comment/${type}`,
     data: {
       id
+    }
+  })
+}
+
+// 音乐播放url
+export const songUrlApi = (id,level) => {
+  return request({
+    url: '/song/url/v1',
+    data: {
+      id: id,
+	  level: level
     }
   })
 }
