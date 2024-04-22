@@ -143,13 +143,13 @@
 	import {
 		bannerApi,
 		voiceApi,
-		newest
+		newestApi
 	} from '/base/api';
 
 	const banners = ref([])
 	const valbums = ref([])
 	const newests = ref([])
-
+	
 	bannerApi().then(res => {
 		banners.value = res.banners
 	})
@@ -162,8 +162,7 @@
 		// voiceApi.value = res.banners
 	})
 
-	newest().then(res => {
-		console.log(res.albums);
+	newestApi().then(res => {
 		for (let i = 0; i < res.albums.length; i + 3) {
 			newests.value.push(res.albums.splice(i, i + 3))
 		}
