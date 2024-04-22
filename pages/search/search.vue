@@ -10,7 +10,7 @@ const resultShow = ref(false)
 const searchList = ref([])
 const historyList = ref([])
 const hotList = ref([])
-
+const offset = ref(0)
 
 //获取本地数据
 historyList.value = JSON.parse(localStorage.getItem('history')) || []
@@ -18,6 +18,8 @@ historyList.value = JSON.parse(localStorage.getItem('history')) || []
 //清空
 const clear = () => {
 	searchVal.value = ''
+	offset.value=0
+	searchList.value=[]
 }
 //热搜列表
 hotApi().then(res => {
@@ -37,17 +39,20 @@ const searchSuggest = () => {
 }
 
 //开始搜索
-const search = async (val = searchVal.value) => {
+const search = async (val = searchVal.value,off=offset.value) => {
 	searchVal.value = val
 	suggestShow.value = false
-	const res = await searchApi(val)
-	console.log(res)
+	const res = await searchApi(val,off)
 	console.log(res.result.songs)
-	searchList.value = res.result.songs
+	// searchList.value = res.result.songs
+	// searchList.value.push(res.result.songs)
+	res.result.songs.forEach(v=>{
+		searchList.value.push(v)
+	})
+	console.log(searchList.value)
 	setTimeout(() => {
 		resultShow.value = true
 	}, 20)
-
 	const index = historyList.value.findIndex(v => v === val)
 	if (index === -1) {
 		historyList.value.push(val)
@@ -82,6 +87,13 @@ const goPlay = (id) =>{
 	})
 } 
 
+const  scrolltolower = () =>{
+	console.log('滚动到底部')
+	offset.value+=30
+	console.log(offset.value)
+	search()
+}
+
 </script>
 
 <template>
@@ -97,19 +109,29 @@ const goPlay = (id) =>{
 			</view>
 			<view class="searchSuggest" v-if="suggestShow">
 				<view @click="search(item.name)" class="suggestItem" v-for="(item, index) in suggestList" :key="index">
-					<view class="suggestIcon"></view> {{ item.name }}
-				</view>
-			</view>
-			<view class="searchResult" v-if="resultShow">
-				<view class="resultItem" v-for="(item, index) in searchList" :key="index">
-
-					<view class="resultContent">
+					<view class="suggestIcon"></view> 
+					<view class="suggestContent">
 						{{ item.name }}
-					</view>
-					<view class="playIcon" @click="goPlay(item.id)"></view>
-					<view class="detailIcon"></view>
+					</view> 
 				</view>
 			</view>
+			<scroll-view scroll-y show-scrollbar="false" @scrolltolower="scrolltolower" class="searchResult" v-if="resultShow" >
+				<view class="resultItem" v-for="(item, index) in searchList" :key="index">
+					<view class="resultContent">
+						<view class="resultName">
+							{{ item.name }}
+						</view>
+						<view class="resultArtist">
+							{{item.artists[0].name}} <view class="alias" v-if="item.alias.length>0">&nbsp; - &nbsp;{{item.alias[0]}}</view> 
+						</view>
+					</view>
+					<view class="resultTools">
+						<view class="playIcon" @click="goPlay(item.id)"></view>
+						<view class="detailIcon"></view>
+					</view>
+					
+				</view>
+			</scroll-view>
 		</view>
 		<view class="contentWrap">
 			<view class="historyTitle" v-if="historyList.length > 0">
@@ -214,6 +236,7 @@ const goPlay = (id) =>{
 	position: absolute;
 	left: 0;
 	top: rpx(45);
+	height: rpx(565);
 	background-color:rgb(244,246,249);
 	width: 100%;
 	color: rgb(40, 50, 72);
@@ -221,15 +244,18 @@ const goPlay = (id) =>{
 	.suggestItem {
 		display: flex;
 		width: 100%;
-		height: rpx(30);
-		line-height: rpx(30);
-		border-bottom: 1px dashed #ccc;
-
+		align-items: center;
 		.suggestIcon {
 			width: rpx(30);
 			height: rpx(30);
 			background: url(../../icon/search.svg) no-repeat center;
 			background-size: rpx(15);
+		}
+		.suggestContent{
+			flex: 1;
+			height: rpx(50);
+			line-height: rpx(50);
+			border-bottom: 1px solid rgb(224,225,228);
 		}
 	}
 }
@@ -249,27 +275,52 @@ const goPlay = (id) =>{
 	top: rpx(45);
 	background-color: white;
 	width: 100%;
-
 	&:last-child {
 		border-bottom: none;
 	}
-
 	.resultItem {
 		display: flex;
 		justify-content: space-between;
-		padding: 0 rpx(20);
+		align-items: center;
 		width: 100%;
-		height: rpx(50);
-		line-height: rpx(50);
-		border-bottom: 1px dashed #ccc;
-		padding: 0 rpx(10);
-
-		.playIcon {
-			width: rpx(50);
-			height: rpx(50);
-			background: url(../../icon/play.svg) no-repeat center;
-			background-size: rpx(30);
+		// border-bottom: 1px dashed #ccc;
+		padding: rpx(10) rpx(10);
+		.resultContent{
+			flex: 1;
+			display: flex;
+			flex-direction: column;
+			.resultName{
+				padding: rpx(5) 0;
+				color: rgb(51,51,52);
+				font-weight: 800;
+			}
+			.resultArtist{
+				display: flex;
+				font-size: rpx(12);
+				color: rgb(85,129,177);
+				.alias{
+					color: rgb(153,153,153);
+				}
+			}
 		}
+		.resultTools{
+			width: rpx(100);
+			display: flex;
+			.playIcon {
+				width: rpx(50);
+				height: rpx(50);
+				background: url(../../icon/play.svg) no-repeat center;
+				background-size: rpx(25);
+				
+			}
+			.detailIcon{
+				width: rpx(30);
+				height: rpx(50);
+				background: url(../../icon/detail.svg) no-repeat center;
+				background-size: rpx(20);
+			}
+		}
+		
 	}
 }
 
@@ -277,7 +328,6 @@ const goPlay = (id) =>{
 	margin-top: rpx(5);
 	display: flex;
 	flex-wrap: wrap;
-
 	.historyItem {
 		display: flex;
 		padding: rpx(5) rpx(20);
@@ -326,7 +376,6 @@ const goPlay = (id) =>{
 
 .top {
 	width: rpx(300);
-	// height: rpx(320);
 	padding: rpx(20) rpx(20);
 	margin-top: rpx(20);
 	margin-left: rpx(15);
@@ -350,11 +399,9 @@ const goPlay = (id) =>{
 	font-size: rpx(17);
 	margin-top: rpx(3);
 	color: rgb(40, 50, 72);
-
 	&.itemActive {
 		font-weight: 500;
 	}
-
 	.order {
 		padding: 0 rpx(15);
 		color: rgb(126, 132, 145);
