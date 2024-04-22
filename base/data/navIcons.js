@@ -3,7 +3,7 @@ const navIcons = [
         "id": -1,
         "name": "每日推荐",
         "iconUrl": "http://p1.music.126.net/4DpSgAVpJny4Ewf-Xw_WQQ==/109951163986641971.jpg",
-        "url": "/pages/recommend/recommend"
+        "url": "/pages/acquiesce/acquiesce"
     },
     {
         "id": -6,

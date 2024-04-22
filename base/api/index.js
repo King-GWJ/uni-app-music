@@ -39,12 +39,10 @@ export const request = ({
 			}
 		})
 	})
-
 }
 
 //搜索建议接口
 export const searchSuggestApi = (val) => {
-
 	return request({
 		url: '/search/suggest',
 		data: {
@@ -62,7 +60,6 @@ export const searchApi = (val, offset) => {
 			offset: offset
 		}
 	})
-
 }
 
 // 游客登录
@@ -136,6 +133,15 @@ export const qrCheckApi = (key) => {
 export const loginStatusApi = () => {
 	return request({
 		url: '/login/status',
+	})
+
+}
+
+// 退出登录
+export const logoutApi = () => {
+	return request({
+		url: '/logout',
+		method: 'GET'
 	})
 }
 
@@ -240,3 +246,11 @@ export const commentApi = (type, id) => {
     }
   })
 }
+
+//每日推荐歌曲
+export const songsApi = () => {
+	return request({
+		url: '/recommend/songs',
+	})
+}
+

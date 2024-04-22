@@ -1,11 +1,14 @@
 <script setup>
+    import {onShow} from '@dcloudio/uni-app'
     import {ref} from "vue";
-    import {bannerApi} from '/base/api'
-    import {link} from '/base/utils'
+    import {bannerApi,logoutApi,personalizedApi} from '/base/api'
+    import {navigateTo} from '/base/utils'
     import navIcons from "/base/data/navIcons";
 
     const banners = ref([])
     const showLeft = ref(null);
+    const isLogin = ref(false)
+    const playListTJ = ref([])
 
     const pageLogin = '/pages/login/login'
     const pageSearch = '/pages/search/search'
@@ -14,19 +17,48 @@
         banners.value = res.banners
     })
 
+    personalizedApi().then(res => {
+        playListTJ.value = res.result
+    })
+
     const showDrawer = () => {
         showLeft.value.open()
     }
     const closeDrawer = () => {
         showLeft.value.close()
     }
+
+    const userCookie = uni.getStorageSync("userCookie");
+
+    onShow(()=>{
+        isLogin.value = !!userCookie;
+    })
+
+    //退出登录
+    const getLogout = () => {
+        logoutApi().then(res=>{
+            if(res.code === 200){
+                uni.setStorageSync('userCookie', "")
+                uni.setStorageSync('userToken', "")
+                isLogin.value = false
+                closeDrawer()
+            }
+        })
+    }
+
+    const getDetail = (id) => {
+        navigateTo("/pages/acquiesce/acquiesce?id="+id)
+    }
+
+
+
 </script>
 
 <template>
     <view class="content">
         <view class="header">
             <uni-icons class="bars" type="bars" size="24" @click="showDrawer"></uni-icons>
-            <view class="search" @click="link(pageSearch)">
+            <view class="search" @click="navigateTo(pageSearch)">
                 <uni-search-bar placeholder="搜索" bgColor="#EEEEEE" readonly />
             </view>
         </view>
@@ -41,7 +73,7 @@
 
             <swiper class="icon-swiper" display-multiple-items="5">
                 <swiper-item v-for="item in navIcons" :key="item.id">
-                    <image :src="item.iconUrl" mode="widthFix" @click="link(item.url)"></image>
+                    <image :src="item.iconUrl" mode="widthFix" @click="navigateTo(item.url)"></image>
                     <view class="icon-name">
                         {{ item.name }}
                     </view>
@@ -50,25 +82,26 @@
 
             <uni-section type="line" title="推荐歌单">
                 <view class="playlist">
-                    <view class="playlist-item" v-for="item in playlist" :key="item.id" @click="goDetail(item.id)">
-                        <image :src="item.coverImgUrl" mode="widthFix"></image>
+                    <view class="playlist-item" v-for="item in playListTJ" :key="item.id" @click="getDetail(item.id)">
+                        <image :src="item.picUrl" mode="widthFix"></image>
                         <view class="playlist-item-name">
                             {{ item.name }}
                         </view>
                     </view>
                 </view>
             </uni-section>
+
         </view>
         <uni-drawer ref="showLeft" mode="left" :width="300">
             <view class="close">
-                <button @click="()=>{
-                    link(pageLogin)
+                <button v-show="!isLogin" @click="()=>{
+                    navigateTo(pageLogin)
                     closeDrawer()
                 }">
                     <text class="word-btn-white">登录</text>
                 </button>
-                <button @click="()=>{
-                }">
+
+                <button v-show="isLogin" @click="getLogout">
                     <text class="word-btn-white">退出登录</text>
                 </button>
             </view>
@@ -140,7 +173,34 @@
                     margin-top: 16rpx;
                 }
             }
-
+            .playlist {
+                display: flex;
+                flex-wrap: nowrap;
+                padding: 0 30rpx;
+                overflow: auto;
+            }
+            .playlist::-webkit-scrollbar {
+                display: none;
+            }
+            .playlist-item {
+                width: 200rpx;
+                flex-shrink: 0;
+                margin-right: 20rpx;
+                image {
+                    width: 100%;
+                    height: 200rpx;
+                    border-radius: 10rpx;
+                }
+            }
+            .playlist-item-name {
+                font-size: 24rpx;
+                height: 70rpx;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                display: -webkit-box;
+                -webkit-line-clamp: 2;
+                -webkit-box-orient: vertical;
+            }
 
         }
 
