@@ -51,19 +51,20 @@ export const useMusicstore=defineStore("music",()=>{
 			console.log(rej);
 		})
 		
-		//获取音乐url
-		// songUrlApi(id).then(url=>{
-		// 	console.log(id);
-		// 	console.log(url)
-		// })
 		
-		// curPlaylist.value = res.songs.map(item => {
-		//       return {
-		//         ...item,
-		//         url: resUrl.data.find(v => v.id === item.id).url
-		//       }
-		//     })
-		//     curIndex.value = 0
+		获取音乐url
+		songUrlApi(id).then(url=>{
+			console.log(id);
+			console.log(url)
+		})
+		
+		curPlaylist.value = res.songs.map(item => {
+		      return {
+		        ...item,
+		        url: resUrl.data.find(v => v.id === item.id).url
+		    }
+		})
+		curIndex.value = 0
 
 	}
 	

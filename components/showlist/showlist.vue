@@ -13,6 +13,7 @@
 			<view class="name">1111111111111111111111111111111111</view>
 			<p class="logo"><image src="../../icon/songlist/icon-bfang.png"/></p>
 			<p class="logo2"><image src="../../icon/songlist/icon-mus.png"/></p>
+
 		</view>
 		<CaurPlay v-if="showList" />
 	</view>
@@ -67,7 +68,7 @@
 		width:rpx(20);
 		height:rpx(25);
 		image{
-			width:rpx(22);
+			width:rpx(23);
 			height:rpx(23);
 		}
 	}

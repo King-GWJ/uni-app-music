@@ -34,12 +34,13 @@
 	}
 	
 	//跳转播放页
-	const playPage=(item)=>{
+	const playPage=(item,index)=>{
 	  console.log(item.id)
 	  uni.navigateTo({
-		url: `/pages/musicPlay/musicPlay?id=${item.id}`
+		url: `/pages/musicPlay/musicPlay?id=${item.id}&index=${index}`
 	  })
 	}
+
 </script>
 
 <template>
@@ -74,7 +75,7 @@
 				</view>
 			</view>
 			<view class="list">
-				<view class="item" v-for="item in songList.tracks" @click="playPage(item)" :key="item.name">
+				<view class="item" v-for="(item,index) in songList.tracks" @click="playPage(item,index)" :key="item.name">
 					<view class="num">{{item.cd}}</view>
 					<view class="text">
 					   <view class="title">
@@ -90,10 +91,10 @@
 			<Showlist />
 		</view>
 		
-		
 		<!-- 每首歌曲右侧设置... -->
 		<!-- <Seittlist v-if="showlist"/> -->
 	</view>
+
 </template>
 
 

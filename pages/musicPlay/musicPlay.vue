@@ -1,6 +1,6 @@
 <script setup>
 	import {onLoad} from '@dcloudio/uni-app'
-	import {songDetailApi ,lyricApi , songUrlApi} from "../../base/api/index.js"
+	import {songDetailApi ,lyricApi , songUrlApi,SongdetailApi} from "../../base/api/index.js"
 	import {watch ,computed ,ref} from "vue"
 	import { useMusicstore } from '../../store/music.js'
 	
@@ -9,8 +9,15 @@
 	
 	onLoad((options)=>{
 		console.log(options.id)
-		musicStore.listId(options.id)
-		console.log(useMusicstore.curIndex);
+		SongdetailApi(options.id).then(res=>{
+			// songList.value=res.playlist
+			musicStore.changeList = res.playlist.tracks
+			musicStore.curIndex = options.index
+			console.log(musicStore.curIndex)
+			console.log(res.playlist)
+			// console.log(songList)
+			console.log(musicStore.changeList);
+		})
 	})
 
 </script>
@@ -26,6 +33,8 @@
 			 <view class="bangdan"></view>
 			 <p><image src="../../icon/songlist/icon-fenxiang.png"/></p>
 		 </view>
+		 <!-- 蒙层 -->
+		 <view class="mask"></view>
 		 <view class="circle">
 			<view class="outer">
 				<view class="undertone">
@@ -37,9 +46,6 @@
 		 <!-- 压唱片的部分 -->
 		 <view class="fixed">
 			 <image src="../../icon/songlist/needle-ab.png"></image>
-			 <!-- <view class="bases">
-				 <view class="arm"></view>
-			 </view> -->
 		 </view>
 		 <view class="title">
 			 <view class="songTitle">
@@ -74,7 +80,7 @@
 			 <p><image src="../../icon/songlist/icon-xiazai.png"/></p>
 			 <p><image src="../../icon/songlist/icon-liebiao.png"/></p>
 		 </footer>
-		
+		<!-- <audio src="" ></audio> -->
 	</view>
 </template>
 
@@ -95,6 +101,7 @@
 		display: flex;
 		align-items: center;
 		padding:0 15px;
+		z-index: 1;
 		p{
 			width:rpx(27);
 			height:rpx(27);
@@ -106,6 +113,16 @@
 		.bangdan{
 			flex:1;
 		}
+	}
+	// 蒙层
+	.mask{
+		position: fixed;
+		top:0;
+		left:0;
+		width:100%;
+		height:100%;
+		background: rgba(0,0,0,.2);
+		backdrop-filter: blur(7px);
 	}
 	.circle{
 		flex:1;
@@ -187,7 +204,6 @@
 	
 	.volume{
 		height:rpx(30);
-		// background-color: darkred;
 		padding:0 rpx(15);
 		display:flex;
 		justify-content: space-between;
@@ -201,10 +217,11 @@
 			line-height:rpx(30);
 			text-align: center;
 			color:#fff;
-			// background:lime;
+		    z-index: 1;
 		}
 		
 	}
+	
 	.play{
 		height:rpx(100);
 		// background:mediumvioletred;

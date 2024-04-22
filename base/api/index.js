@@ -38,13 +38,8 @@ export const searchSuggestApi = (val) => {
 }
 
 // //搜索接口
-export const searchApi = (val) => {
-	return request({
-		url: '/search',
-		data: {
-			keywords: val
-		}
-	})
+export const searchApi = (val, offset) => {
+    return request({ url: '/search', data: { keywords: val, offset:offset } })
 }
 
 // 游客登录
@@ -173,6 +168,16 @@ export const personalizedApi = (num) => {
 			limit: num
 		}
 	})
+}
+
+//推荐新音乐
+export const newsongApi = (num) => {
+    return request({
+        url: '/personalized/newsong',
+        data: {
+            limit: num
+        }
+    })
 }
 
 //每日推荐歌曲
