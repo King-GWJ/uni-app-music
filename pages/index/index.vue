@@ -67,6 +67,10 @@
                 }">
                     <text class="word-btn-white">登录</text>
                 </button>
+                <button @click="()=>{
+                }">
+                    <text class="word-btn-white">退出登录</text>
+                </button>
             </view>
         </uni-drawer>
     </view>
@@ -99,8 +103,6 @@
         .main {
             width: 100%;
             height: 100%;
-
-
 
             .swiper-wrap {
                 padding: 30rpx;
@@ -143,6 +145,6 @@
         }
 
     }
-// 测试
+
 
 </style>

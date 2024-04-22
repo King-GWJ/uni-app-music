@@ -11,12 +11,19 @@
 			榜单推荐
 		</view>
 		<view class="musicImg">
-<!-- 			<image src="../../icon/search.svg" mode=""></image>
-			<image src="../../icon/search.svg" mode=""></image>
-			<image src="../../icon/search.svg" mode=""></image> -->
-			<image :src="item.picUrl" mode="" v-for="(item,index) in data" key="index"></image>
+			<uni-swiper-dot :info="data" :current="current" field="content" :mode="mode">
+				<swiper class="swiper-box" @change="change">
+					<swiper-item v-for="(item ,index) in data" :key="index">
+						<view class="swiper-item">
+							<image class="seiper-image" :src="item.picUrl" mode="aspectFill"></image>
+						</view>
+					</swiper-item>
+				</swiper>
+
+			</uni-swiper-dot>
 		</view>
 		<view class="authority">
+			<image src="../../icon/songlist/icon-wangyiyun.png" mode=""></image>
 			官方榜
 		</view>
 		<view class="musicList">
@@ -51,13 +58,15 @@
 	import {ref} from 'vue'
 	const header = ref(['官方','精选','曲风','全球','语种','特别','数组'])
 	const list = ref([])
+	const current = ref(0)
+	const mode = ref('index')
 	toplistApi().then(res => {
 		console.log(res.list);
 		list.value = res.list
 	})
 	const data = ref([])
-	personalizedApi(3).then(res => {
-		console.log(res);
+	personalizedApi().then(res => {
+		console.log(res.result);
 		data.value = res.result
 	})
 	const skip = (item) => {
@@ -66,7 +75,10 @@
 			url: `/pages/songlist/songlist?id=${item.id}`,
 		});
 	}
-	
+	const change = (e) => {
+		console.log(e);
+		current.value = e.detail.current
+	}
 
 </script>
 
@@ -115,14 +127,36 @@
 		.musicImg{
 			display: flex;
 			justify-content: space-between;
-			>image{
-				width: rpx(80);
-				height: rpx(80);
+			border-radius: rpx(10);
+			overflow: hidden;
+			.swiper-box{
+				height: rpx(120);
+				// height: 100%;
+			}
+			.swiper-item{
+				width: 100%;
+				height: 100%;
+				.seiper-image{
+					width: 100%;
+					height: 100%;
+					>image{
+						width: 100%;
+						height: 100%;
+					}
+				}
 			}
 		}
 		.authority{
-			margin-top: rpx(40);
+			margin-top: rpx(20);
 			font-weight: bold;
+			display: flex;
+			align-items: center;
+			font-size: rpx(18);
+			>image{
+				width: rpx(30);
+				height: rpx(30);
+				margin-right: rpx(6);
+			}
 		}
 		.musicList{
 			flex: 1;
@@ -159,6 +193,7 @@
 						>image{
 							width: 100%;
 							height: 100%;
+							border-radius: rpx(8);
 						}
 					}
 					.introduceText{
