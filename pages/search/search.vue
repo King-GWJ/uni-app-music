@@ -214,10 +214,10 @@ const goPlay = (id) =>{
 	position: absolute;
 	left: 0;
 	top: rpx(45);
-	background-color: white;
+	background-color:rgb(244,246,249);
 	width: 100%;
 	color: rgb(40, 50, 72);
-
+	
 	.suggestItem {
 		display: flex;
 		width: 100%;
@@ -331,7 +331,7 @@ const goPlay = (id) =>{
 	margin-top: rpx(20);
 	margin-left: rpx(15);
 	background-color: white;
-	border-radius: rpx(30);
+	border-radius: rpx(20);
 
 }
 
