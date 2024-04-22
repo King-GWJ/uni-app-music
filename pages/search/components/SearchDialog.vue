@@ -30,7 +30,7 @@
 .dialogWrap{
 	position: absolute;
 	width: 100vw;
-	height: rpx(621);
+	height: rpx(620);
 	background: rgba(0, 0, 0,.2)
 }
 .dialog{
