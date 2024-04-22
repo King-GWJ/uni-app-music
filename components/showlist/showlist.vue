@@ -1,5 +1,5 @@
 <script setup>
-   import CaurPlay from './curPlay.vue'
+   import CaurPlay from './curplay.vue'
    const showList=false
 </script>
 
@@ -11,8 +11,9 @@
 				<view class="img"></view>
 			</view>
 			<view class="name">1111111111111111111111111111111111</view>
-			<p class="logo"><image src="../../icon/songlist/icon-bf.png"/></p>
-			<p class="logo2" @click=""><image src="../../icon/songlist/icon-shlb.png"/></p>
+			<p class="logo"><image src="../../icon/songlist/icon-bfang.png"/></p>
+			<p class="logo2"><image src="../../icon/songlist/icon-mus.png"/></p>
+
 		</view>
 		<CaurPlay v-if="showList" />
 	</view>
@@ -24,7 +25,6 @@
 <style lang="scss" scoped>
 	.footer{
 		height:rpx(46);
-		// background:red;
 		display:flex;
 		align-items: center;
 		padding:0 rpx(15);

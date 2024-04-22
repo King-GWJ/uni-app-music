@@ -16,16 +16,16 @@
 		  <span class="zhuyi">开通vip畅享千万曲库下载特权</span>
 	    </view>
 		<view class="selectlist">
-			<p class="select"><image src="../../icon/songlist/icon-close.png"/>不感兴趣</p>
-			<p class="select"><image src="../../icon/songlist/icon-close.png"/>赞赏好音乐</p>
-			<p class="select"><image src="../../icon/songlist/icon-close.png"/>下一首播放</p>
-			<p class="select"><image src="../../icon/songlist/icon-close.png"/>收藏到歌单</p>
-			<p class="select"><image src="../../icon/songlist/icon-close.png"/>下载</p>
-			<p class="select"><image src="../../icon/songlist/icon-close.png"/>评论（568）</p>
-			<p class="select"><image src="../../icon/songlist/icon-close.png"/>分享</p>
-			<p class="select"><image src="../../icon/songlist/icon-close.png"/>歌手：范倪</p>
-			<p class="select"><image src="../../icon/songlist/icon-close.png"/>创作者：姜帆/浅紫/常伟</p>
-			<p class="select"><image src="../../icon/songlist/icon-close.png"/>专辑：我都明白</p>
+			<p class="select"><image src="../../icon/songlist/icon-fenxiang.png"/>不感兴趣</p>
+			<p class="select"><image src="../../icon/songlist/icon-bfang.png"/>赞赏好音乐</p>
+			<p class="select"><image src="../../icon/songlist/icon-bfang.png"/>下一首播放</p>
+			<p class="select"><image src="../../icon/songlist/icon-bfang.png"/>收藏到歌单</p>
+			<p class="select"><image src="../../icon/songlist/icon-bfang.png"/>下载</p>
+			<p class="select"><image src="../../icon/songlist/icon-bfang.png"/>评论（568）</p>
+			<p class="select"><image src="../../icon/songlist/icon-bfang.png"/>分享</p>
+			<p class="select"><image src="../../icon/songlist/icon-bfang.png"/>歌手：范倪</p>
+			<p class="select"><image src="../../icon/songlist/icon-bfang.png"/>创作者：姜帆/浅紫/常伟</p>
+			<p class="select"><image src="../../icon/songlist/icon-bfang.png"/>专辑：我都明白</p>
 		</view>
 	  </view>
 	</view>

@@ -256,7 +256,7 @@
 		position: absolute;
 		left: 0;
 		top: rpx(45);
-		height: rpx(565);
+		height: rpx(710);
 		background-color: rgb(244, 246, 249);
 		width: 100%;
 		color: rgb(40, 50, 72);
@@ -289,7 +289,7 @@
 
 	.searchResult {
 		position: absolute;
-		height: rpx(565);
+		height: rpx(710);
 		overflow-y: auto;
 		overflow-x: hidden;
 		padding-right: rpx(50);

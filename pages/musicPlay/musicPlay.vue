@@ -1,3 +1,31 @@
+<script setup>
+	import {onLoad} from '@dcloudio/uni-app'
+	import {songDetailApi ,lyricApi , songUrlApi,SongdetailApi} from "../../base/api/index.js"
+	import {watch ,computed ,ref} from "vue"
+	import { useMusicstore } from '../../store/music.js'
+	
+	const musicStore=useMusicstore()
+	
+	
+	onLoad((options)=>{
+		console.log(options.id)
+		SongdetailApi(options.id).then(res=>{
+			// songList.value=res.playlist
+			musicStore.changeList = res.playlist.tracks
+			musicStore.curIndex = options.index
+			console.log(musicStore.curIndex)
+			console.log(res.playlist)
+			// console.log(songList)
+			console.log(musicStore.changeList);
+		})
+	})
+
+</script>
+
+
+
+
+
 <template>
 	<view class="musicPlay">
 		 <view class="header">
@@ -18,11 +46,6 @@
 		 <!-- 压唱片的部分 -->
 		 <view class="fixed">
 			 <image src="../../icon/songlist/needle-ab.png"></image>
-			 <!-- <view class="bases">
-				 <view class="arm">
-					 
-				 </view>
-			 </view> -->
 		 </view>
 		 <view class="title">
 			 <view class="songTitle">
@@ -33,7 +56,11 @@
 			<p class="talk"><image src="../../icon/songlist/icon-talk.png"/></p>
 		 </view>
 		 <view class="volume">
-			<input type="range" value=0 class="range">
+			<view class="time">0</view>
+			<view class="slider">
+				<slider  class="sliders" min="0" max="100" value="0" disabled="true" block-size="10" activeColor="#1890ff" step></slider>
+			</view>
+		 	<view class="time">100</view>
 		 </view>
 		 <view class="play">
 			 <span>
@@ -53,13 +80,10 @@
 			 <p><image src="../../icon/songlist/icon-xiazai.png"/></p>
 			 <p><image src="../../icon/songlist/icon-liebiao.png"/></p>
 		 </footer>
-		
+		<!-- <audio src="" ></audio> -->
 	</view>
 </template>
 
-<script setup>
-
-</script>
 
 <style lang="scss" scoped>
 	
@@ -180,11 +204,20 @@
 	
 	.volume{
 		height:rpx(30);
-		padding:0 25px;
-		.range{
-			 // -webkit-appearance:none;
-			 width: 100%;
-			 height:rpx(30);
+		padding:0 rpx(15);
+		display:flex;
+		justify-content: space-between;
+		.slider{
+			flex:1;
+			margin-top: rpx(-4);
+		}
+		.time{
+			width:rpx(40);
+			height:100;
+			line-height:rpx(30);
+			text-align: center;
+			color:#fff;
+		    z-index: 1;
 		}
 		
 	}
@@ -238,57 +271,15 @@
 	
 	// 压唱片的部分
 	.fixed{
+		width:rpx(90);
+		height:rpx(120);
 		position: absolute;
-		top:rpx(30);
-		right:32%;
+		top:rpx(40);
+		right:rpx(120);
 		image{
-			width:rpx(80);
-			height:rpx(130);
+			width:rpx(90);
+			height:rpx(120);
 		}
 	}
-	// .fixed{
-	// 	width:rpx(18);
-	// 	height:rpx(18);
-	// 	border-radius: 50%;
-	// 	background:#eee;
-	// 	position: absolute;
-	// 	top:rpx(60);
-	// 	left:50%;
-		// .basea{
-		// 	position: relative;
-		// 	width:rpx(10);
-		// 	height:rpx(10);
-		// 	background:#bebebe;
-		// }
-		// .arm{
-		// 	width:rpx(30);
-		// 	height:rpx(50);
-		// 	border:7px solid #eee;
-		// 	position: absolute;
-		// 	right:rpx(-30);
-		// 	top:rpx(25);
-		// 	border-right-color:transparent;
-		// 	border-top-color:transparent;
-		// 	transform:skew(5deg,22deg);
-		// 	transform-origin: right top;
-		// 	border-radius: 0 0 30% 0;
-		// }
-		
-	// }
 	
-	.arm:after{
-		// content:'';
-		// width:rpx(10);
-		// height:rpx(13);
-		// background:#D3D3D3;
-		// position:absolute;
-		// top:rpx(45);
-		// left:rpx(26);
-		// border-radius:rpx(3);
-		// transform:skew(20deg,20deg) roate(75deg);
-		// box-shadow: 0px 0px 0px 1px #bebebe,
-                    
-  //                   // 0px 0px 0px 1px #eee;
-		// z-index: 3;
-	}
 </style>
