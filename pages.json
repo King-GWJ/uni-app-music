@@ -81,7 +81,7 @@
 		},
         {
         	"path" : "pages/acquiesce/acquiesce",
-        	"style" : 
+        	"style" :
         	{
         		"navigationBarTitleText" : "我的",
         		"enablePullDownRefresh" : false
@@ -102,7 +102,7 @@
                 "text": "博客"
             },
             {
-                "pagePath": "pages/acquiesce/acquiesce",
+                "pagePath": "pages/mine/mine",
                 "text": "我的"
             },
             {

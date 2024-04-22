@@ -71,7 +71,7 @@
 	})
 	const skip = (item) => {
 		console.log(item.id);
-		uni.redirectTo({
+		uni.navigateTo({
 			url: `/pages/songlist/songlist?id=${item.id}`,
 		});
 	}
