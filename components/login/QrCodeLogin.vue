@@ -7,14 +7,12 @@
 
     qrKeyApi().then(res => {
         if (res.code === 200) {
-            qrCreateApi(res.data.unikey).then(res => {
-                img.value = res.data.qrimg
+            qrCreateApi(res.data.unikey).then(res1 => {
+                img.value = res1.data.qrimg
                 userStore.getCheckQr(res.data.unikey)
             })
         }
     })
-
-
 
 </script>
 

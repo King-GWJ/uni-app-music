@@ -43,21 +43,20 @@
         showLeft.value.close()
     }
 
-    const userCookie = uni.getStorageSync("userCookie");
+    const curCookie = uni.getStorageSync("curCookie");
 
     onShow(() => {
-        isLogin.value = !!userCookie;
+        isLogin.value = !!curCookie;
     })
-    onShow(() => {
-        isLogin.value = !!userCookie;
+    onHide(() => {
+        isLogin.value = !!curCookie;
     })
 
     //退出登录
     const getLogout = () => {
         logoutApi().then(res => {
             if (res.code === 200) {
-                uni.setStorageSync('userCookie', "")
-                uni.setStorageSync('userToken', "")
+                uni.setStorageSync('curCookie', "")
                 isLogin.value = false
                 closeDrawer()
             }
