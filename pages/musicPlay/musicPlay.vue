@@ -246,18 +246,18 @@
 	}
 	
 	.arm:after{
-		content:'';
-		width:rpx(10);
-		height:rpx(13);
-		background:#D3D3D3;
-		position:absolute;
-		top:rpx(45);
-		left:rpx(26);
-		border-radius:rpx(3);
-		transform:skew(20deg,20deg) roate(75deg);
-		box-shadow: 0px 0px 0px 1px #bebebe,
+		// content:'';
+		// width:rpx(10);
+		// height:rpx(13);
+		// background:#D3D3D3;
+		// position:absolute;
+		// top:rpx(45);
+		// left:rpx(26);
+		// border-radius:rpx(3);
+		// transform:skew(20deg,20deg) roate(75deg);
+		// box-shadow: 0px 0px 0px 1px #bebebe,
                     
-                    0px 0px 0px 1px #eee;
-		z-index: 3;
+  //                   // 0px 0px 0px 1px #eee;
+		// z-index: 3;
 	}
 </style>

@@ -44,24 +44,31 @@
 		<view class="musicList">
 			<view class="music" v-for="(item,index) in list" :key="item.id" @click="toggle(item)">
 				<view class="musicImg">
-					<image :src="item.picUrl" mode=""></image>
+					<image :src="item.al.picUrl" mode=""></image>
 				</view>
 				<view class="musicText">
 					<view class="textName">
 						{{item.name}}
 					</view>
 					<view class="textNumber">
-						<view class="textColor">
-							红黄
+						<view v-if="item.reason" class="textColor">
+							{{item.reason}}
+						</view>
+						<view v-else="item.reason" class="textColorA">
+							超清母带
 						</view>
 						<view class="textJieshao">
-							国定
+							{{item.ar[0].name}}
 						</view>
 					</view>
 				</view>
-				<view class="musicIcon">
-					:
+				<view v-if="item.mv" class="musicMv">
+					<image src="../../icon/songlist/incon-blackbofang.png" mode=""></image>
 				</view>
+				<view class="musicIcon">
+					<image src="../../icon/songlist/icon-shengl.png" mode="widthFix"></image>
+				</view>
+				
 			</view>
 		</view>
 	</view>
@@ -77,12 +84,13 @@
 	})
 	songsApi().then(res => {
 		console.log(res);
-		list.value = res.result
+		list.value = res.data.dailySongs
 	})
 	const currentDate = new Date()
 	const month = currentDate.getMonth() + 1
 	const day = currentDate.getDate()
 	const toggle = (item) => {
+		console.log(item.id);
 		uni.navigateTo({
 			url: `/pages/musicPlay/musicPlay?id=${item.id}`,
 		});
@@ -208,20 +216,44 @@
 					align-items: center;
 					.textColor{
 						background-color: #FFEBEB;
-						padding: rpx(2);
+						padding: 0 rpx(4);
 						border-radius: 8px;
 						color: red;
-						border: 1px #FFE1E1 solid;
+						border: 1px #FF3A3A solid;
+						font-size: rpx(12);
+					}
+					.textColorA{
+						// background-color: #FFEBEB;
+						padding: 0 rpx(4);
+						border-radius: 8px;
+						color: #E4B250;
+						border: 1px #E4B04A solid;
+						font-size: rpx(12);
 					}
 					.textJieshao{
 						color: #808693;
 						margin-left: rpx(4);
+						font-size: rpx(12);
 					}
 				}
 			}
 			.musicIcon{
 				margin-left: rpx(20);
-				padding-right: rpx(10);
+				width: rpx(20);
+				height: rpx(20);
+				>image{
+					width: 100%;
+					height: 100%;
+				}
+			}
+			.musicMv{
+				margin-left: rpx(20);
+				width: rpx(20);
+				height: rpx(20);
+				>image{
+					width: 100%;
+					height: 100%;
+				}
 			}
 		}
 	}
