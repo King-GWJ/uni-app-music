@@ -5,19 +5,23 @@
 	import Showlist from "../../components/showlist/showlist.vue"
 	// import Seittlist from "../../components/showlist/setting.vue"
 	import { ref } from "vue";
+	import { useMusicstore } from '../../store/music.js'
 
 	const songList = ref([]);  //接受传过来的数据
 	const curIndex=ref(0)  //当前下标
 	const showlist=false //显示隐藏
 	const optionId=ref(0)
-
+	const store = useMusicstore()
+	// store.changeList
 	//获取id
 	onLoad((options)=>{
 		//获取详情歌单数据
 		SongdetailApi(options.id).then(res=>{
 			songList.value=res.playlist
+			store.changeList = res.playlist.tracks
 			console.log(res.playlist)
 			console.log(songList)
+			console.log(store.changeList);
 		})
 	})
 
@@ -30,12 +34,12 @@
 	}
 	
 	//跳转播放页
-	// const playPage=()=>{
-	//   uni.navigateTo({
-	// 	url: "/pages/musicPlay/musicPlay"
-		
-	//   })
-	// }
+	const playPage=(item)=>{
+	  console.log(item.id)
+	  uni.navigateTo({
+		url: `/pages/musicPlay/musicPlay?id=${item.id}`
+	  })
+	}
 </script>
 
 <template>
@@ -44,8 +48,8 @@
 			<image :src="songList.coverImgUrl"></image>
 		</view>
 		<view class="nav">
-			<view class="logo"><image src="../../icon/songlist/icon-tianjia.png"></image>{{songList.shareCount}}</view>
-			<view class="logo"><image src="../../icon/songlist/icon-xiaoxi.png"></image>{{Math.floor(songList.commentCount/10/100)}}</view>
+			<view class="logo"><image src="../../icon/songlist/icon-tianjia.png"></image>{{(songList.subscribedCount/100/100).toFixed(2)}}</view>
+			<view class="logo"><image src="../../icon/songlist/icon-xiaoxi.png"></image>{{(songList.commentCount/10/100).toFixed(2)}}万</view>
 			<view class="logo"><image src="../../icon/songlist/分享.png"></image>{{songList.shareCount}}</view>
 		</view>
 		<view class="main">
@@ -70,17 +74,19 @@
 				</view>
 			</view>
 			<view class="list">
-				<view class="item" v-for="item in songList.tracks">
+				<view class="item" v-for="item in songList.tracks" @click="playPage(item)" :key="item.name">
 					<view class="num">{{item.cd}}</view>
 					<view class="text">
-					   <view class="title">{{item.name}}</view>
+					   <view class="title">
+						   <view>{{item.name}}</view>
+						   <view class="alia">{{(item.alia[0])}}</view>
+					   </view>
 					   <view class="singer"></view>
 					</view>
 					<view class="set"><image src="../../icon/songlist/icon-Vertical.png"></image></view>
 				</view>
 			</view>
 			<!-- 底部 -->
-			<!-- <view class="footer"></view> -->
 			<Showlist />
 		</view>
 		
@@ -200,6 +206,15 @@
 			   }
 			   .text{
 				   flex:1;
+				   display: flex;
+				   align-items: center;
+				   .title{
+					   display:flex;
+					   .alia{
+						   font-size:rpx(15);
+						   color:#708090;
+					   }
+				   }
 			   }
 			   .set{
 				   width:rpx(20);
@@ -232,9 +247,14 @@
 		   display: flex;
 		   align-items: center;
 		   justify-content: center;
+		   font-size: rpx(12);
+		   &:last-child{
+			   border:0;
+		   }
 		   image{
-			   width:rpx(20);
-			   height:rpx(20);
+			   width:rpx(18);
+			   height:rpx(18);
+			   margin:0 rpx(5);
 		   }
 	   }
    }

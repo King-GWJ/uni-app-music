@@ -2,14 +2,16 @@
 	import {onLoad} from '@dcloudio/uni-app'
 	import {songDetailApi ,lyricApi , songUrlApi} from "../../base/api/index.js"
 	import {watch ,computed ,ref} from "vue"
-	import { useMusicstore } from "../../store/music.js"
+	import { useMusicstore } from '../../store/music.js'
 	
 	const musicStore=useMusicstore()
 	
 	
-	// onLoad((options){
-	// 	console.log(options)
-	// })
+	onLoad((options)=>{
+		console.log(options.id)
+		musicStore.listId(options.id)
+		console.log(useMusicstore.curIndex);
+	})
 
 </script>
 

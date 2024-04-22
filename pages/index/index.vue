@@ -1,5 +1,5 @@
 <script setup>
-    import {onShow} from '@dcloudio/uni-app'
+    import {onShow,onHide} from '@dcloudio/uni-app'
     import {ref} from "vue";
     import {bannerApi,logoutApi,personalizedApi} from '/base/api'
     import {navigateTo} from '/base/utils'
@@ -30,6 +30,9 @@
 
     const userCookie = uni.getStorageSync("userCookie");
 
+    onShow(()=>{
+        isLogin.value = !!userCookie;
+    })
     onShow(()=>{
         isLogin.value = !!userCookie;
     })
@@ -79,6 +82,17 @@
                     </view>
                 </swiper-item>
             </swiper>
+
+            <uni-section type="line" title="推荐歌单">
+                <view class="playlist">
+                    <view class="playlist-item" v-for="item in playListTJ" :key="item.id" @click="getDetail(item.id)">
+                        <image :src="item.picUrl" mode="widthFix"></image>
+                        <view class="playlist-item-name">
+                            {{ item.name }}
+                        </view>
+                    </view>
+                </view>
+            </uni-section>
 
             <uni-section type="line" title="推荐歌单">
                 <view class="playlist">

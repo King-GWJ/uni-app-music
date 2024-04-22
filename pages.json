@@ -73,7 +73,7 @@
         },
         {
         	"path" : "pages/acquiesce/acquiesce",
-        	"style" : 
+        	"style" :
         	{
         		"navigationBarTitleText" : "我的",
         		"enablePullDownRefresh" : false

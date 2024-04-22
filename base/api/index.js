@@ -1,20 +1,6 @@
 export const baseUrl = "http://121.89.213.194:5001/"
 
 // 封装请求函数
-export const getLoginCellphone = () => {
-	console.log('调用接口');
-	uni.request({
-
-		url: baseUrl + '/music_api/login/cellphone',
-
-		success: res => {
-			console.log(res);
-		},
-		fail: err => {
-			console.log(err);
-		}
-	})
-}
 export const request = ({
 	url,
 	method = 'GET',
@@ -52,12 +38,11 @@ export const searchSuggestApi = (val) => {
 }
 
 // //搜索接口
-export const searchApi = (val, offset) => {
+export const searchApi = (val) => {
 	return request({
 		url: '/search',
 		data: {
-			keywords: val,
-			offset: offset
+			keywords: val
 		}
 	})
 }
@@ -134,7 +119,6 @@ export const loginStatusApi = () => {
 	return request({
 		url: '/login/status',
 	})
-
 }
 
 // 退出登录
@@ -149,6 +133,28 @@ export const logoutApi = () => {
 export const bannerApi = () => {
 	return request({
 		url: '/banner'
+	})
+}
+
+// 博客列表
+export const voiceApi = (val) => {
+	return request({
+		url: '/voicelist/search',
+		data: {
+			limit:val.limit,
+			offset:val.offset
+		}
+	})
+}
+
+// 数字专辑-新碟上架
+export const valbumApi = (val) => {
+	return request({
+		url: '/album/list',
+		data: {
+			limit: val.limit,
+			offset: val.offset
+		}
 	})
 }
 
@@ -169,36 +175,24 @@ export const personalizedApi = (num) => {
 	})
 }
 
+//每日推荐歌曲
+export const songsApi = () => {
+	return request({
+		url: '/recommend/songs',
+	})
+}
+
 //热搜列表
 export const hotApi = () => {
-	return request({
-		url: '/search/hot'
-	})
+	return request({ url: '/search/hot' })
 }
 
-//推荐歌曲
-export const recommendedMusicApi = () => {
-	return request({
-		url: '/personalized/newsong'
-	})
 
-}
 
-// 博客列表
-export const voiceApi = () => {
+// 最新专辑
+export const newest = () => {
 	return request({
-		url: '/voicelist/search'
-	})
-}
-
-// 数字专辑-新碟上架
-export const valbumApi = (val) => {
-	return request({
-		url: '/album/list',
-		data: {
-			limit: val.limit,
-			offset: val.offset
-		}
+		url: '/album/newest',
 	})
 }
 
@@ -245,12 +239,5 @@ export const commentApi = (type, id) => {
       id
     }
   })
-}
-
-//每日推荐歌曲
-export const songsApi = () => {
-	return request({
-		url: '/recommend/songs',
-	})
 }
 
