@@ -44,12 +44,9 @@ const search = async (val = searchVal.value,off=offset.value) => {
 	suggestShow.value = false
 	const res = await searchApi(val,off)
 	console.log(res.result.songs)
-	// searchList.value = res.result.songs
-	// searchList.value.push(res.result.songs)
 	res.result.songs.forEach(v=>{
 		searchList.value.push(v)
 	})
-	console.log(searchList.value)
 	setTimeout(() => {
 		resultShow.value = true
 	}, 20)
@@ -61,7 +58,7 @@ const search = async (val = searchVal.value,off=offset.value) => {
 }
 
 //删除历史
-const clearHistory = () => {
+const clearHistory = () => { 
 	historyList.value = []
 	localStorage.removeItem('history')
 }
@@ -90,7 +87,6 @@ const goPlay = (id) =>{
 const  scrolltolower = () =>{
 	console.log('滚动到底部')
 	offset.value+=30
-	console.log(offset.value)
 	search()
 }
 
