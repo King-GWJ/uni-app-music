@@ -42,7 +42,7 @@
 			</view>
 		</view>
 		<view class="musicList">
-			<view class="music" v-for="(item,index) in list" :key="item.id">
+			<view class="music" v-for="(item,index) in list" :key="item.id" @click="toggle(item)">
 				<view class="musicImg">
 					<image :src="item.picUrl" mode=""></image>
 				</view>
@@ -70,15 +70,23 @@
 <script setup>
 	import { onReady } from '@dcloudio/uni-app'
 	import { ref } from 'vue'
-	import { personalizedApi } from '../../base/api/index.js'
+	import { songsApi, loginStatusApi } from '../../base/api/index.js'
 	const list = ref([])
-	personalizedApi().then(res => {
+	loginStatusApi().then(res => {
+		console.log(res);
+	})
+	songsApi().then(res => {
+		console.log(res);
 		list.value = res.result
-		console.log(res.result);
 	})
 	const currentDate = new Date()
 	const month = currentDate.getMonth() + 1
 	const day = currentDate.getDate()
+	const toggle = (item) => {
+		uni.navigateTo({
+			url: `/pages/musicPlay/musicPlay?id=${item.id}`,
+		});
+	}
 
 </script>
 

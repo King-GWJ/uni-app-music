@@ -162,3 +162,12 @@ export const personalizedApi = (num) => {
 		}
 	})
 }
+
+//每日推荐歌曲
+export const songsApi = () => {
+	return request({
+		url: '/recommend/songs',
+	})
+}
+
+
