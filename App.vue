@@ -1,4 +1,3 @@
-
 <script setup>
     import {onLaunch} from '@dcloudio/uni-app'
     import {useUserStore} from './store/user'
@@ -20,4 +19,3 @@
 
 
 </style>
-
