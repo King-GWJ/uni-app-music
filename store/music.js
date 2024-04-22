@@ -85,7 +85,7 @@ export const useMusicstore=defineStore("musicStore",()=>{
 		})
 		
 		
-		获取音乐url
+		//获取音乐url
 		// songUrlApi(id).then(url=>{
 		// 	console.log(id);
 		// 	console.log(url)

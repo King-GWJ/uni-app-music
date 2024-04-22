@@ -1,15 +1,9 @@
 <script setup>
-	import {
-		ref,
-		watch
-	} from 'vue'
-	import {
-		searchSuggestApi,
-		searchApi,
-		hotApi
-	} from '../../base/api'
+	import { ref, watch } from 'vue'
+	import { searchSuggestApi, searchApi, hotApi } from '../../base/api'
 	import SearchDialogVue from './components/SearchDialog.vue';
-
+	import { useMusicstore } from '../../store/music';
+	
 	const searchVal = ref('')
 	const suggestList = ref([])
 	const suggestShow = ref(false)
@@ -20,6 +14,7 @@
 	const offset = ref(0)
 	const showDialog = ref(false)
 	const detailItem = ref({})
+	const musicStore = useMusicstore()
 	
 	//获取本地数据
 	historyList.value = JSON.parse(localStorage.getItem('history')) || []
@@ -76,7 +71,7 @@
 	}
 
 	watch(searchVal, (v) => {
-		if(v.length===0){
+		if (v.length === 0) {
 			searchVal.value = ''
 			offset.value = 0
 			searchList.value = []
@@ -95,7 +90,8 @@
 		}
 	})
 
-	const goPlay = (id) => {
+	const goPlay = (item,id) => {
+		musicStore.musicSearch(item,id)
 		uni.navigateTo({
 			url: `/pages/musicPlay/musicPlay?id=${id}`
 		})
@@ -106,16 +102,15 @@
 		offset.value += 30
 		search()
 	}
-	
-	const showDetail = (item) =>{
+
+	const showDetail = (item) => {
 		showDialog.value = true
 		detailItem.value = item
 	}
-	
-	const closeDetail = (e)=>{
+
+	const closeDetail = (e) => {
 		showDialog.value = false
 	}
-	
 </script>
 
 <template>
@@ -123,7 +118,8 @@
 		<view class="header">
 			<view class="inp-wrap">
 				<view class="search-icon"></view>
-				<input class="inp" auto-focus="true" @input="searchSuggest" v-model="searchVal" type="text" placeholder="请输入搜索内容" />
+				<input class="inp" auto-focus="true" @input="searchSuggest" v-model="searchVal" type="text"
+					placeholder="请输入搜索内容" />
 				<view class="close-icon" @click="clear" v-if="searchVal.length > 0"></view>
 			</view>
 			<view class="search" @click="search(searchVal)">
@@ -153,7 +149,7 @@
 						</view>
 					</view>
 					<view class="resultTools">
-						<view class="playIcon" @click="goPlay(item.id)"></view>
+						<view class="playIcon" @click="goPlay(item,item.id)"></view>
 						<view class="detailIcon" @click="showDetail(item)"></view>
 					</view>
 
@@ -208,7 +204,8 @@
 				</view>
 			</view>
 		</view>
-		<SearchDialogVue :showDialog="showDialog" @closeDialog="closeDetail(e)" :detailItem="detailItem"></SearchDialogVue>
+		<SearchDialogVue :showDialog="showDialog" @closeDialog="closeDetail(e)" :detailItem="detailItem">
+		</SearchDialogVue>
 	</view>
 </template>
 
@@ -220,7 +217,8 @@
 		height: 100%;
 		display: flex;
 		flex-direction: column;
-		background: rgb(239,241,243);
+		background: rgb(239, 241, 243);
+
 		.header {
 			position: relative;
 			margin-top: rpx(10);
@@ -327,11 +325,13 @@
 				display: flex;
 				flex-direction: column;
 				width: rpx(270);
+
 				.resultName {
 					padding: rpx(5) 0;
 					color: rgb(51, 51, 52);
 					font-weight: 500;
 				}
+
 				.resultArtist {
 					display: flex;
 					flex-shrink: 0;
@@ -339,14 +339,16 @@
 					font-size: rpx(12);
 					color: rgb(85, 129, 177);
 					white-space: nowrap;
-					.subTitIcon{
-						border: 1px solid rgb(234,210,165);
+
+					.subTitIcon {
+						border: 1px solid rgb(234, 210, 165);
 						padding: rpx(1) rpx(2);
 						margin-right: rpx(3);
-						color:rgb(213,165,70) ;
+						color: rgb(213, 165, 70);
 						border-radius: rpx(3);
 						font-size: rpx(9);
 					}
+
 					.alias {
 						color: rgb(153, 153, 153);
 						white-space: nowrap;
@@ -360,6 +362,7 @@
 				width: rpx(100);
 				display: flex;
 				flex-shrink: 1;
+
 				.playIcon {
 					width: rpx(50);
 					height: rpx(50);
