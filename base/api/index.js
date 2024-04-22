@@ -180,6 +180,20 @@ export const songsApi = () => {
 
 //热搜列表
 export const hotApi = () => {
-	return request({ url: '/search/hot' })
+	return request({
+		url: '/search/hot'
+	})
 }
 
+
+//获取歌单所有歌曲
+export const trackAllApi = (id, limit, offset) => {
+	return request({
+		url: '/playlist/track/all',
+		data: {
+			id: id,
+			limit: limit,
+			offset: offset
+		}
+	}, )
+}
