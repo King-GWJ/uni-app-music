@@ -1,7 +1,7 @@
 <script setup>
     import {useUserStore} from "../../store/user";
     import EmailLogin from "../../components/login/EmailLogin.vue";
-    import {ref} from "vue";
+    import {ref, watch} from "vue";
     import PhoneLogin from "../../components/login/PhoneLogin.vue";
     import QrCodeLogin from "../../components/login/QrCodeLogin.vue";
 
@@ -19,8 +19,19 @@
         }, {
             text: '二维码',
             value: 2
+        },
+        {
+            text: '游客登录',
+            value: 3
         }
     ])
+
+    watch(radio,(newValue, oldValue)=>{
+        if(newValue === 3){
+            userStore.getLogin("anonimous")
+        }
+    })
+
 </script>
 
 <template>

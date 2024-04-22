@@ -1,4 +1,4 @@
-export const baseUrl = "http://121.89.213.194:5001/"
+export const baseUrl = "http://121.89.213.194:5001"
 
 // 封装请求函数
 export const request = ({
@@ -10,9 +10,10 @@ export const request = ({
 	return new Promise((resolve, reject) => {
 		uni.request({
 			url: "/music_api" + url,
+			// url: baseUrl + url,
 			method,
 			data: {
-				cookie: uni.getStorageSync('userCookie') || '',
+				cookie: uni.getStorageSync('curCookie') || '',
 				...data
 			},
 			header,
@@ -38,13 +39,8 @@ export const searchSuggestApi = (val) => {
 }
 
 // //搜索接口
-export const searchApi = (val) => {
-	return request({
-		url: '/search',
-		data: {
-			keywords: val
-		}
-	})
+export const searchApi = (val, offset) => {
+	return request({ url: '/search', data: { keywords: val, offset: offset } })
 }
 
 // 游客登录
@@ -141,8 +137,8 @@ export const voiceApi = (val) => {
 	return request({
 		url: '/voicelist/search',
 		data: {
-			limit:val.limit,
-			offset:val.offset
+			limit: val.limit,
+			offset: val.offset
 		}
 	})
 }
@@ -175,6 +171,16 @@ export const personalizedApi = (num) => {
 	})
 }
 
+//推荐新音乐
+export const newsongApi = (num) => {
+	return request({
+		url: '/personalized/newsong',
+		data: {
+			limit: num
+		}
+	})
+}
+
 //每日推荐歌曲
 export const songsApi = () => {
 	return request({
@@ -196,7 +202,6 @@ export const newestApi = () => {
 	})
 }
 
-
 // 电台banner
 export const djBannerApi = () => {
 	return request({
@@ -209,7 +214,51 @@ export const personalizeApi = (val) => {
 	return request({
 		url: '/dj/personalize/recommend',
 		data: {
-			limit:val
+			limit: val
+		}
+	})
+}
+// 歌单详情
+export const SongdetailApi = (id) => {
+	return request({ url: '/playlist/detail', data: { id } })
+}
+
+// 歌曲详情
+export const songDetailApi = (ids) => {
+	return request({
+		url: '/song/detail',
+		data: {
+			ids
+		}
+	})
+}
+
+// 歌词
+export const lyricApi = (id) => {
+	return request({
+		url: '/lyric',
+		data: {
+			id
+		}
+	})
+}
+
+// 音乐url
+export const songUrlApi = (id) => {
+	return request({
+		url: '/song/url',
+		data: {
+			id
+		}
+	})
+}
+
+// 评论
+export const commentApi = (type, id) => {
+	return request({
+		url: `/comment/${type}`,
+		data: {
+			id
 		}
 	})
 }

@@ -19,9 +19,8 @@
 						</view>
 					</swiper-item>
 				</swiper>
-				
+
 			</uni-swiper-dot>
-			<!-- <image :src="item.picUrl" mode="" v-for="(item,index) in data" key="index"></image> -->
 		</view>
 		<view class="authority">
 			<image src="../../icon/songlist/icon-wangyiyun.png" mode=""></image>

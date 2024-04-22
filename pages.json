@@ -40,13 +40,15 @@
             "style": {
                 "navigationBarTitleText": "歌曲列表",
                 "enablePullDownRefresh": false
+				
             }
         },
         {
             "path": "pages/musicPlay/musicPlay",
             "style": {
                 "navigationBarTitleText": "播放音乐",
-                "enablePullDownRefresh": false
+                "enablePullDownRefresh": false,
+				"navigationStyle": "custom"
             }
         },
         {
@@ -70,6 +72,15 @@
                 "enablePullDownRefresh": false
             }
         },
+        {
+
+			"path" : "components/showlist/showlist",
+			"style" : 
+			{
+				"navigationBarTitleText" : "当前播放列表",
+				"enablePullDownRefresh" : false
+			}
+		},
         {
         	"path" : "pages/acquiesce/acquiesce",
         	"style" :
@@ -109,7 +120,7 @@
     "globalStyle": {
         "navigationBarTextStyle": "white",
         "navigationBarTitleText": "uni-app",
-        "navigationBarBackgroundColor": "#c5483c",
+        "navigationBarBackgroundColor": "#d43c33",
         "backgroundColor": "#F8F8F8"
     },
     "uniIdRouter": {}

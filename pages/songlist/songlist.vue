@@ -1,88 +1,100 @@
 
 <script setup>
-	import { ref } from 'vue';
-	
-	const songList=ref([])
-	const id= 19723756
-	const VarLists=ref([])
-	
-	import { toplistApi  } from '../../base/api/index.js'
-	toplistApi().then(res=>{
-		songList.value = res.list
-		console.log(res.list)
-	}) 
-	console.log(songList[0])
-	
-	//查找id
-	
-	//跳转vip界面
-	const goVip=()=>{
-		uni.navigateTo({
-			url:'/pages/vippage/vippage'
+	import {onLoad} from '@dcloudio/uni-app'
+	import { SongdetailApi } from '../../base/api/index.js'
+	import Showlist from "../../components/showlist/showlist.vue"
+	// import Seittlist from "../../components/showlist/setting.vue"
+	import { ref } from "vue";
+	import { useMusicstore } from '../../store/music.js'
+
+	const songList = ref([]);  //接受传过来的数据
+	const curIndex=ref(0)  //当前下标
+	const showlist=false //显示隐藏
+	const optionId=ref(0)
+	const store = useMusicstore()
+	// store.changeList
+	//获取id
+	onLoad((options)=>{
+		//获取详情歌单数据
+		SongdetailApi(options.id).then(res=>{
+			songList.value=res.playlist
+			store.changeList = res.playlist.tracks
+			console.log(res.playlist)
+			console.log(songList)
+			console.log(store.changeList);
 		})
+	})
+
+	//跳转vip界面
+	const goVip = (id) => {
+	  uni.navigateTo({
+		url: "/pages/vippage/vippage",
+		
+	  })
 	}
 	
+	//跳转播放页
+	const playPage=(item,index)=>{
+	  console.log(item.id)
+	  uni.navigateTo({
+		url: `/pages/musicPlay/musicPlay?id=${item.id}&index=${index}`
+	  })
+	}
+
 </script>
-
-
-
-
 
 <template>
 	<view class="musiclist">
 		<view class="header">
-			<image scr=""/>
-			<view class="search">
-				<p class="back">
-				</p>
-				<view class="inp">
-					<input type="text" >
-					<p class="logo">
-						<image src="../../icon/songlist/icon-sousuo.png"/>
-					</p>
-				</view>
-				<span class="shrink">
-					
-				</span>
-			</view>
+			<image :src="songList.coverImgUrl"></image>
 		</view>
 		<view class="nav">
-			<p><image src="../../icon/songlist/icon-tianjia.png"/></p>
-			<p><image src="../../icon/songlist/icon-xiaoxi.png"/></p>
-			<p><image src="../../icon/songlist/icon-fenxiang2.png"/></p>
+			<view class="logo"><image src="../../icon/songlist/icon-tianjia.png"></image>{{(songList.subscribedCount/100/100).toFixed(2)}}</view>
+			<view class="logo"><image src="../../icon/songlist/icon-xiaoxi.png"></image>{{(songList.commentCount/10/100).toFixed(2)}}万</view>
+			<view class="logo"><image src="../../icon/songlist/分享.png"></image>{{songList.shareCount}}</view>
 		</view>
-		<view class="vip">
-			<image src="../../icon/songlist/icon-vip.png"/>
-			<p>含25首vip专项歌曲
-			 <span>vip仅￥0.06/天</span>
-			 <image class="right" src="../../icon/songlist/icon-right.png"
-			 @click="goVip"
-			 />
-			</p>
-		</view>
-		<view class="songList">
-			
-			<view class="allPlay">
-				<image class="bofang" src="../../icon/songlist/red-bofang.png"/>
-				<p>播放全部</p>
-				<image src="../../icon/songlist/icon-load.png"/>
-				<image src="../../icon/songlist/icon-viplist.png"/>
-			</view>
-			<view class="item" >
-					<P class="num">
-						<span></span>
-						<span></span>
-					</P>
-					<view class="title">
-						<h5></h5>
-						<span></span>
+		<view class="main">
+			<view class="bofang">
+				<view class="vipicon">
+					<view class="vip">
+						<image src="../../icon/songlist/icon-vip.png"></image>
+						<view class="vipS">含1首vip专享歌曲</view>
 					</view>
-				<p><image  src="../../icon/songlist/icon-bofanglist.png"/></p>
-				<p><image  src="../../icon/songlist/icon-shengl.png"/></p>
+					<view class="vipprice">
+						<view>vip仅￥0.06/天</view>
+						<image src="../../icon/songlist/icon-right.png"></image>
+					</view>
+				</view>
+				<view class="allPlay">
+					<view class="all">
+						<image src="../../icon/songlist/red-bofang.png"></image>
+						<view>全部播放（{{songList.trackCount}}）</view>
+					</view>
+					<view class="xiazai"><image src="../../icon/songlist/icon-load.png"></image></view>
+					<view class="libiao"><image src="../../icon/songlist/icon-lib.png"></image></view>
+				</view>
 			</view>
+			<view class="list">
+				<view class="item" v-for="(item,index) in songList.tracks" @click="playPage(item,index)" :key="item.name">
+					<view class="num">{{item.cd}}</view>
+					<view class="text">
+					   <view class="title">
+						   <view>{{item.name}}</view>
+						   <view class="alia">{{(item.alia[0])}}</view>
+					   </view>
+					   <view class="singer"></view>
+					</view>
+					<view class="set"><image src="../../icon/songlist/icon-Vertical.png"></image></view>
+				</view>
+			</view>
+			<!-- 底部 -->
+			<Showlist />
 		</view>
 		
+		<!-- 每首歌曲右侧设置... -->
+		<!-- <Seittlist v-if="showlist"/> -->
 	</view>
+
 </template>
 
 
@@ -92,146 +104,160 @@
 	   height:100%;
 	   display:flex;
 	   flex-direction: column;
-	    position: relative;
-		
+	   position: relative;
    }
-   
    .header{
-	   height:rpx(150);
-	   background:#eee;
-	   .search{
-	   	   height:rpx(35);
-	   	   display: flex;
-	   	   // background: #bebebe;
-	   		  
-	   	}
-	   	.back,.shrink{
-	   		width:rpx(30);
-	   		height:100%;
-	   		// background:#eee;
-	   	}
-		.shrink{
-			display: block;
-			width:rpx(30);
-			height:100%;
-			// background:#eee;
-		}
-	   	.inp{
-	   		flex:1;
-			padding:1px 10px;
-			display: flex;
-			input{
-				flex:1;
-				height:100%;
-			}
-			image{
-				width:rpx(30);
-				height:rpx(30);
-			}
-	   	}
-	   	
-   }
-   
-   
-   .nav{
-   		   width:rpx(260);
-   		   height:rpx(40);
-   		   border-radius: 60px;
-   		   background:#fff;
-   		   position: absolute;
-		   top:rpx(130);
-		   left:15%;
-		   display: flex;
-		   align-items: center;
-		   box-shadow: 1px 1px 2px 2px  #eee;
-		   p{
-			   flex:1;
-			   border-right: 1px solid #bebebe;
-			   text-align: center;
-			   image{
-			   			   width:rpx(18);
-			   			   height:rpx(18);
-			   }
-			   &:last-child{
-				   border:0;
-			   }
-		   }	   
-   }
-   
-   .vip{
-	   margin:0 auto;
-	   width:rpx(320);
-	   height:rpx(40);
-	   border:1px solid #eee;
-	   margin-top:rpx(35);
-	   border-radius: 8px;
-	   display:flex;
-	   align-items: center;
-	   padding:0 rpx(10);
+	   height:25%;
 	   image{
-		   width:rpx(25);
-		   height:rpx(25);
-	   }
-	   p{
-		   font-size: rpx(12);
-		   
-		   span{
-			   font-size: rpx(12);
-			   color:#bebebe;
-			   position:absolute;
-			   right:rpx(45);
-		   }
-		   .right{
-			   width:rpx(18);
-			   height:rpx(18);
-			   position:absolute;
-			   right:rpx(25);
-		   }
-	   }
-	   
-   }
-   
-   .allPlay{
-	   margin:rpx(30) 0;
-	   padding:0 rpx(10);
-	   display: flex;
-	   align-items: center;
-	   .bofang{
-		   width:rpx(25);
-		   height:rpx(25);
-	   }
-	   image{
-		   width:rpx(20);
-		   height:rpx(20);
-		   display: block;
-		   margin:0 rpx(10);
-	   }
-	   p{
-		   flex:1;
-		   font-size:14px;
-		   margin: 0 rpx(5);
-	   }
-   }
-   .item{
-	   display: flex;
-	   padding:0 rpx(10);
-	   .num{
-		   width:rpx(70);
+		   width:100%;
 		   height:100%;
 	   }
-	   .title{
-		   display: flex;
-		   flex-direction: column;
-		   flex:1;
-	   }
-	   p{
-		   margin:0 rpx(10);
-		   image{
-		   		   width:rpx(20);
-		   		   height:rpx(20);
-		   }
-		   
-	   }
-	   
    }
+   .main{
+	   height:78%;
+	   .bofang{
+		   height:26%;
+		   position: relative;
+		   .vipicon{
+			   width:rpx(300);
+			   height:rpx(40);
+			   border-radius: rpx(15);
+			   border:1px solid #eee;
+			   position: absolute;
+			   left:50%;
+			   top:45%;
+			   transform: translate(-50%,-50%);
+			   display: flex;
+			   align-items: center;
+			   justify-content: space-between;
+			   padding:0 rpx(10);
+			   .vip{
+				   display: flex;
+			   }
+			   image{
+				   width:rpx(20);
+				   height:rpx(20);
+				   
+			   }
+			   .vipS{
+				   font-size: rpx(13);
+				   margin: 0 rpx(5);
+				   image{
+					   width:rpx(20);
+					   height:rpx(20);		   
+				   }
+			   }
+			   .vipprice{
+				   font-size: rpx(12);
+				   color:#bebebe;
+				   display: flex;
+				   align-items: center;
+			   }
+		   }
+		   .allPlay{
+			   height:rpx(40);
+			   width:100%;
+			   position: absolute;
+			   left:50%;
+			   top:80%;
+			   transform: translate(-50%,-50%);
+			   background: #fff; 
+			   display: flex;
+			   align-items: center;
+			   .all{
+				   flex:1;
+				   display: flex;
+				   font-size: rpx(14);
+				   font-weight: 900;
+				   margin-left: 10px;
+				   image{
+					   margin-right: 5px;
+				   }
+			   }
+			   .xiazai{
+				   width:rpx(20);
+				   height:rpx(20);
+				   margin: 0 rpx(10);
+			   }
+			   .libiao{
+				   width:rpx(18);
+				   height:rpx(18);
+				    margin-right: 10px;
+			   }
+			   image{
+				   width:rpx(20);
+				   height:rpx(20);
+			   }
+		   }
+	   }
+	   .list{
+		   height:64%;
+		   overflow: hidden;
+		   overflow-y: auto;
+		   .item{
+			   height:rpx(55);
+			   // background:#eee;
+			   display: flex;
+			   align-items: center;
+			   justify-content: space-between;
+			   padding:0 rpx(15);
+			   .num{
+				   width:rpx(20);
+				   margin-right: rpx(10);
+			   }
+			   .text{
+				   flex:1;
+				   display: flex;
+				   align-items: center;
+				   .title{
+					   display:flex;
+					   .alia{
+						   font-size:rpx(15);
+						   color:#708090;
+					   }
+				   }
+			   }
+			   .set{
+				   width:rpx(20);
+				   margin-left: rpx(10);
+				   image{
+					   width:rpx(20);
+					   height:rpx(20);
+				   }
+			   }
+		   }
+	   }
+   }
+   .nav{
+	   position: absolute;
+	   left:50%;
+	   top:22%;
+	   transform: translate(-50%,-50%);
+	   width:rpx(280);
+	   height:rpx(40);
+	   background: #fff;
+	   border-radius: rpx(18);
+	   display: flex;
+	   align-items: center;
+	   padding:0 rpx(10);
+	   z-index: 1;
+	   box-shadow: 0 1px 1px 2px #eee;
+	   .logo{
+		   flex:1;
+		   border-right: 1px solid #bebebe;
+		   display: flex;
+		   align-items: center;
+		   justify-content: center;
+		   font-size: rpx(12);
+		   &:last-child{
+			   border:0;
+		   }
+		   image{
+			   width:rpx(18);
+			   height:rpx(18);
+			   margin:0 rpx(5);
+		   }
+	   }
+   }
+   
 </style>
