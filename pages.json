@@ -88,6 +88,14 @@
         		"navigationBarTitleText" : "每日推荐",
         		"enablePullDownRefresh" : false
         	}
+        },
+        {
+        	"path" : "pages/searchResult/searchResult",
+        	"style" : 
+        	{
+        		"navigationBarTitleText" : "搜索结果",
+        		"enablePullDownRefresh" : false
+        	}
         }
     ],
     "tabBar": {

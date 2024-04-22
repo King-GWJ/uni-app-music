@@ -49,10 +49,13 @@
 
 	//开始搜索
 	const search = async (val = searchVal.value, off = offset.value) => {
+		// uni.navigateTo({
+		// 	url:'/pages/searchResult/searchResult'
+		// })
 		searchVal.value = val
 		suggestShow.value = false
 		const res = await searchApi(val, off)
-		console.log(res.result.songs)
+		console.log(res.result)
 		res.result.songs.forEach(v => {
 			searchList.value.push(v)
 		})
@@ -73,6 +76,11 @@
 	}
 
 	watch(searchVal, (v) => {
+		if(v.length===0){
+			searchVal.value = ''
+			offset.value = 0
+			searchList.value = []
+		}
 		if (v.length > 0) {
 			suggestShow.value = true
 		} else {
@@ -115,7 +123,7 @@
 		<view class="header">
 			<view class="inp-wrap">
 				<view class="search-icon"></view>
-				<input class="inp" @input="searchSuggest" v-model="searchVal" type="text" placeholder="请输入搜索内容" />
+				<input class="inp" auto-focus="true" @input="searchSuggest" v-model="searchVal" type="text" placeholder="请输入搜索内容" />
 				<view class="close-icon" @click="clear" v-if="searchVal.length > 0"></view>
 			</view>
 			<view class="search" @click="search(searchVal)">
@@ -178,6 +186,9 @@
 				</view>
 				<view class="likeItem" @click="search('纪念')">
 					纪念
+				</view>
+				<view class="likeItem" @click="search('青花瓷')">
+					青花瓷
 				</view>
 			</view>
 			<view class="top">
@@ -256,7 +267,7 @@
 		position: absolute;
 		left: 0;
 		top: rpx(45);
-		height: rpx(710);
+		height: rpx(560);
 		background-color: rgb(244, 246, 249);
 		width: 100%;
 		color: rgb(40, 50, 72);
@@ -289,7 +300,7 @@
 
 	.searchResult {
 		position: absolute;
-		height: rpx(710);
+		height: rpx(570);
 		overflow-y: auto;
 		overflow-x: hidden;
 		padding-right: rpx(50);
