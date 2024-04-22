@@ -8,7 +8,7 @@
 		searchApi,
 		hotApi
 	} from '../../base/api'
-
+	import SearchDialogVue from './components/SearchDialog.vue';
 
 	const searchVal = ref('')
 	const suggestList = ref([])
@@ -18,7 +18,9 @@
 	const historyList = ref([])
 	const hotList = ref([])
 	const offset = ref(0)
-
+	const showDialog = ref(false)
+	const detailItem = ref({})
+	
 	//获取本地数据
 	historyList.value = JSON.parse(localStorage.getItem('history')) || []
 
@@ -96,6 +98,16 @@
 		offset.value += 30
 		search()
 	}
+	
+	const showDetail = (item) =>{
+		showDialog.value = true
+		detailItem.value = item
+	}
+	
+	const closeDetail = (e)=>{
+		showDialog.value = false
+	}
+	
 </script>
 
 <template>
@@ -134,7 +146,7 @@
 					</view>
 					<view class="resultTools">
 						<view class="playIcon" @click="goPlay(item.id)"></view>
-						<view class="detailIcon"></view>
+						<view class="detailIcon" @click="showDetail(item)"></view>
 					</view>
 
 				</view>
@@ -183,10 +195,9 @@
 						</view>
 					</view>
 				</view>
-
 			</view>
-
 		</view>
+		<SearchDialogVue :showDialog="showDialog" @closeDialog="closeDetail(e)" :detailItem="detailItem"></SearchDialogVue>
 	</view>
 </template>
 
@@ -300,21 +311,23 @@
 			padding: rpx(10) rpx(10);
 
 			.resultContent {
-				flex: 1;
+				// flex: 1;
+				flex-shrink: 0;
 				display: flex;
 				flex-direction: column;
-
+				width: rpx(270);
 				.resultName {
 					padding: rpx(5) 0;
 					color: rgb(51, 51, 52);
-					font-weight: 800;
+					font-weight: 500;
 				}
-
 				.resultArtist {
 					display: flex;
+					flex-shrink: 0;
 					align-items: center;
 					font-size: rpx(12);
 					color: rgb(85, 129, 177);
+					white-space: nowrap;
 					.subTitIcon{
 						border: 1px solid rgb(234,210,165);
 						padding: rpx(1) rpx(2);
@@ -325,6 +338,9 @@
 					}
 					.alias {
 						color: rgb(153, 153, 153);
+						white-space: nowrap;
+						overflow: hidden;
+						text-overflow: ellipsis;
 					}
 				}
 			}
@@ -332,7 +348,7 @@
 			.resultTools {
 				width: rpx(100);
 				display: flex;
-
+				flex-shrink: 1;
 				.playIcon {
 					width: rpx(50);
 					height: rpx(50);
@@ -414,7 +430,7 @@
 		margin-top: rpx(25);
 		margin-left: rpx(15);
 		background-color: white;
-		border-radius: rpx(20);
+		border-radius: rpx(15);
 
 	}
 
