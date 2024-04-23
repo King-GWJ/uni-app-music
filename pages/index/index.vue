@@ -94,18 +94,14 @@
             </uni-section>
 
         </view>
-
         <Sidebar ref="sidebar" />
-
     </view>
 </template>
 
 <style lang="scss" scoped>
     .content {
-        width: 100%;
-        height: 100%;
         position: relative;
-
+        padding-bottom: 100rpx;
         .header {
             padding: 30rpx;
             display: flex;
