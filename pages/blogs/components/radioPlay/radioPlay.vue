@@ -1,11 +1,18 @@
 <template>
 	<view>
-		广播剧
+		
 	</view>
 </template>
 
 <script>
-	
+	export default {
+		name:"radioPlay",
+		data() {
+			return {
+				
+			};
+		}
+	}
 </script>
 
 <style lang="scss">
