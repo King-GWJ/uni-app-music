@@ -125,6 +125,25 @@ export const logoutApi = () => {
 	})
 }
 
+// 退出登录
+export const userAccount = () => {
+	return request({
+		url: '/user/account',
+		method: 'GET'
+	})
+}
+
+// 获取用户详情
+export const userDetailApi = (uid) => {
+	return request({
+		url: '/user/detail',
+		method: 'GET',
+		data: {
+			uid,
+		}
+	})
+}
+
 //轮播图
 export const bannerApi = () => {
 	return request({

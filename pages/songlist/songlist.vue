@@ -6,7 +6,9 @@
 	import Setting from "../../components/showlist/setting.vue"
 	import { useMusicstore } from "../../store/music.js"
 	import { ref } from "vue";
-	const useStore = useMusicstore()
+
+    
+	const useStore = useMusicstore() 
 	const songList = ref([]);  //接受传过来的数据
 	const curIndex=ref(0)  //当前下标
 	const optionId=ref(0)
@@ -100,7 +102,7 @@
 			</view>
 			<view class="list">
 				<view class="item" v-for="(item,index) in songList.tracks"  :key="item.name">
-					<view class="num">{{item.cd}}</view>
+					<view class="num">{{index+1}}</view>
 					<view class="text" @click="playPage(item,index)">
 					   <view class="title">
 						   <view>{{item.name}}</view>
