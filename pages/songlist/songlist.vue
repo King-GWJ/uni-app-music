@@ -3,25 +3,32 @@
 	import {onLoad} from '@dcloudio/uni-app'
 	import { SongdetailApi } from '../../base/api/index.js'
 	import Showlist from "../../components/showlist/showlist.vue"
+	import Setting from "../../components/showlist/setting.vue"
+	import { useMusicstore } from "../../store/music.js"
 	import { ref } from "vue";
 
 	const songList = ref([]);  //接受传过来的数据
 	const curIndex=ref(0)  //当前下标
-	const showlist=false //显示隐藏
 	const optionId=ref(0)
+	const store = useMusicstore()
+	const float=ref(false) //显示隐藏
+	const songDetail=ref([])
+    const itemSong=ref({})
 	// store.changeList
 	//获取id
 	onLoad((options)=>{
+		console.log(options.id)
 		//获取详情歌单数据
 		SongdetailApi(options.id).then(res=>{
 			songList.value=res.playlist
+			console.log(songList.value)
 		})
 	})
 
 	//跳转vip界面
 	const goVip = (id) => {
 	  uni.navigateTo({
-		url: "/pages/vippage/vippage",
+		url: "/pages/vippage/vippage"
 		
 	  })
 	}
@@ -33,6 +40,25 @@
 		url: `/pages/musicPlay/musicPlay?id=${item.id}&index=${index}`
 	  })
 	}
+    
+	//显示隐藏歌曲信息
+	const itemDetail=(f,t)=>{
+		
+		console.log(f)
+		console.log(!f)
+		songDetail.value=t
+		console.log(songDetail.value)
+		itemSong.value=songDetail.value
+		float.value=!f
+	}
+	
+	//跳转至榜单页面
+	const backPage=()=>{
+	  uni.navigateTo({
+	  	url: '/pages/recommended/recommended'
+	  })
+	}
+	
 
 </script>
 
@@ -40,6 +66,13 @@
 	<view class="musiclist">
 		<view class="header">
 			<image :src="songList.coverImgUrl"></image>
+			<view class="search">
+				<!-- <view class="back" @click="backPage"><image src="../../icon/songlist/icon-leftt.png"></image></view>
+				<view class="serchlogo">
+					<image class="ser" src="../../icon/songlist/icon-sousuo.png"></image>
+					<image src="../../icon/songlist/icon-24gf-ellipsisVertical.png"></image>
+				</view>	 -->
+			</view>
 		</view>
 		<view class="nav">
 			<view class="logo"><image src="../../icon/songlist/icon-tianjia.png"></image>{{(songList.subscribedCount/100/100).toFixed(2)}}</view>
@@ -68,24 +101,28 @@
 				</view>
 			</view>
 			<view class="list">
-				<view class="item" v-for="(item,index) in songList.tracks" @click="playPage(item,index)" :key="item.name">
+				<view class="item" v-for="(item,index) in songList.tracks"  :key="item.name">
 					<view class="num">{{item.cd}}</view>
-					<view class="text">
+					<view class="text" @click="playPage(item,index)">
 					   <view class="title">
 						   <view>{{item.name}}</view>
-						   <view class="alia">{{(item.alia[0])}}</view>
+						   <view class="alia">{{item.alia[0]}}</view>
 					   </view>
-					   <view class="singer"></view>
+					   <view class="singer">
+						   <!-- <view><image :src="item.picUrl"></image></view> -->
+						   <view class="singerName">{{item.ar.map(v=>v.name).join("/")}}</view>
+					   </view>
 					</view>
-					<view class="set"><image src="../../icon/songlist/icon-Vertical.png"></image></view>
+					<!-- @click.stop="showlist=true" -->
+					<view class="set" @click="itemDetail(float,item)"><image src="../../icon/songlist/icon-Vertical.png"></image></view>
 				</view>
 			</view>
 			<!-- 底部 -->
 			<Showlist />
-		</view>
-		
 		<!-- 每首歌曲右侧设置... -->
-		<!-- <Seittlist v-if="showlist"/> -->
+		</view>
+		<Setting v-if="float"  @click.stop="float=false" :itemSong="itemSong"/>
+		
 	</view>
 
 </template>
@@ -100,14 +137,43 @@
 	   position: relative;
    }
    .header{
-	   height:25%;
+	   height:30%;
+	   position:relative;
 	   image{
 		   width:100%;
 		   height:100%;
 	   }
+	   .search{
+		   height:rpx(35);
+		   width:100%;
+		   padding:8px 15px;
+		   position: absolute;
+		   top:0;
+		   left:0;
+		   display: flex;
+		   justify-content:space-between;
+		   align-items: center;
+		   .back{
+			   width:rpx(30);
+		   }
+		   .serchlogo{
+			   display: flex;
+			   width:rpx(110);
+			   height:rpx(30);
+		   }
+		   .ser{
+			   margin:0 10px;
+		   }
+		   image{
+			   width:rpx(30);
+			   height:rpx(30);
+		   }
+		   
+	   }
+	   
    }
    .main{
-	   height:78%;
+	   height:68%;
 	   .bofang{
 		   height:26%;
 		   position: relative;
@@ -164,7 +230,7 @@
 				   font-weight: 900;
 				   margin-left: 10px;
 				   image{
-					   margin-right: 5px;
+					   margin-right: 20px;
 				   }
 			   }
 			   .xiazai{
@@ -175,7 +241,7 @@
 			   .libiao{
 				   width:rpx(18);
 				   height:rpx(18);
-				    margin-right: 10px;
+				   margin-right: 20px;
 			   }
 			   image{
 				   width:rpx(20);
@@ -184,7 +250,7 @@
 		   }
 	   }
 	   .list{
-		   height:64%;
+		   height:68%;
 		   overflow: hidden;
 		   overflow-y: auto;
 		   .item{
@@ -194,6 +260,10 @@
 			   align-items: center;
 			   justify-content: space-between;
 			   padding:0 rpx(15);
+			   overflow:hidden;
+			   white-space: nowrap;
+			   text-overflow: ellipsis;
+			   -o-text-overflow:ellipsis;
 			   .num{
 				   width:rpx(20);
 				   margin-right: rpx(10);
@@ -201,12 +271,22 @@
 			   .text{
 				   flex:1;
 				   display: flex;
-				   align-items: center;
+				   flex-direction: column;
 				   .title{
 					   display:flex;
 					   .alia{
 						   font-size:rpx(15);
 						   color:#708090;
+					   }
+				   }
+				   .singer{
+					   font-size:rpx(13);
+					   color:#696969;
+					   .singerName{
+						   overflow:hidden;
+						   white-space: nowrap;
+						   text-overflow: ellipsis;
+						   -o-text-overflow:ellipsis;
 					   }
 				   }
 			   }
@@ -224,7 +304,7 @@
    .nav{
 	   position: absolute;
 	   left:50%;
-	   top:22%;
+	   top:30%;
 	   transform: translate(-50%,-50%);
 	   width:rpx(280);
 	   height:rpx(40);
