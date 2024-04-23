@@ -125,6 +125,25 @@ export const logoutApi = () => {
 	})
 }
 
+// 退出登录
+export const userAccount = () => {
+	return request({
+		url: '/user/account',
+		method: 'GET'
+	})
+}
+
+// 获取用户详情
+export const userDetailApi = (uid) => {
+	return request({
+		url: '/user/detail',
+		method: 'GET',
+		data: {
+			uid,
+		}
+	})
+}
+
 //轮播图
 export const bannerApi = () => {
 	return request({
@@ -190,9 +209,24 @@ export const songsApi = () => {
 
 //热搜列表
 export const hotApi = () => {
-	return request({ url: '/search/hot' })
+	return request({
+		url: '/search/hot'
+	})
 }
 
+
+
+//获取歌单所有歌曲
+export const trackAllApi = (id, limit, offset) => {
+	return request({
+		url: '/playlist/track/all',
+		data: {
+			id: id,
+			limit: limit,
+			offset: offset
+		}
+	}, )
+}
 
 
 // 最新专辑
@@ -243,16 +277,6 @@ export const lyricApi = (id) => {
 	})
 }
 
-// 音乐url
-export const songUrlApi = (id) => {
-	return request({
-		url: '/song/url',
-		data: {
-			id
-		}
-	})
-}
-
 // 评论
 export const commentApi = (type, id) => {
 	return request({
@@ -261,5 +285,16 @@ export const commentApi = (type, id) => {
 			id
 		}
 	})
+}
+
+// 音乐播放url
+export const songUrlApi = (id,level) => {
+  return request({
+    url: '/song/url/v1',
+    data: {
+      id: id,
+	  level: level
+    }
+  })
 }
 

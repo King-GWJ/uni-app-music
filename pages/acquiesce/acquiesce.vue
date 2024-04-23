@@ -42,7 +42,7 @@
 			</view>
 		</view>
 		<view class="musicList">
-			<view class="music" v-for="(item,index) in list" :key="item.id" @click="toggle(item)">
+			<view class="music" v-for="(item,index) in list" :key="item.id" @click="toggle(list,item,index)">
 				<view class="musicImg">
 					<image :src="item.al.picUrl" mode=""></image>
 				</view>
@@ -75,26 +75,33 @@
 </template>
 
 <script setup>
-	import { onReady } from '@dcloudio/uni-app'
+	import { onReady,onLoad } from '@dcloudio/uni-app'
 	import { ref } from 'vue'
-	import { songsApi, loginStatusApi } from '../../base/api/index.js'
+	import { songsApi, loginStatusApi,trackAllApi } from '../../base/api/index.js'
+	import { useMusicstore } from '../../store/music.js'
+	const useStore = useMusicstore()
 	const list = ref([])
-	loginStatusApi().then(res => {
-		console.log(res);
-	})
-	songsApi().then(res => {
-		console.log(res);
-		list.value = res.data.dailySongs
-	})
 	const currentDate = new Date()
 	const month = currentDate.getMonth() + 1
 	const day = currentDate.getDate()
-	const toggle = (item) => {
-		console.log(item.id);
+	const toggle = (l,t,i) => {
+		useStore.musicAllList(l,t,i)
+		console.log(useStore.musicAllList);
 		uni.navigateTo({
-			url: `/pages/musicPlay/musicPlay?id=${item.id}`,
+			url: `/pages/musicPlay/musicPlay?id=${t.id}`,
 		});
 	}
+	onLoad((options) => {
+		if(options.id){
+			trackAllApi(options.id,50,0).then(res => {
+				list.value = res.songs
+			})
+		}else{
+			songsApi().then(res => {
+				list.value = res.data.dailySongs
+			})
+		}	
+	})
 
 </script>
 
@@ -108,6 +115,9 @@
 	overflow-y: auto;
 	&::-webkit-scrollbar{width:0px};
 	background-color: #FEFEFE;
+	.custom-navigation{
+		background-color: burlywood;
+	}
 	.header{
 		width: 100%;
 		height: rpx(140);

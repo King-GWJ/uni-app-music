@@ -31,7 +31,7 @@
         {
             "path": "pages/recommended/recommended",
             "style": {
-                "navigationBarTitleText": "推荐",
+                "navigationBarTitleText": "排行榜",
                 "enablePullDownRefresh": false
             }
         },
@@ -85,7 +85,15 @@
         	"path" : "pages/acquiesce/acquiesce",
         	"style" :
         	{
-        		"navigationBarTitleText" : "我的",
+        		"navigationBarTitleText" : "每日推荐",
+        		"enablePullDownRefresh" : false
+        	}
+        },
+        {
+        	"path" : "pages/searchResult/searchResult",
+        	"style" : 
+        	{
+        		"navigationBarTitleText" : "搜索结果",
         		"enablePullDownRefresh" : false
         	}
         }
@@ -110,17 +118,13 @@
             {
                 "pagePath": "pages/community/community",
                 "text": "社区"
-            },
-            {
-                "pagePath": "pages/recommended/recommended",
-                "text": "推荐"
             }
         ]
     },
     "globalStyle": {
         "navigationBarTextStyle": "white",
         "navigationBarTitleText": "uni-app",
-        "navigationBarBackgroundColor": "#d43c33",
+        "navigationBarBackgroundColor": "#d43b32",
         "backgroundColor": "#F8F8F8"
     },
     "uniIdRouter": {}
