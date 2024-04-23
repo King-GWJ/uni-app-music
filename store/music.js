@@ -22,6 +22,8 @@ export const useMusicstore=defineStore("musicStore",()=>{
 	const musicIndex = ref(0)
 	//音乐的url
 	const musicBack = ref('')
+	//播放模式 1顺序播放 2单曲循环 3随机播放
+	const musicMode = ref(2)
 
 	
 	// 获取全部音乐，当前音乐，当前音乐下标
@@ -46,6 +48,7 @@ export const useMusicstore=defineStore("musicStore",()=>{
 	const musicUrl = watch(musicLove,(newValue,oldValue) => {
 		songUrlApi(musicList.value[musicIndex.value].id,'standard').then(res => {
 			console.log(1);
+			console.log(res)
 			musicBack.value = res.data[0].url
 			audio.src=musicBack.value
 			audio.autoplay = true
@@ -75,6 +78,15 @@ export const useMusicstore=defineStore("musicStore",()=>{
 			isplay.value = false
 		}
 	}
+	
+	//切换播放模式
+	const musicToggle = () => {
+		musicMode.value += 1
+		if(musicMode.value > 3){
+			musicMode.value = 1
+		}
+	}
+	
 	return{
 		audio,
 		curPlaylist,
@@ -88,7 +100,8 @@ export const useMusicstore=defineStore("musicStore",()=>{
 		musicSubtract,
 		musicSearch,
 		musicBack,
-		
+		musicMode,
+		musicToggle,
 		
 	}
 	

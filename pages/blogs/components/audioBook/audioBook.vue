@@ -10,6 +10,15 @@
 				</swiper-item>
 			</swiper>
 		</view>
+		<view class="personalize">
+			<view v-for="(item,index) in personalize" :key="index" :id="item.id">
+				<view class="">
+					<image :src="item.picUrl" mode=""></image>
+					{{item.name}}
+				</view>
+			</view>
+		</view>
+	
 	</view>
 </template>
 
@@ -23,13 +32,14 @@
 	} from "vue"
 
 	const djBanner = ref([])
+	const personalize = ref([])
 
 	djBannerApi().then(res => {
 		djBanner.value = res.data
 	})
-
+	// 电台推荐
 	personalizeApi().then(res => {
-		console.log(res);
+		personalize.value = res.data
 	})
 </script>
 
