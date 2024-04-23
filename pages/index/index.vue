@@ -1,19 +1,20 @@
 <script setup>
-    import {onShow, onHide} from '@dcloudio/uni-app'
     import {ref} from "vue";
     import {bannerApi, logoutApi, newsongApi, personalizedApi} from '/base/api'
     import {navigateTo} from '/base/utils'
     import navIcons from "/base/data/navIcons";
+    import Sidebar from '../../components/sidebar/Sidebar.vue'
 
-    const banners = ref([])
-    const showLeft = ref(null);
-    const isLogin = ref(false)
-    const playListTJ = ref([])
-    const musicList = ref([])
-
-    const pageLogin = '/pages/login/login'
     const pageSearch = '/pages/search/search'
     const pageMusicPlay = '/pages/musicPlay/musicPlay'
+
+    const curCookie = uni.getStorageSync("curCookie");
+
+    const banners = ref([])
+    const playListTJ = ref([])
+    const musicList = ref([])
+    const sidebar = ref(null)
+
 
     bannerApi().then(res => {
         banners.value = res.banners
@@ -36,44 +37,16 @@
     }
 
 
-    const showDrawer = () => {
-        showLeft.value.open()
-    }
-    const closeDrawer = () => {
-        showLeft.value.close()
-    }
-
-    const curCookie = uni.getStorageSync("curCookie");
-
-    onShow(() => {
-        isLogin.value = !!curCookie;
-    })
-    onHide(() => {
-        isLogin.value = !!curCookie;
-    })
-
-    //退出登录
-    const getLogout = () => {
-        logoutApi().then(res => {
-            if (res.code === 200) {
-                uni.setStorageSync('curCookie', "")
-                isLogin.value = false
-                closeDrawer()
-            }
-        })
-    }
-
     const getDetail = (id) => {
         navigateTo("/pages/acquiesce/acquiesce?id=" + id)
     }
-
 
 </script>
 
 <template>
     <view class="content">
         <view class="header">
-            <uni-icons class="bars" type="bars" size="24" @click="showDrawer"></uni-icons>
+            <uni-icons class="bars" type="bars" size="24" @click="()=>{sidebar.showDrawer()}"></uni-icons>
             <view class="search" @click="navigateTo(pageSearch)">
                 <uni-search-bar placeholder="搜索" bgColor="#EEEEEE" readonly />
             </view>
@@ -121,20 +94,9 @@
             </uni-section>
 
         </view>
-        <uni-drawer ref="showLeft" mode="left" :width="300">
-            <view class="close">
-                <button v-show="!isLogin" @click="()=>{
-                    navigateTo(pageLogin)
-                    closeDrawer()
-                }">
-                    <text class="word-btn-white">登录</text>
-                </button>
 
-                <button v-show="isLogin" @click="getLogout">
-                    <text class="word-btn-white">退出登录</text>
-                </button>
-            </view>
-        </uni-drawer>
+        <Sidebar ref="sidebar" />
+
     </view>
 </template>
 
@@ -246,6 +208,7 @@
                 .musiclist {
                     display: flex;
                     flex-direction: column;
+
                     .musiclist-item {
                         display: flex;
                         align-items: center;
@@ -272,10 +235,7 @@
             .newsong::-webkit-scrollbar {
                 display: none;
             }
-
-
         }
-
     }
 
 

@@ -1,6 +1,6 @@
 <script setup>
     import {qrCreateApi, qrKeyApi} from "../../base/api";
-    import {ref, watch} from "vue";
+    import {ref} from "vue";
     import {useUserStore} from "../../store/user";
     const userStore = useUserStore()
     const img = ref("")

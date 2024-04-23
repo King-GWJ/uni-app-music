@@ -1,27 +1,46 @@
 import {defineStore} from 'pinia'
 import {ref} from 'vue'
+import {switchTab} from '/base/utils'
 import {
     emailLoginApi,
     phoneLoginApi,
     loginStatusApi,
-    anonimousLoginApi, qrCheckApi,
+    anonimousLoginApi,
+    qrCheckApi,
+    userAccount,
+    userDetailApi
 } from '/base/api'
 
 export const useUserStore = defineStore('user', () => {
 
     //用户信息
-    const account = ref(null)
     const profile = ref(null)
 
+    //获取登录状态
     const getProfile = () => {
         loginStatusApi().then(res => {
             if (res.code === 200) {
-                account.value = res.data.account
-                profile.value = res.data.profile
+                setAccount(res.data.profile)
             }
         })
     }
 
+    const setAccount = (value) => {
+        profile.value = value
+    }
+
+    //获取用户信息
+    const getAccount = () => {
+        userAccount().then(res=>{
+            if(res.code === 200){
+                userDetailApi(res.account.id).then(res=>{
+                    setAccount(res.profile)
+                })
+            }
+        })
+    }
+
+    //登录
     const getLogin = (type, account = '', password = '') => {
         switch (type) {
             case 'email':
@@ -39,7 +58,7 @@ export const useUserStore = defineStore('user', () => {
                     if (res.code === 200) {
                         uni.setStorageSync('curCookie', res.cookie)
                         profile.value = res
-                        uni.navigateBack()
+                        switchTab("/pages/index/index")
                     }
                 })
                 break;
@@ -47,13 +66,14 @@ export const useUserStore = defineStore('user', () => {
         }
     }
 
+    //二维码登录
     const getCheckQr = (key) => {
         const interval = setInterval(() => {
             qrCheckApi(key).then(res => {
                 if (res.code === 803) {
                     uni.setStorageSync('curCookie', res.cookie)
                     clearInterval(interval)
-                    uni.navigateBack()
+                    switchTab("/pages/index/index")
                 }
             })
         }, 2000);
@@ -65,20 +85,20 @@ export const useUserStore = defineStore('user', () => {
         }, 30000)
     }
 
+    //存储用户信息
     const storeData = (res) => {
         if (res.code === 200) {
             uni.setStorageSync('curCookie', res.cookie)
-            account.value = res.account
-            profile.value = res.profile
-            uni.navigateBack()
+            setAccount(res.profile)
+            switchTab("/pages/index/index")
         }
     }
 
     return {
-        account,
         profile,
         getProfile,
         getLogin,
-        getCheckQr
+        getCheckQr,
+        getAccount
     }
 });
