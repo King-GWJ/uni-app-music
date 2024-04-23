@@ -1,22 +1,84 @@
 <script setup>
-import { ref } from 'vue';
+import { ref, watch } from 'vue';
+import { useMusicstore } from '../../../store/music';
+import { useUserStore } from '../../../store/user';
+import { userPlayListApi,playListChange } from '../../../base/api';
 
 
 	const props = defineProps(['showDialog','detailItem'])
 	const emits = defineEmits(['closeDialog'])
+	const musicStore = useMusicstore()
+	const userStore = useUserStore()
+	const profile = ref(userStore.profile)
+	const playList = ref([])
+	const popup = ref(null)
+	const popup2 = ref(null)
+	const popup3 = ref(null)
+	if(!profile.value){
+		profile.value = userStore.setProfileData()
+	}
+	
+	const getPlayList = async ()=>{
+		const res = await userPlayListApi(profile.value.userId)
+		playList.value = res.playlist
+		console.log(playList.value)
+	}
+	
+	getPlayList()
+	// userPlayListApi(profile.value.userId).then(res=>{
+	// 	console.log(res.playlist)
+	// 	playList.value = res.playlist
+		
+	// })
 	
 	
 	
+	const nextPlay = ()=>{
+		musicStore.musicBehind(props.detailItem,props.detailItem.id)
+		popup.value.open()
+		emits('closeDialog')
+	}
+	
+	
+	const toLike = ()=>{
+		if(!profile.value.userId){
+			popup2.value.open()
+			setTimeout(()=>{
+				uni.navigateTo({
+					url:'/pages/login/login'
+				})
+			},1000)
+		}else{
+			popup3.value.open()
+			emits('closeDialog')
+		}
+		
+	}
+	
+	const add = async (item)=>{
+		const res = await playListChange('add',item.id,props.detailItem.id)
+		console.log(res)
+		profile.value = userStore.setProfileData()
+		getPlayList()
+		// playListChange('add',item.id,props.detailItem.id).then(res=>{
+		// 	console.log(res)
+		// 	getPlayList()
+		// })
+	}
 	
 	const fn = (e)=>{
-		console.log(props.detailItem)
+		
 		e.stopPropagation()
 	}
+	
+	
+
 </script>
 
 
 
 <template>
+	
 	<view class="dialogWrap" v-if="showDialog" @click="emits('closeDialog')">
 		<view class="dialog" @click="fn">
 			<view class="header">
@@ -29,17 +91,16 @@ import { ref } from 'vue';
 						{{props.detailItem.artists[0].name}}
 					</view>
 				</view>
-				
 			</view>
 			<view class="content">
-				<view class="item">
+				<view class="item" @click="nextPlay">
 					<view class="itemIcon nextPaly">
 					</view>
 					<view class="itemContent">
 						下一首播放
 					</view>
 				</view>
-				<view class="item">
+				<view class="item" @click="toLike">
 					<view class="itemIcon like">
 					</view>
 					<view class="itemContent">
@@ -126,11 +187,109 @@ import { ref } from 'vue';
 			</view>
 		</view>
 	</view>
+	<uni-popup class="mesWrap" ref="popup" type="message">
+		<uni-popup-message class="mes" type="success" message="添加列表成功" :duration="800"></uni-popup-message>
+	</uni-popup>
+	<uni-popup class="mesWrap" ref="popup2" type="message">
+		<uni-popup-message class="mes" type="error" message="请登录" :duration="800"></uni-popup-message>
+	</uni-popup>
+	<view>
+		<uni-popup ref="popup3" type="bottom" border-radius="10px 10px 0 0" background-color="#fff">
+			<view class="playList">
+				<view class="playListHeader">
+					<view class="playListTitle">
+						收藏到歌单
+					</view>
+					<view class="selectAll">
+						多选
+					</view>
+				</view>
+				<view class="playListContent">
+					<view class="playListItem">
+						<view class="img new">
+							+
+						</view>
+						<view class="itemContent">
+							<view class="contentTitle">
+								新建歌单
+							</view>
+						</view>
+					</view>
+					<view @click="add(item)" class="playListItem" v-for="item in playList">
+						<view class="img">
+							<image :src="item.coverImgUrl" mode="widthFix"></image>
+						</view>
+						<view class="itemContent">
+							<view class="contentTitle">
+								{{item.name}}
+							</view>
+							<view class="count">
+								{{item.trackCount}}首
+							</view>
+						</view>
+					</view>
+				</view>
+			</view>
+		</uni-popup>
+	</view>
 </template>
 
 
 
 <style lang="scss" scoped>
+
+.playList{
+	min-height: rpx(200);
+	display: flex;
+	flex-direction: column;
+	.playListHeader{
+		display: flex;
+		justify-content: space-between;
+		padding: rpx(10) rpx(20);
+		color: rgb(62,71,90);
+		.playListTitle{
+			font-weight: 900;
+		}
+		border-bottom: 1px solid rgb(239,240,241);
+	}
+	.playListContent{
+		display: flex;
+		flex-direction: column;
+		.playListItem{
+			display: flex;
+			margin: rpx(8) 0;
+			.new{
+				background: rgb(242,243,244);
+				text-align: center;
+				line-height: rpx(50);
+				font-size: rpx(30);
+			}
+			.img{
+				width: rpx(50);
+				height: rpx(50);
+				margin: 0 rpx(10);
+				border-radius: rpx(10);
+				image{
+					width: rpx(50);
+					height: rpx(50);
+					border-radius: rpx(10);
+				}
+			}
+			.itemContent{
+				display: flex;
+				flex-direction: column;
+				justify-content: center;
+				.contentTitle{
+					color: rgb(62,71,90);
+				}
+				.count{
+					font-size: rpx(13);
+					color: rgb(126,132,145);
+				}
+			}
+		}
+	}
+}
 
 .dialogWrap{
 	position: absolute;
@@ -195,6 +354,8 @@ import { ref } from 'vue';
 		}
 	}
 }
+
+
 
 .nextPaly{
 	background: url(../../../icon/nextPlay.svg) no-repeat center;

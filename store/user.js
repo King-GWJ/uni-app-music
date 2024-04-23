@@ -87,6 +87,7 @@ export const useUserStore = defineStore('user', () => {
 
     //存储用户信息
     const storeData = (res, isLogin) => {
+		console.log(res);
         if (res.cookie) {
             uni.setStorageSync('curCookie', res.cookie)
         }
