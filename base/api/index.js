@@ -150,6 +150,7 @@ export const userPlayListApi = (uid) => {
 		method: 'GET',
 		data: {
 			uid,
+			timestamp: Date.now()
 		}
 	})
 }
@@ -318,3 +319,15 @@ export const userFollowApi = (val) => {
   })
 }
 
+//歌单添加删除歌曲
+export const playListChange = (op,pid,tracks) =>{
+	return request({
+		url:'/playlist/tracks',
+		data:{
+			op,
+			pid,
+			tracks,
+			timestamp: Date.now()
+		}
+	})
+}
