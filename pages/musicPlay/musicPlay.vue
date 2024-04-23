@@ -18,41 +18,9 @@
 	} from '../../store/music.js'
 
 	const useStore = useMusicstore() 
-	const list=useStore.musicList   // 所有音乐数据
-	console.log(list)
-	const currIndex=useStore.musicIndex //  当前音乐下标
-	console.log(currIndex) 
-	const currSong=useStore.musicLove  // 当前音乐
-	console.log(currSong)
-	
 	const subtract = (num) => { // 上一首/下一首
-	console.log(num)
 		useStore.musicSubtract(num)
-		useStore.isPlay
-		console.log(useStore.musicBack)
 	}
-	
-	useStore.audio.autoplay = true;
-	
-	
-	
-	useStore.audio.src=useStore.musicBack
-	
-	
-	
-	// const aaa = watch(useStore.musicBack,(a,b) =>{
-	// 	console.log(useStore.musicBack);
-	// 	useStore.audio.src=useStore.musicBack
-	// })
-	
-	
-	
-	
-	//播放图片改变
-	const playBtn=computed(()=>{
-		return  useStore.isPlay? '../../icon/songlist/icon-bofang.png':'../../icon/songlist/icon-a.png'
-	})
-		
 		
 	//返回上一页
 	const backPrve=()=>{
@@ -84,7 +52,7 @@
 		<view class="circle">
 			<view class="outer">
 				<view class="undertone">
-					<view class="images"><image :src="currSong.al.picUrl" ></image></view>
+					<view class="images"><image :src="useStore.musicLove.al.picUrl" ></image></view>
 				</view>
 			</view>
 			<view class="sun"></view>
@@ -95,8 +63,8 @@
 		</view>
 		<view class="title">
 			<view class="songTitle">
-				<p class="nameSog"><p class="name">{{currSong.name}}  {{currSong.alia[0]}}<span>{{currSong.pop}}</span> </p></p>
-				<p class="singer">{{currSong.ar.map(v=>v.name).join('/')}}</p>
+				<p class="nameSog"><p class="name">{{useStore.musicLove.name}}  {{useStore.musicLove.alia[0]}}<span>{{useStore.musicLove.pop}}</span> </p></p>
+				<p class="singer">{{useStore.musicLove.ar.map(v=>v.name).join('/')}}</p>
 			</view>
 			<p class="collent">
 				<image src="../../icon/songlist/icon-collent.png" />
@@ -120,8 +88,9 @@
 				<p @click="subtract(-1)">
 					<image src="../../icon/songlist/icon-shangyishou.png" />
 				</p>
-				<p @click="play">
-					<image :src="playBtn" />
+				<p @click="useStore.play()">
+					<image v-if="useStore.isplay" src="../../icon/songlist/icon-bofang.png" />
+					<image v-else src="../../icon/songlist/icon-a.png" />
 				</p>
 				<p @click="subtract(1)">
 					<image src="../../icon/songlist/icon-next.png" />
