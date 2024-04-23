@@ -31,7 +31,6 @@
         //调用父组件的event事件
         emits('tabIndexEvent', index)
     }
-
 </script>
 
 <template>

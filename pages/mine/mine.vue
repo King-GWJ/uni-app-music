@@ -15,10 +15,11 @@
     const profile = userStore.profile;
     const isLogin = ref(false)
     const sidebar = ref(null)
+    const tabIndex = ref(0)
 
     onShow(() => {
         isLogin.value = !!curCookie;
-        if (!profile) {
+        if(!profile) {
             userStore.getAccount()
         }
     })
@@ -37,8 +38,8 @@
             name: "动态",
         },
     ])
-    const tabIndex = (index) => {
-        console.log("ggg",'父：'+index)
+    const getTabIndex = (index) => {
+        tabIndex.value = index
     }
 </script>
 
@@ -59,7 +60,17 @@
                 </view>
             </view>
             <view class="connect">
-                <TabToggle :tabList="tabList" @tabIndexEvent="tabIndex"/>
+                <TabToggle :tabList="tabList" @tabIndexEvent="getTabIndex" />
+                <view v-if="tabIndex === 0">
+                    音乐
+                </view>
+                <view v-if="tabIndex === 1">
+                    播客
+                </view>
+                <view v-if="tabIndex === 2">
+                    动态
+                </view>
+
             </view>
         </view>
 
