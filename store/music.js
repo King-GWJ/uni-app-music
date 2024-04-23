@@ -24,6 +24,18 @@ export const useMusicstore=defineStore("musicStore",()=>{
 	const musicBack = ref('')
 	//播放模式 1顺序播放 2单曲循环 3随机播放
 	const musicMode = ref(2)
+	// 播放的计时器
+	const musicTimer = ref(null)
+	// 音乐播放时长
+	const musicTime = ref({
+		points: '00',
+		seconds:'00'
+	})
+	// 音乐当前播放时间
+	const musicNowTime = ref({
+		points: '00',
+		seconds:'00'
+	})
 
 	
 	// 获取全部音乐，当前音乐，当前音乐下标
@@ -31,7 +43,8 @@ export const useMusicstore=defineStore("musicStore",()=>{
 		musicList.value = l
 		musicLove.value = t
 		musicIndex.value = i
-		console.log(musicLove);
+		console.log(l);
+		console.log('下标',i);
 	}
 	
 	// 搜索调这个方法
@@ -46,17 +59,23 @@ export const useMusicstore=defineStore("musicStore",()=>{
 	
 	// 监听音乐数组改变获取音乐播放的rul
 	const musicUrl = watch(musicLove,(newValue,oldValue) => {
+		clearInterval(musicTimer.value)
+		musicNowTime.value.seconds = '00'
+		musicNowTime.value.points = '00'
+		musicTime.value.seconds = '00'
+		musicTime.value.points = '00'
 		songUrlApi(musicList.value[musicIndex.value].id,'standard').then(res => {
-			console.log(1);
-			console.log(res)
+			console.log(res);
 			musicBack.value = res.data[0].url
 			audio.src=musicBack.value
 			audio.autoplay = true
+			audio.loop = true
 		})
 	})
 	
 	// 切换上一首或者下一首  同时判断是不是第一首或者最后一首
 	const musicSubtract = (num) => {
+		isplay.value = false
 		musicIndex.value += num
 		if(musicIndex.value < 0){
 			musicIndex.value = musicList.value.length -1
@@ -72,10 +91,11 @@ export const useMusicstore=defineStore("musicStore",()=>{
 		if(!audio.paused){
 			audio.pause()
 			isplay.value = true
-			console.log(1);
+			clearInterval(musicTimer.value)
 		}else{
 			audio.play()
 			isplay.value = false
+			computeMusic()
 		}
 	}
 	
@@ -90,6 +110,47 @@ export const useMusicstore=defineStore("musicStore",()=>{
 	//添加到下一首
 	const musicBehind = (t,i) => {
 		musicList.value.splice(musicIndex.value,0,t)
+	}
+	
+	// 获取音乐时长
+	audio.onCanplay(() => {
+		computeMusic()
+	});
+	
+	// 计算音乐播放时间
+	const computeMusic = () => {
+		musicTime.value.points = Math.floor(audio.duration / 60)  > 10 ? Math.floor(audio.duration / 60) + '' : '0' + Math.floor(audio.duration / 60)
+		musicTime.value.seconds = Math.floor(audio.duration - Number(musicTime.value.points) * 60) > 10 ? Math.floor(audio.duration - Number(musicTime.value.points) * 60) + '' : '0' + Math.floor(audio.duration - Number(musicTime.value.points) * 60)
+		musicTimer.value = setInterval(() => {
+			let a = Number(musicNowTime.value.seconds) + 1
+			musicNowTime.value.seconds = a >= 10 ? a + '' : '0' + a
+			if(musicNowTime.value.seconds === '60'){
+				musicNowTime.value.seconds = '00' 
+				let b = Number(musicNowTime.value.points) + 1
+				musicNowTime.value.points = b >= 10 ? b + '' : '0' + b
+			}
+				
+			if(musicNowTime.value.seconds === musicTime.value.seconds && musicNowTime.value.points === musicTime.value.points){
+				clearInterval(musicTimer.value)
+				musicNowTime.value.seconds = '00'
+				musicNowTime.value.points = '00'
+				musicTime.value.seconds = '00'
+				musicTime.value.points = '00'
+				if(musicMode.value === 1){
+					// 列表循环
+					audio.loop = false
+					musicSubtract(1)
+				}else if(musicMode.value === 2){
+					// 单曲循环
+					audio.loop = true
+				}else if(musicMode.value === 3){
+					// 随机播放
+					audio.loop = false
+					let i = musicList.value.length -1
+					musicSubtract(Math.floor(Math.random() * i) + 1)
+				}
+			}
+		},50)
 	}
 	
 	return{
@@ -108,7 +169,8 @@ export const useMusicstore=defineStore("musicStore",()=>{
 		musicMode,
 		musicToggle,
 		musicBehind,
-		
+		musicTime,
+		musicNowTime,
 	}
 	
 })

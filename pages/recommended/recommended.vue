@@ -39,7 +39,7 @@
 				</view>
 				<view class="introduce">
 					<view class="introduceImg">
-						<image :src="item.coverImgUrl" mode=""></image>
+						<image :src="item.coverImgUrl" mode="widthFix"></image>
 					</view>
 					<view class="introduceText">
 						<view class="">
@@ -126,12 +126,12 @@
 		}
 		.musicImg{
 			display: flex;
-			justify-content: space-between;
+			flex-wrap: nowrap;
 			border-radius: rpx(10);
-			overflow: hidden;
+			overflow-x: auto;
+			width: 100%;
 			.swiper-box{
 				height: rpx(120);
-				// height: 100%;
 			}
 			.swiper-item{
 				width: 100%;
@@ -175,6 +175,11 @@
 					.listLeft{
 						font-size: rpx(22);
 						font-weight: bold;
+						height: rpx(40);
+						overflow: hidden;
+						text-overflow: ellipsis;
+						white-space: nowrap;
+						width: rpx(180);
 					}
 					.renewal{
 						color: #989DA8;
@@ -200,7 +205,11 @@
 						margin-left: rpx(30);
 						overflow: hidden;
 						>view{
-							flex: 1;
+							 display: -webkit-box;
+							  -webkit-box-orient: vertical;
+							  -webkit-line-clamp: 3;
+							  overflow: hidden;
+							  text-overflow: ellipsis; 
 						}
 					}
 				}

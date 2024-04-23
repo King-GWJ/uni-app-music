@@ -60,12 +60,12 @@
 			</p>
 		</view>
 		<view class="volume">
-			<view class="time">0</view>
+			<view class="time">{{useStore.musicNowTime.points}}:{{useStore.musicNowTime.seconds}}</view>
 			<view class="slider">
 				<slider  class="sliders" min="0" max="100" value="0" disabled="true" block-size="10" activeColor="#1890ff" step></slider>
 			</view>
-			<view class="time">100</view>
-		</view>
+			<view class="time">{{useStore.musicTime.points}}:{{useStore.musicTime.seconds}}</view>
+		</view> 
 		<view class="play">
 			<span @click="useStore.musicToggle()">
 				<image  v-if="useStore.musicMode === 1 " src="../../icon/songlist/icon-meiti-suijibofang.png" />
