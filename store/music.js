@@ -22,6 +22,7 @@ export const useMusicstore=defineStore("musicStore",()=>{
 	const musicIndex = ref(0)
 	//音乐的url
 	const musicBack = ref('')
+
 	
 	// 获取全部音乐，当前音乐，当前音乐下标
 	const musicAllList = (l,t,i) => { 
@@ -77,8 +78,6 @@ export const useMusicstore=defineStore("musicStore",()=>{
 		curPlaylist,
 		curIndex,
 		isplay,
-		curSongdetail,
-		playSongs,
 		play,
 		musicAllList,
 		musicList,
@@ -87,6 +86,7 @@ export const useMusicstore=defineStore("musicStore",()=>{
 		musicSubtract,
 		musicSearch,
 		musicBack,
+		
 		
 	}
 	
