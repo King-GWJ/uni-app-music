@@ -1,5 +1,5 @@
 <script setup>
-	import { defineProps } from 'vue';
+   import { defineProps } from 'vue';
    import CaurPlay from './curplay.vue'
    import {onLoad} from '@dcloudio/uni-app'
    import { SongdetailApi } from '../../base/api/index.js'

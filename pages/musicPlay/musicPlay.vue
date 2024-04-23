@@ -1,3 +1,4 @@
+
 <script setup>
 	import {
 		onLoad
@@ -26,23 +27,6 @@
 		useStore.isPlay
 	}
 	
-// const innerAudioContext = uni.createInnerAudioContext();
-// innerAudioContext.autoplay = true;
-// innerAudioContext.src = 'https://web-ext-storage.dcloud.net.cn/uni-app/ForElise.mp3';
-// innerAudioContext.onPlay(() => {
-//   console.log('开始播放');
-// });
-// innerAudioContext.onError((res) => {
-//   console.log(res.errMsg);
-//   console.log(res.errCode);
-// });
-// innerAudioContext.onEnded(()=>{
-// 	console.log('停止播放');
-// })
-// const play=()=>{
-// 	innerAudioContext.play() 
-// 	innerAudioContext.pause()
-// }
 	
 	
 //播放图片改变
@@ -359,3 +343,4 @@ const playBtn=computed(()=>{
 		}
 	}
 </style>
+
