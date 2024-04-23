@@ -63,7 +63,6 @@ export const useMusicstore=defineStore("musicStore",()=>{
 		musicLove.value = musicList.value[musicIndex.value]
 	}
 	
-
 	//播放
 	const play=()=>{
 		console.log(isplay.value);
@@ -75,7 +74,6 @@ export const useMusicstore=defineStore("musicStore",()=>{
 			audio.play()
 			isplay.value = false
 		}
-		isplay.value = true
 	}
 	return{
 		audio,

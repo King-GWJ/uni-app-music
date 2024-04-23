@@ -39,9 +39,14 @@
 			<p class="select"><image src="../../icon/songlist/icon-load.png"/>下载</p>
 			<p class="select"><image src="../../icon/songlist/icon-xiaoxi.png"/>评论（568）</p>
 			<p class="select"><image src="../../icon/songlist/icon-fx.png"/>分享</p>
-			<p class="select"><image src="../../icon/songlist/icon-singer.png"/>歌手：范倪</p>
-			<p class="select"><image src="../../icon/songlist/icon-create.png"/>创作者：姜帆/浅紫/常伟</p>
-			<p class="select"><image src="../../icon/songlist/icon-zhuanji.png"/>专辑：我都明白</p>
+			<p class="select"><image src="../../icon/songlist/icon-singer.png"/>歌手：{{data.ar.map(item=>item.name).join('/')}}</p>
+			<p class="select"><image src="../../icon/songlist/icon-create.png"/>创作者：</p>
+			<p class="select"><image src="../../icon/songlist/icon-zhuanji.png"/>专辑：{{data.al.name}}</p>
+		    <p class="select"><image src="../../icon/songlist/icon-pu.png"/>求谱/上传乐谱：{{data.alia[0]}}</p>
+			<p class="select"><image src="../../icon/songlist/icon-create.png"/>设为铃声</p>
+			<p class="select"><image src="../../icon/songlist/icon-cart.png"/>单曲购买</p>
+			<p class="select"><image src="../../icon/songlist/icon-car.png"/>音乐礼品卡</p>
+			<p class="select"><image src="../../icon/songlist/icon-shep.png"/>屏蔽歌曲或歌手</p>			
 		</view>
 	  </view>
 	</view>
@@ -86,12 +91,12 @@
 			  .name{
 				  margin: 0 rpx(5);
 				  width:rpx(160);
-				  // background: cadetblue;
 				  p{
 					font-size: rpx(14);
 					display: flex;
 					flex-wrap: warp;
 					align-items: center;
+					margin-bottom: rpx(2);
 				  }
 				  span{
 					  display: block;
@@ -127,12 +132,17 @@
 		  padding:3px 0;
 	  }
 	  .select{
-		  height:rpx(40);
-		  line-height:rpx(40);
-		  // background: skyblue;
+		  height:rpx(35);
+		  line-height:rpx(35);
 		  margin:rpx(5) rpx(10);
 		  display: flex;
 		  align-items: center;
+		  overflow:hidden;
+		  white-space: nowrap;
+		  text-overflow: ellipsis;
+		  -o-text-overflow:ellipsis;
+		  padding:0 rpx(5);
+		  font-size: rpx(14);
 		  image{
 			  width: rpx(22);
 			  height: rpx(22);

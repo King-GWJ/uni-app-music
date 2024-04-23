@@ -13,8 +13,8 @@
 		
 	//返回上一页
 	const backPrve=()=>{
-		uni.navigateBack({
-		  delta: 1 
+		uni.navigateTo({
+		  // url: "/pages/vippage/vippage"
 		});
 	}
 
@@ -22,15 +22,13 @@
 
 
 
-
-
 <template>
 	<view class="musicPlay">
-		<view class="background"><image :src="currSong.al.picUrl" ></image></view>
+		<view class="background"><image :src="useStore.musicLove.al.picUrl" ></image></view>
 		<view class="header">
-			<p @click="backPrve">
+			<!-- <p @click="backPrve">
 				<image src="../../icon/songlist/icon-xiala.png" />
-			</p>
+			</p> -->
 			<view class="bangdan"></view>
 			<p>
 				<image src="../../icon/songlist/icon-fenxiang.png" />
@@ -41,6 +39,8 @@
 		<view class="circle">
 			<view class="outer">
 				<view class="undertone">
+					<!-- <view class="masks"></view>
+					<view class="backImage"><image :src="useStore.musicLove.al.picUrl" ></image></view> -->
 					<view class="images"><image :src="useStore.musicLove.al.picUrl" ></image></view>
 				</view>
 			</view>
@@ -168,7 +168,6 @@
 			top: 20%;
 			position: relative;
 			// border: 1px solid #808080;
-
 		}
 
 		.undertone {
@@ -181,22 +180,48 @@
 			left: 50%;
 			transform: translate(-50%,-50%);
 		}
-
+        .backImage{
+        	width: rpx(240);
+        	height: rpx(240);
+			border-radius: 50%;
+			position: absolute;
+			top: 50%;
+			left: 50%;
+			transform: translate(-50%,-50%);
+			z-index: 1;
+			image{
+				width: rpx(240);
+				height: rpx(240);
+				border-radius: 50%;
+			}
+        }
+		.masks{
+			position: fixed;
+			top: 0;
+			left: 0;
+			width: rpx(240);
+			height: rpx(240);
+			// background: rgba(200, 200, 200, .2);
+			backdrop-filter: blur(30px);
+			z-index: 2;
+			border-radius: 50%;
+			color:red;
+		}
 		.sun {
 			width: rpx(240);
 			height: rpx(240);
 			border-radius: 50%;
 			background: -webkit-linear-gradient(45deg, transParent 35%,
-					rgba(255, 255, 255, 0.2) 45%,
-					rgba(255, 255, 255, 0.3) 50%,
-					rgba(255, 255, 255, 0.2) 55%,
-					transParent);
+						rgba(255, 255, 255, 0.2) 45%,
+						rgba(255, 255, 255, 0.3) 50%,
+						rgba(255, 255, 255, 0.2) 55%,
+						transParent);
 			position: absolute;
-			top: 55%;
+			top: 60%;
 			left: 51%;
 			transform: translate(-50%,-50%);
+			border-radius: 50%;
 		}
-
 		.images {
 			width: rpx(160);
 			height: rpx(160);
@@ -205,13 +230,13 @@
 			top: 50%;
 			left: 50%;
 			transform: translate(-50%,-50%);
-			box-shadow: 0 1px 3px 2px black;
-			z-index: 1;
+			box-shadow: 0 1px 3px 2px lightslategrey;
+			z-index: 3;
 			image{
 				width: rpx(160);
 				height: rpx(160);
 				border-radius: 50%;
-				box-shadow: 0 1px 3px 2px black;
+				box-shadow: 0 1px 3px 2px lightslategrey;
 			}
 		}
 			.image{
@@ -335,8 +360,6 @@
 					height:rpx(27);
 				}
 			}
-				
-			
 		}
 	}
 	footer{
@@ -365,7 +388,12 @@
 
 		image {
 			width: rpx(90);
-			height: rpx(120);
+			height:rpx(150);
+			position: absolute;
+			top: 0;
+			left: 30%;
+			transform-origin: rpx(10) rpx(110);
+			transform: rotate(-10deg);
 		}
 	}
 	

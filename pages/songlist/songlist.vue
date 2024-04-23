@@ -58,7 +58,12 @@
 	  	url: '/pages/recommended/recommended'
 	  })
 	}
-	
+
+	//判断是否有mv
+	// const mv=()=>{
+	// 	return songList.video? '../../icon/songlist/icon-mv.png' : ''
+
+	// }
 
 </script>
 
@@ -101,9 +106,9 @@
 				</view>
 			</view>
 			<view class="list">
-				<view class="item" v-for="(item,index) in songList.tracks"  :key="item.name">
+				<view class="item" v-for="(item,index) in songList.tracks"  :key="item.name"  @click="playPage(item,index)">
 					<view class="num">{{index+1}}</view>
-					<view class="text" @click="playPage(item,index)">
+					<view class="text">
 					   <view class="title">
 						   <view>{{item.name}}</view>
 						   <view class="alia">{{item.alia[0]}}</view>
@@ -173,7 +178,7 @@
 	   
    }
    .main{
-	   height:68%;
+	   height:67%;
 	   .bofang{
 		   height:26%;
 		   position: relative;
