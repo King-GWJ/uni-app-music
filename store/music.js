@@ -118,8 +118,6 @@ export const useMusicstore=defineStore("musicStore",()=>{
 		curPlaylist,
 		curIndex,
 		isplay,
-		curSongdetail,
-		playSongs,
 		play,
 		musicAllList,
 		musicList,

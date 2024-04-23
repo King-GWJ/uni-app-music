@@ -11,6 +11,20 @@
 	const subtract = (num) => {  // 上一首/下一首
 		useStore.musicSubtract(num)
 	}
+	
+		const innerAudioContext = uni.createInnerAudioContext();
+	     // console .1og( innerAudioContext)
+		 innerAudioContext.autoplay=true
+		 innerAudioContext.src="http://m801.music.126.net/20240422122808/5c825f2ffec5f31dff011d45e7b32dc8/jdymusic/obj/wo3DlMOGwrbDjj7DisKw/35341894757/947f/725b/21f6/6abc404fd60ddb8338823db0a410da93.mp3"
+		 innerAudioContext.onPlay(()=>{
+			 console.log('开始播放')
+		 })
+		 innerAudioContext.onError((res)=>{
+		 		 console.log('res.errMsg')
+		 })
+		 const playsss=()=>{
+			 // innerAudioContext.onPlay()
+		 }
 </script>
 
 
@@ -59,7 +73,7 @@
 			 </span>
 			 <view class="code">
 				 <p @click="subtract(-1)"><image src="../../icon/songlist/icon-shangyishou.png"/></p>
-				 <p><image src="../../icon/songlist/icon-bofang.png"/></p>
+				 <p @click="playsss()"><image src="../../icon/songlist/icon-bofang.png"/></p>
 				 <p @click="subtract(1)"><image src="../../icon/songlist/icon-next.png"/></p>
 			 </view>
 			 <span>
@@ -71,7 +85,6 @@
 			 <p><image src="../../icon/songlist/icon-xiazai.png"/></p>
 			 <p><image src="../../icon/songlist/icon-liebiao.png"/></p>
 		 </footer>
-		<!-- <audio src="" ></audio> -->
 	</view>
 </template>
 
