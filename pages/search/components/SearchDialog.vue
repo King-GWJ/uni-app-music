@@ -1,7 +1,12 @@
 <script setup>
+import { ref } from 'vue';
+
+
 	const props = defineProps(['showDialog','detailItem'])
 	const emits = defineEmits(['closeDialog'])
 	
+	
+	console.log(props.detailItem)
 	
 	const fn = (e)=>{
 		e.stopPropagation()
@@ -14,10 +19,109 @@
 	<view class="dialogWrap" v-if="showDialog" @click="emits('closeDialog')">
 		<view class="dialog" @click="fn">
 			<view class="header">
+				<image class="img" :src="props.detailItem.artists[0].img1v1Url" mode=""></image>
+				<view class="info">
+					<view class="name">
+						{{props.detailItem.name}}
+					</view>
+					<view class="artist">
+						{{props.detailItem.artists[0].name}}
+					</view>
+				</view>
 				
 			</view>
 			<view class="content">
-				主题
+				<view class="item">
+					<view class="itemIcon nextPaly">
+					</view>
+					<view class="itemContent">
+						下一首播放
+					</view>
+				</view>
+				<view class="item">
+					<view class="itemIcon like">
+					</view>
+					<view class="itemContent">
+						收藏到歌单
+					</view>
+				</view>
+				<view class="item">
+					<view class="itemIcon download">
+					</view>
+					<view class="itemContent">
+						下载
+					</view>
+				</view>
+				<view class="item">
+					<view class="itemIcon recommend">
+					</view>
+					<view class="itemContent">
+						评论
+					</view>
+				</view>
+				<view class="item">
+					<view class="itemIcon share">
+					</view>
+					<view class="itemContent">
+						分享
+					</view>
+				</view>
+				<view class="item">
+					<view class="itemIcon singer">
+					</view>
+					<view class="itemContent">
+						歌手:&nbsp;&nbsp;{{props.detailItem.artists[0].name}}
+					</view>
+				</view>
+				<view class="item">
+					<view class="itemIcon albums">
+					</view>
+					<view class="itemContent">
+						专辑:&nbsp;&nbsp;{{props.detailItem.album.name}}
+					</view>
+				</view>
+				<view class="item">
+					<view class="itemIcon cloud">
+					</view>
+					<view class="itemContent">
+						云推歌
+					</view>
+				</view>
+				<view class="item">
+					<view class="itemIcon buy">
+					</view>
+					<view class="itemContent">
+						单曲购买
+					</view>
+				</view>
+				<view class="item">
+					<view class="itemIcon card">
+					</view>
+					<view class="itemContent">
+						音乐礼品卡
+					</view>
+				</view>
+				<view class="item">
+					<view class="itemIcon music">
+					</view>
+					<view class="itemContent">
+						更多乐谱
+					</view>
+				</view>
+				<view class="item">
+					<view class="itemIcon ding">
+					</view>
+					<view class="itemContent">
+						设为铃声
+					</view>
+				</view>
+				<view class="item">
+					<view class="itemIcon close">
+					</view>
+					<view class="itemContent">
+						屏蔽歌手或歌曲
+					</view>
+				</view>
 			</view>
 		</view>
 	</view>
@@ -46,12 +150,116 @@
 	border-top-right-radius:rpx(20);
 	border-top-left-radius:rpx(20);
 	.header{
-		height: rpx(80);
+		height: rpx(50);
+		display: flex;
+		padding: rpx(20);
+		border-bottom: 1px solid rgb(234,234,234);
+		.img{
+			width: rpx(60);
+			height: rpx(60);
+			border-radius: rpx(5);
+		}
+		.info{
+			margin-left: rpx(10);
+			.name{
+				
+			}
+			.artist{
+				font-size: rpx(13);
+				margin-top: rpx(5);
+				color: rgb(153,153,153);
+			}
+		}
+		
 	}
 	.content{
 		flex: 1;
+		display: flex;
+		flex-direction: column;
+		overflow: auto;
+		.item{
+			display: flex;
+			align-items: center;
+			height: rpx(50);
+			flex-shrink: 0;
+			font-size: rpx(18);
+			color: rgb(51,51,52);
+			padding: 0 rpx(10);
+			.itemIcon{
+				width: rpx(22);
+				height: rpx(22);
+				margin-right: rpx(10);
+			}
+		}
 	}
 }
+
+.nextPaly{
+	background: url(../../../icon/nextPlay.svg) no-repeat center;
+	background-size: rpx(18);
+}
+
+.like{
+	background: url(../../../icon/like.svg) no-repeat center;
+	background-size: contain;
+}
+
+.download{
+	background: url(../../../icon/download.svg) no-repeat center;
+	background-size: contain;
+}
+
+.recommend{
+	background: url(../../../icon/recommend.svg) no-repeat center;
+	background-size: contain;
+}
+
+.share{
+	background: url(../../../icon/share.svg) no-repeat center;
+	background-size: rpx(18);
+}
+
+.singer{
+	background: url(../../../icon/singer.svg) no-repeat center;
+	background-size: contain;
+}
+
+
+
+.albums{
+	background: url(../../../icon/albums.svg) no-repeat center;
+	background-size: contain;
+}
+
+.cloud{
+	background: url(../../../icon/cloud.svg) no-repeat center;
+	background-size: contain;
+}
+.buy{
+	background: url(../../../icon/buy.svg) no-repeat center;
+	background-size: rpx(18);
+}
+.card{
+	background: url(../../../icon/card.svg) no-repeat center;
+	background-size: contain;
+}
+.music{
+	width: rpx(100);
+	height: rpx(100);
+	background: url(../../../icon/music.svg) no-repeat center;
+	background-size: rpx(45);
+}
+
+.ding{
+	background: url(../../../icon/ding.svg) no-repeat center;
+	background-size: contain;
+}
+
+.close{
+	background: url(../../../icon/close.svg) no-repeat center;
+	background-size: contain;
+}
+
 
 
 </style>
