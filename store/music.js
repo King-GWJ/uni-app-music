@@ -77,6 +77,7 @@ export const useMusicstore=defineStore("musicStore",()=>{
 			audio.play()
 			isplay.value = false
 		}
+		isplay.value = true
 	}
 	
 	//切换播放模式

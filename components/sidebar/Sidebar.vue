@@ -6,8 +6,8 @@
     import {logoutApi} from "../../base/api";
 
     const userStore = useUserStore()
-    const profile = userStore.profile;
 
+    const profile = ref(userStore.profile)
     const showLeft = ref(null)
     const isLogin = ref(false)
     const pageLogin = '/pages/login/login'
@@ -16,8 +16,8 @@
 
     onShow(() => {
         isLogin.value = !!curCookie;
-        if(!profile) {
-            userStore.getAccount()
+        if (!profile.value ) {
+            profile.value = userStore.setProfileData()
         }
     })
     const showDrawer = () => {
@@ -37,6 +37,7 @@
         logoutApi().then(res => {
             if (res.code === 200) {
                 uni.setStorageSync('curCookie', "")
+                uni.setStorageSync('profile', "")
                 isLogin.value = false
                 closeDrawer()
             }

@@ -12,15 +12,16 @@
     const pageLogin = '/pages/login/login'
 
     const userStore = useUserStore()
-    const profile = userStore.profile;
+
+    const profile = ref(userStore.profile)
     const isLogin = ref(false)
     const sidebar = ref(null)
     const tabIndex = ref(0)
 
     onShow(() => {
         isLogin.value = !!curCookie;
-        if(!profile) {
-            userStore.getAccount()
+        if (!profile.value) {
+            profile.value = userStore.setProfileData()
         }
     })
 

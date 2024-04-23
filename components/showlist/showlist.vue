@@ -1,21 +1,31 @@
 <script setup>
    import { defineProps } from 'vue';
    import CaurPlay from './curplay.vue'
+   import Setting from "../../components/showlist/setting.vue"
    import {onLoad} from '@dcloudio/uni-app'
    import { SongdetailApi } from '../../base/api/index.js'
-   import Showlist from "../../components/showlist/showlist.vue"
-   import Setting from "../../components/showlist/setting.vue"
    import { ref } from "vue";
    import { useMusicstore } from '../../store/music.js'
    
+   
    const showList=false //例表显示隐藏
    const selectSong=ref([])
+   const useStore=useMusicstore ()
+   const list=useStore.musicList
+   console.log(list)
+   console.log(useStore.musicIndex)
+   console.log(useStore.musicLove)
    
+
    
-   const props = defineProps({
-     clickItem: Array
-   })
-   
+   //跳转播放页
+   const playPage=(item,index)=>{
+     console.log(item.id)
+     useStore.musicAllList(songList.value.tracks,item,index)
+     uni.navigateTo({
+   	 url: `/pages/musicPlay/musicPlay?id=${item.id}&index=${index}`
+     })
+   }
    
    
 </script>
@@ -23,7 +33,7 @@
 
 <template>
 	<view>
-		<view class="footer">
+		<view class="footer" @click="playPage">
 			<view class="circle">
 				<view class="img"></view>
 			</view>
