@@ -59,6 +59,7 @@ export const useMusicstore=defineStore("musicStore",()=>{
 			musicIndex.value = 0
 		}
 		musicLove.value = musicList.value[musicIndex.value]
+		// audio.src=musicLove.value
 	}
 	
 
