@@ -1,7 +1,7 @@
 <script setup>
-    import {qrCreateApi, qrKeyApi} from "../../base/api";
+    import {qrCreateApi, qrKeyApi} from "../../../base/api";
     import {ref} from "vue";
-    import {useUserStore} from "../../store/user";
+    import {useUserStore} from "../../../store/user";
     const userStore = useUserStore()
     const img = ref("")
 
