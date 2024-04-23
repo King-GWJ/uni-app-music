@@ -13,9 +13,9 @@
 <style lang="scss">
     // @import "/uni_modules/uni-scss/index.scss";
     /*每个页面公共css */
-    page, uni-page-body {
+    page, uni-page-body,uni-page {
+        width: 100%;
         height: 100%;
     }
-
 
 </style>

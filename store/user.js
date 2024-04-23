@@ -34,6 +34,7 @@ export const useUserStore = defineStore('user', () => {
         userAccount().then(res=>{
             if(res.code === 200){
                 userDetailApi(res.account.id).then(res=>{
+
                     setAccount(res.profile)
                 })
             }
