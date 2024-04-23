@@ -298,3 +298,13 @@ export const songUrlApi = (id,level) => {
   })
 }
 
+// 用户关注列表
+export const userFollowApi = (val) => {
+  return request({
+    url: '/user/follows',
+    data: {
+      uid: val.uid,
+    }
+  })
+}
+
