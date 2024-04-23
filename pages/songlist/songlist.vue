@@ -26,7 +26,7 @@
 	})
 
 	//跳转vip界面
-	const goVip = (id) => {
+	const goVip = () => {
 	  uni.navigateTo({
 		url: "/pages/vippage/vippage"
 		
@@ -118,7 +118,7 @@
 				</view>
 			</view>
 			<!-- 底部 -->
-			<Showlist />
+			<Showlist  :clickItem="itemSong"/>
 		<!-- 每首歌曲右侧设置... -->
 		</view>
 		<Setting v-if="float"  @click.stop="float=false" :itemSong="itemSong"/>

@@ -5,9 +5,6 @@ import {
 	ref
 } from 'vue'
 import {
-	switchTab
-} from '/base/utils'
-import {
 	emailLoginApi,
 	phoneLoginApi,
 	loginStatusApi,
@@ -22,69 +19,59 @@ export const useUserStore = defineStore('user', () => {
 	//用户信息
 	const profile = ref(null)
 
-	//获取登录状态
-	const getProfile = () => {
-		loginStatusApi().then(res => {
-			if (res.code === 200) {
-				setAccount(res.data.profile)
-			}
-		})
-	}
+    //获取登录状态
+    const getProfile = () => {
+        loginStatusApi().then(res => {
+            if (res.code === 200) {
+                storeData(res)
+            }
+        })
+    }
 
-	const setAccount = (value) => {
-		profile.value = value
-	}
+    //获取用户信息
+    const getAccount = () => {
+        userAccount().then(res => {
+            if (res.code === 200 && res.account) {
+                userDetailApi(res.account.id).then(res => {
+                    storeData(res)
+                })
+            }
+        })
+    }
 
+    //登录
+    const getLogin = (type, account = '', password = '') => {
+        switch (type) {
+            case 'email':
+                emailLoginApi(account, password).then(res => {
+                    storeData(res)
+                })
+                break;
+            case 'phone':
+                phoneLoginApi(account, password).then(res => {
+                    storeData(res)
+                })
+                break;
+            case 'anonimous':
+                anonimousLoginApi().then(res => {
+                    if (res.code === 200) {
+                        storeData(res)
+                    }
+                })
+                break;
+        }
+    }
 
-	//获取用户信息
-	const getAccount = () => {
-		userAccount().then(res => {
-			if (res.code === 200) {
-				userDetailApi(res.account.id).then(res => {
-					setAccount(res.profile)
-				})
-			}
-		})
-	}
-
-
-	//登录
-	const getLogin = (type, account = '', password = '') => {
-		switch (type) {
-			case 'email':
-				emailLoginApi(account, password).then(res => {
-					storeData(res)
-				})
-				break;
-			case 'phone':
-				phoneLoginApi(account, password).then(res => {
-					storeData(res)
-				})
-				break;
-			case 'anonimous':
-				anonimousLoginApi().then(res => {
-					if (res.code === 200) {
-						uni.setStorageSync('curCookie', res.cookie)
-						profile.value = res
-						switchTab("/pages/index/index")
-					}
-				})
-				break;
-
-		}
-	}
-
-	//二维码登录
-	const getCheckQr = (key) => {
-		const interval = setInterval(() => {
-			qrCheckApi(key).then(res => {
-				if (res.code === 803) {
-					uni.setStorageSync('curCookie', res.cookie)
-					clearInterval(interval)
-					switchTab("/pages/index/index")
-				}
-			})
-		}, 2000);
+    //二维码登录
+    const getCheckQr = (key) => {
+        const interval = setInterval(() => {
+            qrCheckApi(key).then(res => {
+                if (res.code === 803) {
+                    storeData(res)
+                    clearInterval(interval)
+                }
+            })
+        }, 2000);
 
 		setTimeout(() => {
 			if (interval) {
@@ -93,6 +80,7 @@ export const useUserStore = defineStore('user', () => {
 		}, 30000)
 	}
 
+<<<<<<< HEAD
 	//存储用户信息
 	    const storeData = (res) => {
 	        if (res.cookie) {
@@ -128,3 +116,40 @@ export const useUserStore = defineStore('user', () => {
 	        setProfileData
 	    }
 	});
+=======
+    //存储用户信息
+    const storeData = (res) => {
+        if (res.cookie) {
+            uni.setStorageSync('curCookie', res.cookie)
+        }
+
+        if (res.profile) {
+            profile.value = res.profile
+            uni.setStorageSync('profile', res.profile)
+        }
+        uni.navigateBack()
+    }
+
+    const setProfileData = () => {
+        if (profile.value) {
+            return profile.value
+        } else {
+            if (uni.getStorageSync("profile")) {
+                return uni.getStorageSync("profile")
+            } else {
+                getAccount()
+            }
+        }
+        return ''
+    }
+
+    return {
+        profile,
+        getProfile,
+        getLogin,
+        getCheckQr,
+        getAccount,
+        setProfileData
+    }
+});
+>>>>>>> foreshow
