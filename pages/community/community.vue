@@ -34,19 +34,20 @@
 
 
 	const userStore = useUserStore()
+	const profile = ref(userStore.profile)
 	const Follows = ref([])
 	onShow(() => {
-		userStore.getAccount()
+		if (!profile.value ) {
+		    profile.value = userStore.setProfileData()
+		}
 	})
-	watch(() => userStore.profile, () => {
-		const profile = userStore.profile
 		userFollowApi({
-			uid: profile.userId
+			uid: profile.value.userId
 		}).then(res => {
 			console.log(res);
 			Follows.value = res.follow
 		})
-	})
+
 </script>
 
 <style lang="scss">

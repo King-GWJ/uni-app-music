@@ -94,19 +94,37 @@ export const useUserStore = defineStore('user', () => {
 	}
 
 	//存储用户信息
-	const storeData = (res) => {
-		if (res.code === 200) {
-			uni.setStorageSync('curCookie', res.cookie)
-			setAccount(res.profile)
-			switchTab("/pages/index/index")
-		}
-	}
-
-	return {
-		profile,
-		getProfile,
-		getLogin,
-		getCheckQr,
-		getAccount
-	}
-});
+	    const storeData = (res) => {
+	        if (res.cookie) {
+	            uni.setStorageSync('curCookie', res.cookie)
+	        }
+	
+	        if (res.profile) {
+	            profile.value = res.profile
+	            uni.setStorageSync('profile', res.profile)
+	        }
+	        // uni.navigateBack()
+	    }
+	
+	    const setProfileData = () => {
+	        if (profile.value) {
+	            return profile.value
+	        } else {
+	            if (uni.getStorageSync("profile")) {
+	                return uni.getStorageSync("profile")
+	            } else {
+	                getAccount()
+	            }
+	        }
+	        return ''
+	    }
+	
+	    return {
+	        profile,
+	        getProfile,
+	        getLogin,
+	        getCheckQr,
+	        getAccount,
+	        setProfileData
+	    }
+	});
