@@ -6,9 +6,10 @@ import { ref } from 'vue';
 	const emits = defineEmits(['closeDialog'])
 	
 	
-	console.log(props.detailItem)
+	
 	
 	const fn = (e)=>{
+		console.log(props.detailItem)
 		e.stopPropagation()
 	}
 </script>
@@ -185,6 +186,7 @@ import { ref } from 'vue';
 			font-size: rpx(18);
 			color: rgb(51,51,52);
 			padding: 0 rpx(10);
+			
 			.itemIcon{
 				width: rpx(22);
 				height: rpx(22);
