@@ -36,7 +36,7 @@
 	//跳转播放页
 	const playPage=(item,index)=>{
 	  useStore.musicAllList(songList.value.tracks,item,index)
-	  uni.navigateTo({
+	  uni.switchTab({
 		url: `/pages/musicPlay/musicPlay?id=${item.id}&index=${index}`
 	  })
 	}

@@ -39,9 +39,6 @@
 	<view class="musicPlay">
 		<view class="background"></view>
 		<view class="header">
-			<p @click="backPrve">
-				<image src="../../icon/songlist/icon-xiala.png" />
-			</p>
 			<view class="bangdan"></view>
 			<p>
 				<image src="../../icon/songlist/icon-fenxiang.png" />
@@ -81,8 +78,10 @@
 			<view class="time">100</view>
 		</view>
 		<view class="play">
-			<span>
-				<image src="../../icon/songlist/icon-danquxunhuan.png" />
+			<span @click="useStore.musicToggle()">
+				<image  v-if="useStore.musicMode === 1 " src="../../icon/songlist/icon-meiti-suijibofang.png" />
+				<image  v-else-if="useStore.musicMode === 2 " src="../../icon/songlist/icon-danquxunhuan.png" />
+				<image  v-else-if="useStore.musicMode === 3 " src="../../icon/songlist/icon-light.png" />
 			</span>
 			<view class="code">
 				<p @click="subtract(-1)">
