@@ -11,19 +11,12 @@
    const showList=false //例表显示隐藏
    const selectSong=ref([])
    const useStore=useMusicstore ()
-   const list=useStore.musicList
-   console.log(list)
-   console.log(useStore.musicIndex)
-   console.log(useStore.musicLove)
-   
-
+   console.log(useStore.musicLove) //当前歌曲
    
    //跳转播放页
-   const playPage=(item,index)=>{
-     console.log(item.id)
-     useStore.musicAllList(songList.value.tracks,item,index)
-     uni.navigateTo({
-   	 url: `/pages/musicPlay/musicPlay?id=${item.id}&index=${index}`
+   const playPage=()=>{
+     uni.switchTab({
+   	 url: `/pages/musicPlay/musicPlay`
      })
    }
    
@@ -35,9 +28,9 @@
 	<view>
 		<view class="footer" @click="playPage">
 			<view class="circle">
-				<view class="img"></view>
+				<view class="img"><image :src="useStore.musicLove.al.picUrl" ></image></view>
 			</view>
-			<view class="name">1111111111111111111111111111111111</view>
+			<view class="name">{{useStore.musicLove.name}}</view>
 			<p class="logo"><image src="../../icon/songlist/icon-bfang.png"/></p>
 			<p class="logo2"><image src="../../icon/songlist/icon-mus.png"/></p>
 
@@ -70,6 +63,11 @@
 			height:rpx(25);
 			border-radius: 50%;
 			background: lightblue;
+			image{
+				width:100%;
+				height:100%;
+				border-radius: 50%;
+			}
 		}
 	}
 	
@@ -80,6 +78,7 @@
 		white-space: nowrap;
 		text-overflow: ellipsis;
 		-o-text-overflow:ellipsis;
+		font-size: rpx(14);
 	}
 	.logo{
 		width:rpx(25);

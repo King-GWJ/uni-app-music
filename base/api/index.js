@@ -143,6 +143,16 @@ export const userDetailApi = (uid) => {
 		}
 	})
 }
+// 获取用户歌单
+export const userPlayListApi = (uid) => {
+	return request({
+		url: '/user/playlist',
+		method: 'GET',
+		data: {
+			uid,
+		}
+	})
+}
 
 //轮播图
 export const bannerApi = () => {

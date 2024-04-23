@@ -1,6 +1,6 @@
 <script setup>
     import {ref} from "vue";
-    import {bannerApi, logoutApi, newsongApi, personalizedApi} from '/base/api'
+    import {bannerApi, toplistApi, newsongApi, personalizedApi} from '/base/api'
     import {navigateTo} from '/base/utils'
     import navIcons from "/base/data/navIcons";
     import Sidebar from '../../components/sidebar/Sidebar.vue'
@@ -12,6 +12,7 @@
 
     const banners = ref([])
     const playListTJ = ref([])
+    const topListTJ = ref([])
     const musicList = ref([])
     const sidebar = ref(null)
 
@@ -22,6 +23,10 @@
 
     personalizedApi().then(res => {
         playListTJ.value = res.result
+    })
+
+    toplistApi().then(res => {
+        topListTJ.value = res.list
     })
 
     newsongApi(12).then(res => {
@@ -93,6 +98,17 @@
                 </view>
             </uni-section>
 
+            <uni-section type="line" title="排行榜">
+                <view class="playlist">
+                    <view class="playlist-item" v-for="item in topListTJ" :key="item.id" @click="getDetail(item.id)">
+                        <image :src="item.coverImgUrl" mode="widthFix"></image>
+                        <view class="playlist-item-name">
+                            {{ item.name }}
+                        </view>
+                    </view>
+                </view>
+            </uni-section>
+
         </view>
         <Sidebar ref="sidebar" />
     </view>
@@ -101,7 +117,7 @@
 <style lang="scss" scoped>
     .content {
         position: relative;
-        padding-bottom: 100rpx;
+        padding-bottom: 95rpx;
         .header {
             padding: 30rpx;
             display: flex;
@@ -200,25 +216,28 @@
                 flex-wrap: nowrap;
                 overflow: auto;
                 padding: 0 30rpx;
-
+                box-sizing: border-box;
                 .musiclist {
                     display: flex;
                     flex-direction: column;
-
                     .musiclist-item {
+                        width: 300rpx;
                         display: flex;
                         align-items: center;
                         margin-right: 20rpx;
                         margin-bottom: 15rpx;
 
                         image {
-                            width: 80rpx;
-                            height: 80rpx;
+                            width: 150rpx;
+                            height: 150rpx;
                             margin-right: 15rpx;
                             border-radius: 10rpx;
+                            background: #FFFFFF;
+
                         }
 
                         .musiclist-item-name {
+                            width: 100%;
                             font-size: 24rpx;
                             overflow: hidden;
                             white-space: nowrap;

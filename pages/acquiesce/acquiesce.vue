@@ -28,14 +28,16 @@
 			<view class="allImg">
 				<image src="../../icon/songlist/red-bofang.png" mode=""></image>
 			</view>
-			<view class="allText">
+			<view class="allText" @click="playAll(list,list[0],0)">
 				播放全部
 				<view class="">
 					VIP 歌曲免费畅听
 				</view>
 			</view>
-			<view class="allLiebiao">
-				<image src="../../icon/songlist/icon-danquxunhuan.png" mode=""></image>
+			<view class="allLiebiao" @click="useStore.musicToggle()">
+				<image  v-if="useStore.musicMode === 1 " src="../../icon/songlist/icon-meiti-suijibofang.png" />
+				<image  v-else-if="useStore.musicMode === 2 " src="../../icon/songlist/icon-danquxunhuan.png" />
+				<image  v-else-if="useStore.musicMode === 3 " src="../../icon/songlist/icon-light.png" />
 			</view>
 			<view class="allLiebiao">
 				<image src="../../icon/songlist/icon-liebiao.png" mode=""></image>
@@ -90,8 +92,7 @@
 	const day = currentDate.getDate()
 	const toggle = (l,t,i) => {
 		useStore.musicAllList(l,t,i)
-		console.log(useStore.musicAllList);
-		uni.navigateTo({
+		uni.switchTab({
 			url: `/pages/musicPlay/musicPlay?id=${t.id}`,
 		});
 	}
@@ -109,6 +110,12 @@
 	const itemDetail = (f,t) => {
 		itemSong.value=t
 		float.value=!f
+	}
+	const playAll = (l,t,i) => {
+		useStore.musicAllList(l,t,i)
+		uni.switchTab({
+			url: `/pages/musicPlay/musicPlay?id=${t.id}`,
+		})
 	}
 </script>
 

@@ -1,29 +1,29 @@
 import {
-	defineStore
+    defineStore
 } from 'pinia'
 import {
-	ref
+    ref
 } from 'vue'
 import {
-	emailLoginApi,
-	phoneLoginApi,
-	loginStatusApi,
-	anonimousLoginApi,
-	qrCheckApi,
-	userAccount,
-	userDetailApi
+    emailLoginApi,
+    phoneLoginApi,
+    loginStatusApi,
+    anonimousLoginApi,
+    qrCheckApi,
+    userAccount,
+    userDetailApi
 } from '/base/api'
 
 export const useUserStore = defineStore('user', () => {
 
-	//用户信息
-	const profile = ref(null)
+    //用户信息
+    const profile = ref(null)
 
     //获取登录状态
     const getProfile = () => {
         loginStatusApi().then(res => {
             if (res.code === 200) {
-                storeData(res)
+                storeData(res, false)
             }
         })
     }
@@ -33,7 +33,7 @@ export const useUserStore = defineStore('user', () => {
         userAccount().then(res => {
             if (res.code === 200 && res.account) {
                 userDetailApi(res.account.id).then(res => {
-                    storeData(res)
+                    storeData(res.false)
                 })
             }
         })
@@ -44,18 +44,18 @@ export const useUserStore = defineStore('user', () => {
         switch (type) {
             case 'email':
                 emailLoginApi(account, password).then(res => {
-                    storeData(res)
+                    storeData(res, true)
                 })
                 break;
             case 'phone':
                 phoneLoginApi(account, password).then(res => {
-                    storeData(res)
+                    storeData(res, true)
                 })
                 break;
             case 'anonimous':
                 anonimousLoginApi().then(res => {
                     if (res.code === 200) {
-                        storeData(res)
+                        storeData(res, true)
                     }
                 })
                 break;
@@ -67,21 +67,21 @@ export const useUserStore = defineStore('user', () => {
         const interval = setInterval(() => {
             qrCheckApi(key).then(res => {
                 if (res.code === 803) {
-                    storeData(res)
+                    storeData(res, true)
                     clearInterval(interval)
                 }
             })
         }, 2000);
 
-		setTimeout(() => {
-			if (interval) {
-				clearInterval(interval)
-			}
-		}, 30000)
-	}
+        setTimeout(() => {
+            if (interval) {
+                clearInterval(interval)
+            }
+        }, 30000)
+    }
 
     //存储用户信息
-    const storeData = (res) => {
+    const storeData = (res, isLogin) => {
         if (res.cookie) {
             uni.setStorageSync('curCookie', res.cookie)
         }
@@ -90,7 +90,10 @@ export const useUserStore = defineStore('user', () => {
             profile.value = res.profile
             uni.setStorageSync('profile', res.profile)
         }
-        uni.navigateBack()
+
+        if(isLogin){
+            uni.navigateBack()
+        }
     }
 
     const setProfileData = () => {
@@ -111,7 +114,6 @@ export const useUserStore = defineStore('user', () => {
         getProfile,
         getLogin,
         getCheckQr,
-        getAccount,
         setProfileData
     }
 });

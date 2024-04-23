@@ -56,7 +56,7 @@
 
             .iden {
                 width: 30rpx;
-                height: 8rpx;
+                height: 7rpx;
                 border-radius: 10rpx;
                 margin-top: 5rpx;
             }
