@@ -5,7 +5,9 @@ import { ref } from 'vue';
 	const props = defineProps(['showDialog','detailItem'])
 	const emits = defineEmits(['closeDialog'])
 	
-	
+	const nextPlay()=>{
+		
+	}
 	
 	
 	const fn = (e)=>{
@@ -32,7 +34,7 @@ import { ref } from 'vue';
 				
 			</view>
 			<view class="content">
-				<view class="item">
+				<view class="item" @click="nextPlay">
 					<view class="itemIcon nextPaly">
 					</view>
 					<view class="itemContent">
