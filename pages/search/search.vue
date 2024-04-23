@@ -92,7 +92,7 @@
 
 	const goPlay = (item,id) => {
 		musicStore.musicSearch(item,id)
-		uni.navigateTo({
+		uni.switchTab({
 			url: `/pages/musicPlay/musicPlay?id=${id}`
 		})
 	}
