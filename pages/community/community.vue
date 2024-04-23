@@ -7,7 +7,7 @@
 				</span>
 				<view class="name">
 					<text>{{item.nickname}}</text>
-					<image :src="(item.vipRights.associator.iconUrl || item.avatarDetail.identityIconUrl)" mode=""></image>
+					<image :src="item.vipRights.associator.iconUrl " mode=""></image>
 				</view>
 			</view>
 			<view class="">
@@ -34,19 +34,23 @@
 
 
 	const userStore = useUserStore()
+	const profile = ref(userStore.profile);
 	const Follows = ref([])
 	onShow(() => {
-		userStore.getAccount()
+		console.log(profile.value);
+		if(!profile.value) {
+		    profile.value = userStore.setProfileData()
+		}
 	})
-	watch(() => userStore.profile, () => {
-		const profile = userStore.profile
-		userFollowApi({
-			uid: profile.userId
-		}).then(res => {
-			console.log(res);
-			Follows.value = res.follow
-		})
+	userFollowApi({
+		uid: profile.value.userId
+	}).then(res => {
+		console.log(res);
+		Follows.value = res.follow
 	})
+	// watch(() => userStore.profile, () => {
+		
+	// })
 </script>
 
 <style lang="scss">
