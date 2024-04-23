@@ -43,9 +43,11 @@ export const useMusicstore=defineStore("musicStore",()=>{
 	}
 	
 	// 监听音乐数组改变获取音乐播放的rul
-	const musicUrl = watch(musicIndex,(newValue,oldValue) => {
+	const musicUrl = watch(musicLove,(newValue,oldValue) => {
 		songUrlApi(musicList.value[musicIndex.value].id,'standard').then(res => {
 			musicBack.value = res.data[0].url
+			audio.src=musicBack.value
+			audio.autoplay = true;
 			console.log(musicBack);
 		})
 	})
@@ -65,15 +67,15 @@ export const useMusicstore=defineStore("musicStore",()=>{
 
 	//播放
 	const play=()=>{
-		if(audio.pushed){
-			audio.play()
-			isplay.value=true
+		console.log(!audio.paused);
+		if(!audio.paused){
+			audio.pause()
+			isplay.value = false
 		}else{
-			audio.pushe()
-			isplay.value=false
+			audio.play()
 		}
+		isplay.value = true
 	}
-	
 	return{
 		audio,
 		curPlaylist,

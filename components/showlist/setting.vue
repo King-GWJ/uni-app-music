@@ -11,10 +11,8 @@
 	const props = defineProps({
 	  itemSong: Object,
 	});
-
-	console.log(props.itemSong)
-	
-	
+    data.value=props.itemSong
+	console.log(data)
 	
 	
 </script>
@@ -24,10 +22,10 @@
 	  <view class="showlist">
 	    <view class="showtop">
 	      <view class="text">
-	        <view class="cover"><image/></view>
-			<view class="name">
-				<p>歌曲：</p>
-				<span>111111</span>
+	        <view class="cover"><image :src="data.al.picUrl"/></view>
+			<view class="name"> 
+				<p><h3>歌曲:</h3>{{data.name}}</p>
+				<span>{{data.ar.map(item=>item.name).join('/')}}</span>
 			</view>
 			<view class="vip">vip仅￥0.06/天</view>
 	      </view>
@@ -80,8 +78,9 @@
 				  border-radius: rpx(8);
 				  background: royalblue;
 				  image{
-					  width:rpx(55);
-					  height:rpx(55);
+					  width:100%;
+					  height:100%;
+					  border-radius: rpx(8);
 				  }
 			  }
 			  .name{
@@ -92,6 +91,7 @@
 					font-size: rpx(14);
 					display: flex;
 					flex-wrap: warp;
+					align-items: center;
 				  }
 				  span{
 					  display: block;
@@ -134,8 +134,8 @@
 		  display: flex;
 		  align-items: center;
 		  image{
-			  width: rpx(25);
-			  height: rpx(25);
+			  width: rpx(22);
+			  height: rpx(22);
 			  margin:0 rpx(5);
 		  }
 	  }
