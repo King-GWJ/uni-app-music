@@ -2,10 +2,10 @@
     import {onShow} from '@dcloudio/uni-app'
     import Sidebar from "../../components/sidebar/Sidebar.vue";
     import TabToggle from "../../components/tab/TabToggle.vue";
-    import {ref} from "vue";
+    import {ref, watch} from "vue";
     import {navigateTo} from "../../base/utils";
     import {useUserStore} from "../../store/user";
-
+    import {userPlayListApi} from "../../base/api";
     const curCookie = uni.getStorageSync("curCookie");
 
     const pageSearch = '/pages/search/search'
@@ -17,12 +17,19 @@
     const isLogin = ref(false)
     const sidebar = ref(null)
     const tabIndex = ref(0)
+    const playList = ref([])
 
     onShow(() => {
         isLogin.value = !!curCookie;
         if (!profile.value) {
             profile.value = userStore.setProfileData()
         }
+    })
+
+    watch(profile,()=>{
+        userPlayListApi(profile.value?.userId).then(res=>{
+            playList.value = res.playlist
+        })
     })
 
     const tabList = ref([
@@ -62,13 +69,19 @@
             </view>
             <view class="connect">
                 <TabToggle :tabList="tabList" @tabIndexEvent="getTabIndex" />
-                <view v-if="tabIndex === 0">
-                    音乐
+                <view v-if="tabIndex === 0" class="view">
+                    <uni-list :border="false" v-for="(item,index) in playList" :key="index">
+                        <uni-list-chat
+                            :title="item.name"
+                            to="/pages/acquiesce/acquiesce?id="
+                            :avatar="item.coverImgUrl"
+                            :note='item.trackCount+"首"' ></uni-list-chat>
+                    </uni-list>
                 </view>
-                <view v-if="tabIndex === 1">
+                <view v-if="tabIndex === 1" class="view">
                     播客
                 </view>
-                <view v-if="tabIndex === 2">
+                <view v-if="tabIndex === 2" class="view">
                     动态
                 </view>
 
@@ -82,11 +95,9 @@
 
 <style lang="scss" scoped>
     .content {
-        width: 100%;
-        height: 100%;
+        padding-bottom: 95rpx;
         position: relative;
         background-color: rgba(125, 118, 124, 0.9);
-
         .header {
             display: flex;
             width: 100%;
@@ -99,7 +110,6 @@
         .main {
             width: 100%;
             height: 100%;
-
             .login {
                 display: flex;
                 flex-direction: column;
@@ -118,10 +128,12 @@
 
             .connect {
                 width: 100%;
-                height: 100%;
                 background-color: #FFFFFF;
-                border-radius: 40rpx 40rpx 0;
+                border-radius: 40rpx 40rpx 0 0;
                 margin-top: 100rpx;
+                .view{
+                    min-height: 800rpx;
+                }
             }
         }
 
