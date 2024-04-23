@@ -35,6 +35,7 @@ export const useUserStore = defineStore('user', () => {
 		profile.value = value
 	}
 
+<<<<<<< HEAD
 	//获取用户信息
 	const getAccount = () => {
 		userAccount().then(res => {
@@ -45,6 +46,19 @@ export const useUserStore = defineStore('user', () => {
 			}
 		})
 	}
+=======
+    //获取用户信息
+    const getAccount = () => {
+        userAccount().then(res=>{
+            if(res.code === 200){
+                userDetailApi(res.account.id).then(res=>{
+                    console.log("用户信息:",res)
+                    setAccount(res.profile)
+                })
+            }
+        })
+    }
+>>>>>>> foreshow
 
 	//登录
 	const getLogin = (type, account = '', password = '') => {

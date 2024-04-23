@@ -42,11 +42,11 @@
 			</view>
 		</view>
 		<view class="musicList">
-			<view class="music" v-for="(item,index) in list" :key="item.id" @click="toggle(list,item,index)">
+			<view class="music" v-for="(item,index) in list" :key="item.id" >
 				<view class="musicImg">
 					<image :src="item.al.picUrl" mode=""></image>
 				</view>
-				<view class="musicText">
+				<view class="musicText" @click="toggle(list,item,index)">
 					<view class="textName">
 						{{item.name}}
 					</view>
@@ -65,12 +65,13 @@
 				<view v-if="item.mv" class="musicMv">
 					<image src="../../icon/songlist/incon-blackbofang.png" mode=""></image>
 				</view>
-				<view class="musicIcon">
+				<view class="musicIcon" @click="itemDetail(float,item)" >
 					<image src="../../icon/songlist/icon-shengl.png" mode="widthFix"></image>
 				</view>
 				
 			</view>
 		</view>
+		<Setting v-if="float"  @click.stop="float=false" :itemSong="itemSong"/>
 	</view>
 </template>
 
@@ -79,8 +80,11 @@
 	import { ref } from 'vue'
 	import { songsApi, loginStatusApi,trackAllApi } from '../../base/api/index.js'
 	import { useMusicstore } from '../../store/music.js'
+	import Setting from "../../components/showlist/setting.vue"
 	const useStore = useMusicstore()
 	const list = ref([])
+	const float = ref(false)
+	const itemSong = ref({})
 	const currentDate = new Date()
 	const month = currentDate.getMonth() + 1
 	const day = currentDate.getDate()
@@ -102,7 +106,10 @@
 			})
 		}	
 	})
-
+	const itemDetail = (f,t) => {
+		itemSong.value=t
+		float.value=!f
+	}
 </script>
 
 <style lang="scss" scoped>

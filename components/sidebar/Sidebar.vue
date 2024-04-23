@@ -4,6 +4,7 @@
     import {navigateTo} from '/base/utils'
     import {useUserStore} from "../../store/user";
     import {logoutApi} from "../../base/api";
+
     const userStore = useUserStore()
     const profile = userStore.profile;
 
@@ -15,7 +16,7 @@
 
     onShow(() => {
         isLogin.value = !!curCookie;
-        if (!profile) {
+        if(!profile) {
             userStore.getAccount()
         }
     })
@@ -44,26 +45,26 @@
 </script>
 
 <template>
-        <uni-drawer ref="showLeft" mode="left" :width="300">
-            <view class="close">
-                <view class="user" v-show="isLogin">
-                    <image :src="profile?.avatarUrl" mode="widthFix" class="user-img"></image>
-                    <view class="user-name">
-                        {{ profile?.nickname }}
-                    </view>
+    <uni-drawer ref="showLeft" mode="left" :width="300">
+        <view class="close">
+            <view class="user" v-show="isLogin">
+                <image :src="profile?.avatarUrl" mode="widthFix" class="user-img"></image>
+                <view class="user-name">
+                    {{ profile?.nickname }}
                 </view>
-                <button v-show="!isLogin" @click="()=>{
+            </view>
+            <button v-show="!isLogin" @click="()=>{
                         navigateTo(pageLogin)
                         closeDrawer()
                     }">
-                    <text class="word-btn-white">登录</text>
-                </button>
+                <text class="word-btn-white">登录</text>
+            </button>
 
-                <button v-show="isLogin" @click="getLogout">
-                    <text class="word-btn-white">退出登录</text>
-                </button>
-            </view>
-        </uni-drawer>
+            <button v-show="isLogin" @click="getLogout">
+                <text class="word-btn-white">退出登录</text>
+            </button>
+        </view>
+    </uni-drawer>
 </template>
 
 <style scoped lang="scss">

@@ -1,9 +1,12 @@
 <script setup>
     import {onShow} from '@dcloudio/uni-app'
     import Sidebar from "../../components/sidebar/Sidebar.vue";
+    import TabToggle from "../../components/tab/TabToggle.vue";
     import {ref} from "vue";
     import {navigateTo} from "../../base/utils";
     import {useUserStore} from "../../store/user";
+
+    const curCookie = uni.getStorageSync("curCookie");
 
     const pageSearch = '/pages/search/search'
     const pageLogin = '/pages/login/login'
@@ -12,15 +15,32 @@
     const profile = userStore.profile;
     const isLogin = ref(false)
     const sidebar = ref(null)
-    const curCookie = uni.getStorageSync("curCookie");
+    const tabIndex = ref(0)
 
     onShow(() => {
         isLogin.value = !!curCookie;
-        if (!profile) {
+        if(!profile) {
             userStore.getAccount()
         }
     })
 
+    const tabList = ref([
+        {
+            isSelect: true,
+            name: "音乐",
+        },
+        {
+            isSelect: false,
+            name: "播客",
+        },
+        {
+            isSelect: false,
+            name: "动态",
+        },
+    ])
+    const getTabIndex = (index) => {
+        tabIndex.value = index
+    }
 </script>
 
 <template>
@@ -40,6 +60,16 @@
                 </view>
             </view>
             <view class="connect">
+                <TabToggle :tabList="tabList" @tabIndexEvent="getTabIndex" />
+                <view v-if="tabIndex === 0">
+                    音乐
+                </view>
+                <view v-if="tabIndex === 1">
+                    播客
+                </view>
+                <view v-if="tabIndex === 2">
+                    动态
+                </view>
 
             </view>
         </view>
@@ -54,7 +84,7 @@
         width: 100%;
         height: 100%;
         position: relative;
-        background-color: #7d767c;
+        background-color: rgba(125, 118, 124, 0.9);
 
         .header {
             display: flex;
@@ -74,7 +104,7 @@
                 flex-direction: column;
                 justify-content: start;
                 align-items: center;
-                margin-top: 20rpx;
+                margin-top: 10rpx;
 
                 .login-img {
                     width: 140rpx;

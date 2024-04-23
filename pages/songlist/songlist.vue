@@ -7,15 +7,15 @@
 	import { useMusicstore } from "../../store/music.js"
 	import { ref } from "vue";
 
+    
+	const useStore = useMusicstore() 
 	const songList = ref([]);  //接受传过来的数据
 	const curIndex=ref(0)  //当前下标
 	const optionId=ref(0)
-	const store = useMusicstore()
 	const float=ref(false) //显示隐藏
 	const songDetail=ref([])
     const itemSong=ref({})
-	// store.changeList
-	//获取id
+
 	onLoad((options)=>{
 		console.log(options.id)
 		//获取详情歌单数据
@@ -35,7 +35,7 @@
 	
 	//跳转播放页
 	const playPage=(item,index)=>{
-	  console.log(item.id)
+	  useStore.musicAllList(songList.value.tracks,item,index)
 	  uni.navigateTo({
 		url: `/pages/musicPlay/musicPlay?id=${item.id}&index=${index}`
 	  })
@@ -102,7 +102,7 @@
 			</view>
 			<view class="list">
 				<view class="item" v-for="(item,index) in songList.tracks"  :key="item.name">
-					<view class="num">{{item.cd}}</view>
+					<view class="num">{{index+1}}</view>
 					<view class="text" @click="playPage(item,index)">
 					   <view class="title">
 						   <view>{{item.name}}</view>
