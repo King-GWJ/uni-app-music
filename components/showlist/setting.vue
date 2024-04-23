@@ -43,7 +43,7 @@
 			<p class="select"><image src="../../icon/songlist/icon-fx.png"/>分享</p>
 			<p class="select"><image src="../../icon/songlist/icon-singer.png"/>歌手：范倪</p>
 			<p class="select"><image src="../../icon/songlist/icon-create.png"/>创作者：姜帆/浅紫/常伟</p>
-			<p class="select"><image src="../../icon/songlist/icon-icon-zhuanji"/>专辑：我都明白</p>
+			<p class="select"><image src="../../icon/songlist/icon-zhuanji.png"/>专辑：我都明白</p>
 		</view>
 	  </view>
 	</view>
