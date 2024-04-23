@@ -87,6 +87,11 @@ export const useMusicstore=defineStore("musicStore",()=>{
 		}
 	}
 	
+	//添加到下一首
+	const musicBehind = (t,i) => {
+		musicList.value.splice(musicIndex.value,0,t)
+	}
+	
 	return{
 		audio,
 		curPlaylist,
@@ -102,6 +107,7 @@ export const useMusicstore=defineStore("musicStore",()=>{
 		musicBack,
 		musicMode,
 		musicToggle,
+		musicBehind,
 		
 	}
 	

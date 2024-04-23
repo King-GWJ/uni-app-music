@@ -28,7 +28,7 @@
 			<view class="allImg">
 				<image src="../../icon/songlist/red-bofang.png" mode=""></image>
 			</view>
-			<view class="allText" @click="useStore.musicAllList(list,list[0],0)">
+			<view class="allText" @click="playAll(list,list[0],0)">
 				播放全部
 				<view class="">
 					VIP 歌曲免费畅听
@@ -110,6 +110,12 @@
 	const itemDetail = (f,t) => {
 		itemSong.value=t
 		float.value=!f
+	}
+	const playAll = (l,t,i) => {
+		useStore.musicAllList(l,t,i)
+		uni.switchTab({
+			url: `/pages/musicPlay/musicPlay?id=${t.id}`,
+		})
 	}
 </script>
 
