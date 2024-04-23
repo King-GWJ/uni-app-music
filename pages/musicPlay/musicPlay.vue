@@ -1,58 +1,15 @@
 <script setup>
-	import {
-		onLoad
-	} from '@dcloudio/uni-app'
-	import {
-		songDetailApi,
-		lyricApi,
-		songUrlApi,
-		SongdetailApi
-	} from "../../base/api/index.js"
-	import {
-		watch,
-		computed,
-		ref
-	} from "vue"
-	import {
-		useMusicstore
-	} from '../../store/music.js'
+	import {onLoad} from '@dcloudio/uni-app'
+	import {songDetailApi,lyricApi,songUrlApi,SongdetailApi} from "../../base/api/index.js"
+	import {watch,computed,ref} from "vue"
+	import {useMusicstore} from '../../store/music.js'
 
 	const useStore = useMusicstore() 
-	const list=useStore.musicList   // 所有音乐数据
-	console.log(list)
-	const currIndex=useStore.musicIndex //  当前音乐下标
-	console.log(currIndex) 
-	const currSong=useStore.musicLove  // 当前音乐
-	console.log(currSong)
-	
 	const subtract = (num) => { // 上一首/下一首
-	console.log(num)
 		useStore.musicSubtract(num)
-		useStore.isPlay
-		console.log(useStore.musicBack)
+
 	}
-	
-	useStore.audio.autoplay = true;
-	
-	
-	
-	useStore.audio.src=useStore.musicBack
-	
-	
-	
-	// const aaa = watch(useStore.musicBack,(a,b) =>{
-	// 	console.log(useStore.musicBack);
-	// 	useStore.audio.src=useStore.musicBack
-	// })
-	
-	
-	
-	
-	//播放图片改变
-	const playBtn=computed(()=>{
-		return  useStore.isPlay? '../../icon/songlist/icon-bofang.png':'../../icon/songlist/icon-a.png'
-	})
-		
+
 		
 	//返回上一页
 	const backPrve=()=>{
@@ -69,7 +26,7 @@
 
 <template>
 	<view class="musicPlay">
-		<view class="background"></view>
+		<view class="background"><image :src="currSong.al.picUrl" ></image></view>
 		<view class="header">
 			<p @click="backPrve">
 				<image src="../../icon/songlist/icon-xiala.png" />
@@ -84,7 +41,7 @@
 		<view class="circle">
 			<view class="outer">
 				<view class="undertone">
-					<view class="images"><image :src="currSong.al.picUrl" ></image></view>
+					<view class="images"><image :src="useStore.musicLove.al.picUrl" ></image></view>
 				</view>
 			</view>
 			<view class="sun"></view>
@@ -95,8 +52,8 @@
 		</view>
 		<view class="title">
 			<view class="songTitle">
-				<p class="nameSog"><p class="name">{{currSong.name}}  {{currSong.alia[0]}}<span>{{currSong.pop}}</span> </p></p>
-				<p class="singer">{{currSong.ar.map(v=>v.name).join('/')}}</p>
+				<p class="nameSog"><p class="name">{{useStore.musicLove.name}}  {{useStore.musicLove.alia[0]}}<span>{{useStore.musicLove.pop}}</span> </p></p>
+				<p class="singer">{{useStore.musicLove.ar.map(v=>v.name).join('/')}}</p>
 			</view>
 			<p class="collent">
 				<image src="../../icon/songlist/icon-collent.png" />
@@ -120,8 +77,10 @@
 				<p @click="subtract(-1)">
 					<image src="../../icon/songlist/icon-shangyishou.png" />
 				</p>
-				<p @click="play">
-					<image :src="playBtn" />
+
+				<p @click="useStore.play()">
+					<image v-if="useStore.isplay" src="../../icon/songlist/icon-bofang.png" />
+					<image v-else src="../../icon/songlist/icon-a.png" />
 				</p>
 				<p @click="subtract(1)">
 					<image src="../../icon/songlist/icon-next.png" />
@@ -155,6 +114,18 @@
 		flex-direction: column;
 		background: #165F7D;
 	}
+    .background{
+		position: fixed;
+		top: 0;
+		left: 0;
+		width: 100%;
+		height: 100%;
+		image{
+			width: 100%;
+			height: 100%;
+		}
+	}
+	
 	
 	.header{
 		height:rpx(40);
@@ -178,12 +149,12 @@
 	// 蒙层
 	.mask{
 		position: fixed;
-		top:0;
-		left:0;
-		width:100%;
-		height:100%;
-		background: rgba(0,0,0,.2);
-		backdrop-filter: blur(7px);
+		top: 0;
+		left: 0;
+		width: 100%;
+		height: 100%;
+		background: rgba(0, 0, 0, .2);
+		backdrop-filter: blur(30px);
 	}
 	.circle{
 		flex:1;
@@ -192,11 +163,11 @@
 			width: rpx(260);
 			height: rpx(260);
 			border-radius: 50%;
-			background: rgba(255, 255, 255, 0.3);
+			background: rgba(200, 200, 200, 0.5);
 			left: 16%;
 			top: 20%;
 			position: relative;
-			border: 1px solid #808080;
+			// border: 1px solid #808080;
 
 		}
 
@@ -235,6 +206,7 @@
 			left: 50%;
 			transform: translate(-50%,-50%);
 			box-shadow: 0 1px 3px 2px black;
+			z-index: 1;
 			image{
 				width: rpx(160);
 				height: rpx(160);
@@ -267,7 +239,7 @@
 			flex-direction: column;
 			.nameSog{
 				display: flex;
-				color:#D3D3D3;
+				color:#F5F5F5;
 			}
 			.name{
 				height:rpx(25);
@@ -291,7 +263,7 @@
         .singer{
 			margin-top:rpx(2);
 			font-size:rpx(13);
-			color:	#B0C4DE;
+			color:#DCDCDC;
 		}
 		.collent {
 			width: rpx(30);
