@@ -40,7 +40,6 @@
 	const profile = ref(userStore.profile)
 	const Follows = ref([])
 	onShow(() => {
-		console.log(1231);
 		if (!profile.value) {
 			profile.value = userStore.setProfileData()
 		}
