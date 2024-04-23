@@ -1,22 +1,18 @@
 <script setup>
-    import {useUserStore} from "../../store/user";
+    import {useUserStore} from "../../../store/user";
     import {ref} from "vue";
 
     const userStore = useUserStore()
-    const form = ref(null);
     const formData = ref({
-        phone: '',
+        email: '',
         password: ''
     })
+    const form = ref(null);
     const rules = {
-        phone: {
+        email: {
             rules: [
-                {required: true, errorMessage: '手机号不能为空'},
-                {
-                    minLength: 1,
-                    maxLength: 11,
-                    errorMessage: '手机号长度必须为{maxLength}位'
-                }
+                { required: true, errorMessage: '邮箱不能为空'},
+                { format: 'email', errorMessage: '邮箱格式错误'},
             ]
         },
         password: {
@@ -29,29 +25,28 @@
 
     const submit = () => {
         form.value.validate().then(res => {
-            userStore.getLogin("phone",res.phone,res.password)
+            userStore.getLogin("email",res.email,res.password)
         }).catch(err => {
             console.log('表单错误信息：', err);
         })
     }
+
 </script>
 
 <template>
-    <view className='PhoneLogin'>
+    <view className='EmailLogin'>
         <uni-forms ref="form" :rules="rules" :modelValue="formData">
-            <uni-forms-item name="phone">
-                <uni-easyinput prefixIcon="phone" type="number" v-model="formData.phone" placeholder="请输入手机号" />
+            <uni-forms-item name="email">
+                <uni-easyinput prefixIcon="email" v-model="formData.email" placeholder="请输入邮箱" />
             </uni-forms-item>
             <uni-forms-item name="password">
                 <uni-easyinput prefixIcon="locked" type="password" v-model="formData.password" placeholder="请输入密码" />
             </uni-forms-item>
         </uni-forms>
-        <button @click="submit" >登录</button>
+        <button @click="submit">登录</button>
     </view>
 </template>
 
 <style scoped lang="scss">
-    button{
 
-    }
 </style>

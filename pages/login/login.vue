@@ -1,9 +1,9 @@
 <script setup>
     import {useUserStore} from "../../store/user";
-    import EmailLogin from "../../components/login/EmailLogin.vue";
+    import EmailLogin from "./components/EmailLogin.vue";
     import {ref, watch} from "vue";
-    import PhoneLogin from "../../components/login/PhoneLogin.vue";
-    import QrCodeLogin from "../../components/login/QrCodeLogin.vue";
+    import PhoneLogin from "./components/PhoneLogin.vue";
+    import QrCodeLogin from "./components/QrCodeLogin.vue";
 
     const userStore = useUserStore()
 
