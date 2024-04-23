@@ -1,4 +1,3 @@
-
 <script setup>
 	import {onLoad} from '@dcloudio/uni-app'
 	import {songDetailApi,lyricApi,songUrlApi,SongdetailApi} from "../../base/api/index.js"
@@ -6,24 +5,11 @@
 	import {useMusicstore} from '../../store/music.js'
 
 	const useStore = useMusicstore() 
-	const list=useStore.musicList   // 所有音乐数据
-	console.log(list)
-	const currIndex=useStore.musicIndex //  当前音乐下标
-	console.log(currIndex) 
-	const currSong=useStore.musicLove  // 当前音乐
-	console.log(currSong)
-	
 	const subtract = (num) => { // 上一首/下一首
 		useStore.musicSubtract(num)
-		useStore.isPlay
+
 	}
-	
-	//播放图片改变
-	const playBtn=computed(()=>{
-		// useStore.play()
-		return  useStore.isPlay? '../../icon/songlist/icon-bofang.png':'../../icon/songlist/icon-a.png'
-	})
-		
+
 		
 	//返回上一页
 	const backPrve=()=>{
@@ -55,7 +41,7 @@
 		<view class="circle">
 			<view class="outer">
 				<view class="undertone">
-					<view class="images"><image :src="currSong.al.picUrl" ></image></view>
+					<view class="images"><image :src="useStore.musicLove.al.picUrl" ></image></view>
 				</view>
 			</view>
 			<view class="sun"></view>
@@ -66,8 +52,8 @@
 		</view>
 		<view class="title">
 			<view class="songTitle">
-				<p class="nameSog"><p class="name">{{currSong.name}}  {{currSong.alia[0]}}<span>{{currSong.pop}}</span> </p></p>
-				<p class="singer">{{currSong.ar.map(v=>v.name).join('/')}}</p>
+				<p class="nameSog"><p class="name">{{useStore.musicLove.name}}  {{useStore.musicLove.alia[0]}}<span>{{useStore.musicLove.pop}}</span> </p></p>
+				<p class="singer">{{useStore.musicLove.ar.map(v=>v.name).join('/')}}</p>
 			</view>
 			<p class="collent">
 				<image src="../../icon/songlist/icon-collent.png" />
@@ -79,8 +65,7 @@
 		<view class="volume">
 			<view class="time">0</view>
 			<view class="slider">
-				<slider class="sliders" min="0" max="100" value="0" disabled="true" block-size="10"
-					activeColor="#1890ff" step></slider>
+				<slider  class="sliders" min="0" max="100" value="0" disabled="true" block-size="10" activeColor="#1890ff" step></slider>
 			</view>
 			<view class="time">100</view>
 		</view>
@@ -92,8 +77,10 @@
 				<p @click="subtract(-1)">
 					<image src="../../icon/songlist/icon-shangyishou.png" />
 				</p>
-				<p>
-					<image :src="playBtn" @click="useStore.play()"/>
+
+				<p @click="useStore.play()">
+					<image v-if="useStore.isplay" src="../../icon/songlist/icon-bofang.png" />
+					<image v-else src="../../icon/songlist/icon-a.png" />
 				</p>
 				<p @click="subtract(1)">
 					<image src="../../icon/songlist/icon-next.png" />
@@ -119,10 +106,11 @@
 
 
 <style lang="scss" scoped>
-	.musicPlay {
-		width: 100%;
-		height: 100%;
-		display: flex;
+	
+	.musicPlay{
+		width:100%;
+		height:100%;
+		display:flex;
 		flex-direction: column;
 		background: #165F7D;
 	}
@@ -137,31 +125,29 @@
 			height: 100%;
 		}
 	}
-	.header {
-		height: rpx(40);
+	
+	
+	.header{
+		height:rpx(40);
 		// background: palevioletred;
 		display: flex;
 		align-items: center;
-		padding: 0 15px;
+		padding:0 15px;
 		z-index: 1;
-
-		p {
-			width: rpx(27);
-			height: rpx(27);
-
-			image {
-				width: rpx(27);
-				height: rpx(27);
+		p{
+			width:rpx(27);
+			height:rpx(27);
+			image{
+				width:rpx(27);
+				height:rpx(27);
 			}
 		}
-
-		.bangdan {
-			flex: 1;
+		.bangdan{
+			flex:1;
 		}
 	}
-
 	// 蒙层
-	.mask {
+	.mask{
 		position: fixed;
 		top: 0;
 		left: 0;
@@ -170,9 +156,8 @@
 		background: rgba(0, 0, 0, .2);
 		backdrop-filter: blur(30px);
 	}
-
-	.circle {
-		flex: 1;
+	.circle{
+		flex:1;
 		position: relative;
 		.outer {
 			width: rpx(260);
@@ -229,10 +214,18 @@
 				box-shadow: 0 1px 3px 2px black;
 			}
 		}
+			.image{
+				width:rpx(125);
+				height:rpx(125);
+				border-radius: 50%;
+				background: skyblue;
+				position: absolute;
+				left:rpx(30);
+				top:rpx(27);
+			}
 	}
-
-	.title {
-		height: rpx(60);
+	.title{
+		height:rpx(60);
 		// background:indianred;
 		display: flex;
 		align-items: center;
@@ -282,85 +275,75 @@
 				height: rpx(30);
 			}
 		}
-
-		.talk {
-			width: rpx(30);
-			height: rpx(30);
-
-			image {
-				width: rpx(30);
-				height: rpx(30);
+		.talk{
+			width:rpx(30);
+			height:rpx(30);
+			image{
+				width:rpx(30);
+				height:rpx(30);
 			}
 		}
-
-
+		
+		
 	}
-
-	.volume {
-		height: rpx(30);
-		padding: 0 rpx(15);
-		display: flex;
+	
+	.volume{
+		height:rpx(30);
+		padding:0 rpx(15);
+		display:flex;
 		justify-content: space-between;
-
-		.slider {
-			flex: 1;
+		.slider{
+			flex:1;
 			margin-top: rpx(-4);
 		}
-
-		.time {
-			width: rpx(40);
-			height: 100;
-			line-height: rpx(30);
+		.time{
+			width:rpx(40);
+			height:100;
+			line-height:rpx(30);
 			text-align: center;
-			color: #fff;
-			z-index: 1;
+			color:#fff;
+		    z-index: 1;
 		}
-
+		
 	}
-
-	.play {
-		height: rpx(100);
+	
+	.play{
+		height:rpx(100);
 		// background:mediumvioletred;
-		padding: 0 rpx(30);
+		padding:0 rpx(30);
 		display: flex;
 		align-items: center;
-
-		span {
-			display: block;
-			width: rpx(30);
-			height: rpx(30);
-
-			image {
-				width: 100%;
-				height: 100%;
+		span{
+			display:block;
+			width:rpx(30);
+			height:rpx(30);
+			image{
+				width:100%;
+				height:100%;
 			}
 		}
-
-		.code {
-			flex: 1;
+		.code{
+			flex:1;
 			// background: #808080;
-			display: flex;
-			padding: 0 rpx(15);
+			display:flex;
+			padding:0 rpx(15);
 			justify-content: space-around;
-
-			p {
+			p{
 				display: flex;
-
-				image {
-					width: rpx(27);
-					height: rpx(27);
+				image{
+					width:rpx(27);
+					height:rpx(27);
 				}
 			}
-
-
+				
+			
 		}
 	}
-
-	footer {
-		height: rpx(60);
+	footer{
+		height:rpx(60);
 		// background: darkred;
-		padding: 0 rpx(60);
-		display: flex;
+		padding:0 rpx(60);
+		display:flex;
 		align-items: center;
 		justify-content: space-between;
 
@@ -371,7 +354,7 @@
 			}
 		}
 	}
-
+	
 	// 压唱片的部分
 	.fixed {
 		width: rpx(96);
@@ -385,5 +368,5 @@
 			height: rpx(120);
 		}
 	}
+	
 </style>
-
