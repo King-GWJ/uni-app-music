@@ -80,43 +80,6 @@ export const useUserStore = defineStore('user', () => {
 		}, 30000)
 	}
 
-<<<<<<< HEAD
-	//存储用户信息
-	    const storeData = (res) => {
-	        if (res.cookie) {
-	            uni.setStorageSync('curCookie', res.cookie)
-	        }
-	
-	        if (res.profile) {
-	            profile.value = res.profile
-	            uni.setStorageSync('profile', res.profile)
-	        }
-	        // uni.navigateBack()
-	    }
-	
-	    const setProfileData = () => {
-	        if (profile.value) {
-	            return profile.value
-	        } else {
-	            if (uni.getStorageSync("profile")) {
-	                return uni.getStorageSync("profile")
-	            } else {
-	                getAccount()
-	            }
-	        }
-	        return ''
-	    }
-	
-	    return {
-	        profile,
-	        getProfile,
-	        getLogin,
-	        getCheckQr,
-	        getAccount,
-	        setProfileData
-	    }
-	});
-=======
     //存储用户信息
     const storeData = (res) => {
         if (res.cookie) {
@@ -152,4 +115,4 @@ export const useUserStore = defineStore('user', () => {
         setProfileData
     }
 });
->>>>>>> foreshow
+
