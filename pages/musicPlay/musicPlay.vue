@@ -71,9 +71,9 @@
 		</view> 
 		<view class="play">
 			<span @click="useStore.musicToggle()">
-				<image  v-if="useStore.musicMode === 1 " src="../../icon/songlist/icon-meiti-suijibofang.png" />
+				<image  v-if="useStore.musicMode === 1 " src="../../icon/songlist/icon-liebiaoxunhuan.png" />
 				<image  v-else-if="useStore.musicMode === 2 " src="../../icon/songlist/icon-danquxunhuan.png" />
-				<image  v-else-if="useStore.musicMode === 3 " src="../../icon/songlist/icon-light.png" />
+				<image  v-else-if="useStore.musicMode === 3 " src="../../icon/songlist/icon-meiti-suijibofang.png" />
 			</span>
 			<view class="code">
 				<p @click="subtract(-1)">
