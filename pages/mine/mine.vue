@@ -102,6 +102,12 @@
 
 <style lang="scss" scoped>
     .content {
+        width: 100%;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        overflow: hidden;
+        overflow-y: scroll;
         position: relative;
         background-color: rgba(125, 118, 124, 0.9);
 
@@ -115,6 +121,7 @@
         }
 
         .main {
+            flex: 1;
             .login {
                 display: flex;
                 flex-direction: column;
