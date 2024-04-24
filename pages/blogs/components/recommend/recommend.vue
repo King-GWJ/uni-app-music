@@ -127,7 +127,7 @@
 		<view class="type">
 			<view v-for="(item,index) in newests" :key="index" class="list">
 				<view v-for="(li) in item" :key="index" class="li">
-					<image :src="li.picUrl" mode="" class="img"></image>
+					<image :src="li.picUrl" mode="" class="img" @click='detail(li.id)'></image>
 					<text>{{li.name}}</text>
 				</view>
 			</view>
@@ -143,13 +143,22 @@
 	import {
 		bannerApi,
 		voiceApi,
-		newestApi
+		newestApi,
+		getalbumApi
 	} from '/base/api';
+	import {
+		navigateTo
+	} from "/base/utils"
 
 	const banners = ref([])
 	const valbums = ref([])
 	const newests = ref([])
-	
+	// const getalbumAs = ref([])
+
+	const detail = (val) => {
+		navigateTo(`/pages/blogs/components/recommend/detail/detail?id=${val}`)
+	}
+
 	bannerApi().then(res => {
 		banners.value = res.banners
 	})
