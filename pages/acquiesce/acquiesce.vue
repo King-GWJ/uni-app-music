@@ -103,6 +103,7 @@
 			})
 		}else{
 			songsApi().then(res => {
+				console.log(res);
 				list.value = res.data.dailySongs
 			})
 		}	

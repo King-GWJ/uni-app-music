@@ -321,9 +321,6 @@ import { userPlayListApi,playListChange } from '../../../base/api';
 		}
 		.info{
 			margin-left: rpx(10);
-			.name{
-				
-			}
 			.artist{
 				font-size: rpx(13);
 				margin-top: rpx(5);
