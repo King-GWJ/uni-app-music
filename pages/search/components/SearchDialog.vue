@@ -41,6 +41,7 @@ import { userPlayListApi,playListChange } from '../../../base/api';
 	
 	
 	const toLike = ()=>{
+		console.log(profile.value.userId)
 		if(!profile.value.userId){
 			popup2.value.open()
 			setTimeout(()=>{
@@ -321,9 +322,7 @@ import { userPlayListApi,playListChange } from '../../../base/api';
 		}
 		.info{
 			margin-left: rpx(10);
-			.name{
-				
-			}
+
 			.artist{
 				font-size: rpx(13);
 				margin-top: rpx(5);
