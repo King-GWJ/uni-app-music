@@ -16,16 +16,26 @@
 
 			</view>
 		</view>
-		<view class="" v-for="(item,index) in list" :key="index">
-			<h1>歌名:{{item.name}}</h1>
+		<view class="main">
 			<view class="">
-				{{(item.ar.map(item => item.name)).join("/")}}
+				<view class="">
+					播放全部({{list?.length}})
+				</view>
+			</view>
+			<view class="list" v-for="(item,index) in list" :key="index" @click="goDetail({i:index,t:item,l:list,n:'新专辑'})">
+				<text>{{item.name}}</text>
+				<view>
+					{{(item.ar.map(item => item.name)).join("/")}}
+				</view>
 			</view>
 		</view>
 	</view>
 </template>
 
 <script setup>
+	import {
+		switchTab
+	} from "/base/utils"
 	import {
 		onLoad
 	} from '@dcloudio/uni-app'
@@ -35,87 +45,123 @@
 	import {
 		ref
 	} from "vue";
-	import {useMusicstore} from "@/store/music"
-	
+	import {
+		useMusicstore
+	} from "@/store/music"
+
 	const useMusic = useMusicstore()
 	const list = ref([])
 	const title = ref([])
+	const goDetail = (val) => {
+		useMusic.musicAllList(val.l,val.t,val.i,val.n)
+		console.log(val);
+		switchTab('../../../../../pages/musicPlay/musicPlay')
+	}
 	onLoad((options) => {
 		getalbumApi(options.id).then(res => {
 			list.value = res.songs
 			title.value = res.album
-			console.log(res.songs,res.album);
+			console.log(res.songs, res.album);
 		})
 	})
 </script>
 
 <style lang="scss">
 	.title {
-		display:flex;
-		flex-wrap:wrap;
-		height:200px;
+		display: flex;
+		flex-wrap: wrap;
+		height: 200px;
 		justify-self: center;
-		align-items:center;
-		background:#eee;
+		align-items: center;
+		background: #eee;
 		padding: 0 20px;
+
 		.img {
 			width: 110px;
-			height:110px;
-			background-color:#fff;
-			border-radius:10px;
-			display:flex;
-			justify-content:center;
-			align-items:center;
+			height: 110px;
+			background-color: #fff;
+			border-radius: 10px;
+			display: flex;
+			justify-content: center;
+			align-items: center;
+
 			image {
 				width: 80px;
-				height:80px;
-				border-radius:10px;
+				height: 80px;
+				border-radius: 10px;
 				display: inline-block;
 			}
 		}
-		.name{
-			margin-left:20px;
-			height:110px;
-			flex:1;
-			display:flex;
-			flex-direction:column;
-			justify-content:space-between;
-			algin-items:space-between;
+
+		.name {
+			margin-left: 20px;
+			height: 110px;
+			flex: 1;
+			display: flex;
+			flex-direction: column;
+			justify-content: space-between;
+			algin-items: space-between;
+
 			.songs {
-				height:16px;
-				line-height:16px;
-				max-width:180px;
-				font-size:16px;
+				height: 16px;
+				line-height: 16px;
+				max-width: 180px;
+				font-size: 16px;
 				white-space: nowrap;
 				-webkit-box-orient: vertical;
 				/* 控制只有第二行才会溢出隐藏 */
 				-webkit-line-clamp: 2;
 				/* 确保文本溢出时显示省略号 */
 				overflow: hidden;
-				text-overflow:ellipsis;
-				color:white;
+				text-overflow: ellipsis;
+				color: white;
 			}
+
 			.bottom {
-				font-size:10px;
-				color:white;
-				height:60px;
-				display:flex;
-				flex-direction:column;
-				justify-content:space-between;
+				font-size: 10px;
+				color: white;
+				height: 60px;
+				display: flex;
+				flex-direction: column;
+				justify-content: space-between;
+
 				.description {
-					line-height:16px;
-					max-width:180px;
-					font-size:10px;
+					line-height: 16px;
+					max-width: 180px;
+					font-size: 10px;
 					white-space: nowrap;
 					-webkit-box-orient: vertical;
 					/* 控制只有第二行才会溢出隐藏 */
 					-webkit-line-clamp: 2;
 					/* 确保文本溢出时显示省略号 */
 					overflow: hidden;
-					text-overflow:ellipsis;
-					color:white;
+					text-overflow: ellipsis;
+					color: white;
 				}
 			}
+		}
+	}
+
+	.main {
+		overflow: auto;
+		display: flex;
+		flex-direction: column;
+		background-color: lime;
+		padding: 0 10px;
+
+		.list {
+			height: 60px;
+			display: flex;
+			flex-direction: column;
+			height: 60px;
+			color: white;
+			justify-content: center;
+
+			text {
+				font-size: 15px;
+			}
+
+			font-size:9px;
 		}
 	}
 </style>

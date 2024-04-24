@@ -58,6 +58,10 @@ export const useMusicstore = defineStore("musicStore", () => {
 		musicLove.value = t
 		musicIndex.value = i
 		musicType.value = n
+		console.log(l);
+		console.log(t);
+		console.log(i);
+		console.log(n);
 		clearInterval(musicTimer.value)
 		const arr = musicHistory.value.find(item => item.name === musicType.value)
 		if(arr){
