@@ -4,6 +4,7 @@
     import {navigateTo} from '/base/utils'
     import navIcons from "/base/data/navIcons";
     import Sidebar from '../../components/sidebar/Sidebar.vue'
+	import musicBarVue from "../../components/musicBar/musicBar.vue";
 
     const pageSearch = '/pages/search/search'
     const pageMusicPlay = '/pages/musicPlay/musicPlay'
@@ -50,6 +51,7 @@
 
 <template>
     <view class="content">
+		<musicBarVue></musicBarVue>
         <view class="header">
             <uni-icons class="bars" type="bars" size="24" @click="()=>{sidebar.showDrawer()}"></uni-icons>
             <view class="search" @click="navigateTo(pageSearch)">
