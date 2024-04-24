@@ -1,4 +1,5 @@
 export const baseUrl = "http://121.89.213.194:5001"
+// export const baseUrl = "https://zyxcl.xyz/music/api"
 
 // 封装请求函数
 export const request = ({
@@ -9,8 +10,8 @@ export const request = ({
 }) => {
 	return new Promise((resolve, reject) => {
 		uni.request({
-			url: "/music_api" + url,
-			// url: baseUrl + url,
+			// url: "/music_api" + url,
+			url: baseUrl + url,
 			method,
 			data: {
 				cookie: uni.getStorageSync('curCookie') || '',
