@@ -3,6 +3,7 @@
 	import { searchSuggestApi, searchApi, hotApi } from '../../base/api'
 	import SearchDialogVue from './components/SearchDialog.vue';
 	import { useMusicstore } from '../../store/music';
+	import musicBarVue from '../../components/musicBar/musicBar.vue';
 	
 	const searchVal = ref('')
 	const suggestList = ref([])
@@ -116,7 +117,7 @@ const closeDetail = (e) => {
 
 <template>
 	<view class="box">
-
+		<musicBarVue></musicBarVue>
 		<view class="header">
 			<view class="inp-wrap">
 				<view class="search-icon"></view>
