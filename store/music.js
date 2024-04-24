@@ -36,6 +36,8 @@ export const useMusicstore=defineStore("musicStore",()=>{
 		points: '00',
 		seconds:'00'
 	})
+	// 历史播放音乐
+	const musicHistory = ref([])
 
 	
 	// 获取全部音乐，当前音乐，当前音乐下标
@@ -43,8 +45,6 @@ export const useMusicstore=defineStore("musicStore",()=>{
 		musicList.value = l
 		musicLove.value = t
 		musicIndex.value = i
-		console.log(l);
-		console.log('下标',i);
 	}
 	
 	// 搜索调这个方法
@@ -60,13 +60,16 @@ export const useMusicstore=defineStore("musicStore",()=>{
 	
 	// 监听音乐数组改变获取音乐播放的rul
 	const musicUrl = watch(musicLove,(newValue,oldValue) => {
+		if(musicHistory.value.find(item => item.id === musicLove.value.id)){
+		}else{
+			musicHistory.value.push(musicLove.value)
+		}
 		clearInterval(musicTimer.value)
 		musicNowTime.value.seconds = '00'
 		musicNowTime.value.points = '00'
 		musicTime.value.seconds = '00'
 		musicTime.value.points = '00'
 		songUrlApi(musicList.value[musicIndex.value].id,'standard').then(res => {
-			console.log(res);
 			musicBack.value = res.data[0].url
 			audio.src=musicBack.value
 			audio.autoplay = true
@@ -88,7 +91,6 @@ export const useMusicstore=defineStore("musicStore",()=>{
 	
 	//播放
 	const play=()=>{
-		console.log(isplay.value);
 		if(!audio.paused){
 			audio.pause()
 			isplay.value = true
@@ -151,7 +153,7 @@ export const useMusicstore=defineStore("musicStore",()=>{
 					musicSubtract(Math.floor(Math.random() * i) + 1)
 				}
 			}
-		},50)
+		},1000)
 	}
 	
 	return{
@@ -172,6 +174,7 @@ export const useMusicstore=defineStore("musicStore",()=>{
 		musicBehind,
 		musicTime,
 		musicNowTime,
+		musicHistory,
 	}
 	
 })
