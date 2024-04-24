@@ -145,6 +145,7 @@
             flex: 1;
             overflow: hidden;
             overflow-y: scroll;
+            padding-bottom: 80rpx;
             .swiper-wrap {
                 padding: 30rpx;
 
