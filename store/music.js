@@ -52,6 +52,7 @@ export const useMusicstore=defineStore("musicStore",()=>{
 			musicBack.value = res.data[0].url
 			audio.src=musicBack.value
 			audio.autoplay = true
+			console.log(musicBack.value)
 		})
 	})
 	

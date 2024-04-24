@@ -82,7 +82,7 @@
 		<view class="nav">
 			<view class="logo"><image src="../../icon/songlist/icon-tianjia.png"></image>{{(songList.subscribedCount/100/100).toFixed(2)}}</view>
 			<view class="logo"><image src="../../icon/songlist/icon-xiaoxi.png"></image>{{(songList.commentCount/10/100).toFixed(2)}}万</view>
-			<view class="logo"><image src="../../icon/songlist/分享.png"></image>{{songList.shareCount}}</view>
+			<view class="logo"><image src="../../icon/songlist/icon-fx.png"></image>{{songList.shareCount}}</view>
 		</view>
 		<view class="main">
 			<view class="bofang">
@@ -123,7 +123,7 @@
 				</view>
 			</view>
 			<!-- 底部 -->
-			<Showlist  :clickItem="itemSong"/>
+			<Showlist v-if="useStore.musicLove.length!==0" :clickItem="itemSong"/>
 		<!-- 每首歌曲右侧设置... -->
 		</view>
 		<Setting v-if="float"  @click.stop="float=false" :itemSong="itemSong"/>
@@ -265,10 +265,6 @@
 			   align-items: center;
 			   justify-content: space-between;
 			   padding:0 rpx(15);
-			   overflow:hidden;
-			   white-space: nowrap;
-			   text-overflow: ellipsis;
-			   -o-text-overflow:ellipsis;
 			   .num{
 				   width:rpx(20);
 				   margin-right: rpx(10);
@@ -277,6 +273,10 @@
 				   flex:1;
 				   display: flex;
 				   flex-direction: column;
+	               overflow:hidden;
+	               white-space: nowrap;
+	               text-overflow: ellipsis;
+	               -webkit-box-ordinal: vertical;
 				   .title{
 					   display:flex;
 					   .alia{
