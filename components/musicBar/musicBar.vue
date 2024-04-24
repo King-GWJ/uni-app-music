@@ -1,16 +1,15 @@
 <script setup>
 import { ref, watch } from 'vue';
 import { useMusicstore } from '../../store/music';
+import {
+    onShow
+  } from "@dcloudio/uni-app";
 
 const musicStore = useMusicstore()
 const url = ref('')
 const name = ref('请播放音乐')
 const artist = ref('')
 const flag = ref(true)
-
-
-console.log(musicStore.musicLove)
-
 
 const goPlay = () =>{
 	uni.switchTab({
@@ -27,8 +26,17 @@ musicStore.audio.onPlay(()=>{
 
 musicStore.audio.onPause(()=>{
 		flag.value = true
+		url.value = musicStore.musicLove.al.picUrl
+		name.value = musicStore.musicLove.name
+		artist.value = musicStore.musicLove.ar[0].name
+
 })
 
+onShow(()=>{
+	url.value = musicStore.musicLove.al.picUrl
+	name.value = musicStore.musicLove.name
+	artist.value = musicStore.musicLove.ar[0].name
+})
 
 const change = (e)=>{
 	musicStore.play()
@@ -42,9 +50,6 @@ const detail = (e)=>{
 }
 
 </script>
-
-
-
 
 <template>
 	<view class="musicBar" @click="goPlay">
