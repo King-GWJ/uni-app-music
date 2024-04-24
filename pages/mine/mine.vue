@@ -84,7 +84,7 @@
                 </view>
                 <view v-if="tabIndex === 1" class="view">
                     播客
-                    <custom-music></custom-music>
+                    <!-- <custom-music></custom-music> -->
                 </view>
                 <view v-if="tabIndex === 2" class="view">
                     动态
