@@ -2,7 +2,7 @@
 import { ref, watch } from 'vue';
 import { useMusicstore } from '../../../store/music';
 import { useUserStore } from '../../../store/user';
-import { userPlayListApi,playListChange } from '../../../base/api';
+import { userPlayListApi,playListChange,commentApi } from '../../../base/api';
 
 
 	const props = defineProps(['showDialog','detailItem'])
@@ -11,35 +11,42 @@ import { userPlayListApi,playListChange } from '../../../base/api';
 	const userStore = useUserStore()
 	const profile = ref(userStore.profile)
 	const playList = ref([])
+	const totalComment = ref(0)
 	const popup = ref(null)
 	const popup2 = ref(null)
 	const popup3 = ref(null)
+	const popup4 = ref(null)
 	if(!profile.value){
 		profile.value = userStore.setProfileData()
 	}
 	
+	//获取用户歌单列表
 	const getPlayList = async ()=>{
 		const res = await userPlayListApi(profile.value.userId)
 		playList.value = res.playlist
-		console.log(playList.value)
+	}
+	//获取评论
+	const getComment = async ()=>{
+		const res = await commentApi('music',props.detailItem.id)
+		totalComment.value = res.total
 	}
 	
 	getPlayList()
-	// userPlayListApi(profile.value.userId).then(res=>{
-	// 	console.log(res.playlist)
-	// 	playList.value = res.playlist
+	//监听传过来的参数
+	watch(()=>props,()=>{
+		getComment()
+	},
+	{deep:true}
+	)
 		
-	// })
-	
-	
-	
+	//下一首播放
 	const nextPlay = ()=>{
 		musicStore.musicBehind(props.detailItem,props.detailItem.id)
 		popup.value.open()
 		emits('closeDialog')
 	}
 	
-	
+	//收藏
 	const toLike = ()=>{
 		if(!profile.value.userId){
 			popup2.value.open()
@@ -52,22 +59,20 @@ import { userPlayListApi,playListChange } from '../../../base/api';
 			popup3.value.open()
 			emits('closeDialog')
 		}
-		
 	}
 	
+	//收藏到歌单
 	const add = async (item)=>{
 		const res = await playListChange('add',item.id,props.detailItem.id)
-		console.log(res)
-		profile.value = userStore.setProfileData()
+		if(res.body.code===502){
+			popup4.value.open()
+		}
 		getPlayList()
-		// playListChange('add',item.id,props.detailItem.id).then(res=>{
-		// 	console.log(res)
-		// 	getPlayList()
-		// })
 	}
 	
+	
+	//阻止冒泡
 	const fn = (e)=>{
-		
 		e.stopPropagation()
 	}
 	
@@ -118,7 +123,7 @@ import { userPlayListApi,playListChange } from '../../../base/api';
 					<view class="itemIcon recommend">
 					</view>
 					<view class="itemContent">
-						评论
+						评论({{totalComment}})
 					</view>
 				</view>
 				<view class="item">
@@ -192,6 +197,9 @@ import { userPlayListApi,playListChange } from '../../../base/api';
 	</uni-popup>
 	<uni-popup class="mesWrap" ref="popup2" type="message">
 		<uni-popup-message class="mes" type="error" message="请登录" :duration="800"></uni-popup-message>
+	</uni-popup>
+	<uni-popup class="mesWrap" ref="popup4" type="message">
+		<uni-popup-message class="mes" type="error" message="歌曲已存在" :duration="800"></uni-popup-message>
 	</uni-popup>
 	<view>
 		<uni-popup ref="popup3" type="bottom" border-radius="10px 10px 0 0" background-color="#fff">
