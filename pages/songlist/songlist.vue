@@ -82,7 +82,7 @@
 		<view class="nav">
 			<view class="logo"><image src="../../icon/songlist/icon-tianjia.png"></image>{{(songList.subscribedCount/100/100).toFixed(2)}}</view>
 			<view class="logo"><image src="../../icon/songlist/icon-xiaoxi.png"></image>{{(songList.commentCount/10/100).toFixed(2)}}万</view>
-			<view class="logo"><image src="../../icon/songlist/分享.png"></image>{{songList.shareCount}}</view>
+			<view class="logo"><image src="../../icon/songlist/share.png"></image>{{songList.shareCount}}</view>
 		</view>
 		<view class="main">
 			<view class="bofang">

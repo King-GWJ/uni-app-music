@@ -9,8 +9,8 @@ export const request = ({
 }) => {
 	return new Promise((resolve, reject) => {
 		uni.request({
-			url: "/music_api" + url,
-			// url: baseUrl + url,
+			// url: "/music_api" + url,
+			url: baseUrl + url,
 			method,
 			data: {
 				cookie: uni.getStorageSync('curCookie') || '',
