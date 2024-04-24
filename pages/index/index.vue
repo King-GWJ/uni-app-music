@@ -1,5 +1,4 @@
 <script setup>
-    import {onShow} from '@dcloudio/uni-app'
     import {ref} from "vue";
     import {bannerApi, toplistApi, newsongApi, personalizedApi} from '/base/api'
     import {navigateTo} from '/base/utils'
@@ -45,6 +44,7 @@
     const getDetail = (id) => {
         navigateTo("/pages/acquiesce/acquiesce?id=" + id)
     }
+
 
 </script>
 
@@ -111,13 +111,14 @@
 
         </view>
         <Sidebar ref="sidebar" />
+        <custom-music></custom-music>
     </view>
 </template>
 
 <style lang="scss" scoped>
     .content {
         position: relative;
-        padding-bottom: 95rpx;
+
         .header {
             padding: 30rpx;
             display: flex;
@@ -137,9 +138,6 @@
         }
 
         .main {
-            width: 100%;
-            height: 100%;
-
             .swiper-wrap {
                 padding: 30rpx;
 
@@ -217,9 +215,11 @@
                 overflow: auto;
                 padding: 0 30rpx;
                 box-sizing: border-box;
+
                 .musiclist {
                     display: flex;
                     flex-direction: column;
+
                     .musiclist-item {
                         width: 300rpx;
                         display: flex;
@@ -233,7 +233,6 @@
                             margin-right: 15rpx;
                             border-radius: 10rpx;
                             background: #FFFFFF;
-
                         }
 
                         .musiclist-item-name {
@@ -245,7 +244,6 @@
                     }
                 }
             }
-
 
             .newsong::-webkit-scrollbar {
                 display: none;
