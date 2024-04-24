@@ -41,10 +41,12 @@
 
 
 	onShow(() => {
+		if(musicStore.audio.src.length>0){
+			url.value = musicStore.musicLove.al.picUrl
+			name.value = musicStore.musicLove.name
+			artist.value = musicStore.musicLove.ar[0].name
+		}
 
-		url.value = musicStore.musicLove.al.picUrl
-		name.value = musicStore.musicLove.name
-		artist.value = musicStore.musicLove.ar[0].name
 
 
 		if (musicStore.audio.paused) {
