@@ -6,7 +6,6 @@
     import {navigateTo} from "../../base/utils";
     import {useUserStore} from "../../store/user";
     import {userPlayListApi} from "../../base/api";
-
     const curCookie = uni.getStorageSync("curCookie");
 
     const pageSearch = '/pages/search/search'
@@ -57,7 +56,7 @@
 </script>
 
 <template>
-    <view class="content">
+    <view class="content" style="height: 100%;">
         <view class="header">
             <uni-icons class="bars" type="bars" size="24" @click="()=>{sidebar.showDrawer()}"></uni-icons>
             <uni-icons class="bars" type="search" size="24" @click="navigateTo(pageSearch)"></uni-icons>
@@ -80,11 +79,12 @@
                             :title="item.name"
                             to="/pages/acquiesce/acquiesce?id="
                             :avatar="item.coverImgUrl"
-                            :note='item.trackCount+"首"'></uni-list-chat>
+                            :note='item.trackCount+"首"' ></uni-list-chat>
                     </uni-list>
                 </view>
                 <view v-if="tabIndex === 1" class="view">
                     播客
+                    <!-- <custom-music></custom-music> -->
                 </view>
                 <view v-if="tabIndex === 2" class="view">
                     动态
@@ -94,13 +94,18 @@
         </view>
 
         <Sidebar ref="sidebar" />
-
     </view>
+	<musicBar></musicBar>
 </template>
 
 <style lang="scss" scoped>
     .content {
-        padding-bottom: 95rpx;
+        width: 100%;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        overflow: hidden;
+        overflow-y: scroll;
         position: relative;
         background-color: rgba(125, 118, 124, 0.9);
 
@@ -114,9 +119,9 @@
         }
 
         .main {
-            width: 100%;
-            height: 100%;
-
+            flex: 1;
+            display: flex;
+            flex-direction: column;
             .login {
                 display: flex;
                 flex-direction: column;
@@ -134,14 +139,10 @@
             }
 
             .connect {
-                width: 100%;
+                flex: 1;
+                padding-bottom: 80rpx;
                 background-color: #FFFFFF;
                 border-radius: 40rpx 40rpx 0 0;
-                margin-top: 100rpx;
-
-                .view {
-                    min-height: 800rpx;
-                }
             }
         }
 

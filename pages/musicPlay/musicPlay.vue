@@ -14,7 +14,8 @@
 	const isCollect=ref(false) //添加收藏
     
 	
-	
+	console.log(useStore.musicNowTime);
+	console.log(useStore.musicTime);
 	
 	//切换歌曲
 	const subtract = (num) => { // 上一首/下一首
@@ -27,16 +28,10 @@
 			url: '/pages/index/index'
 		})
 	}
-	
     //点击收藏
 	const Collect=()=>{
-		console.log(2);
 		isCollect.value=!isCollect.value
 	}
-	
-	
-	
-	
 </script>
 
 
@@ -48,7 +43,7 @@
 			<p @click="Backprve">
 				<image src="../../icon/songlist/icon-bback.png"></image>
 			</p>
-			<view>{{}}</view>
+			
 			<p @click="shareShow=true">
 				<image src="../../icon/songlist/icon-fenxiang.png" />
 			</p>
@@ -75,17 +70,17 @@
 				<p class="singer">{{useStore.musicLove.ar.map(v=>v.name).join('/')}}</p>
 			</view>
 			<p class="collent" @click="Collect()">
-				<image v-if="isCollect"  src="../../icon/songlist/icon-collent.png"></image>
-				<image v-else src="../../icon/songlist/icon-collect.png"></image>
+				<image v-if="isCollect"  src="../../icon/songlist/icon-collect.png"></image>
+				<image v-else src="../../icon/songlist/icon-collent.png"></image>
 			</p>
 			<p class="talk">
 				<image src="../../icon/songlist/icon-talk.png" />
 			</p>
 		</view>
-		<view class="volume">
+		<view class="volume" >
 			<view class="time">{{useStore.musicNowTime.points}}:{{useStore.musicNowTime.seconds}}</view>
 			<view class="slider">
-				<slider  class="sliders" min="0" max="100" value="0" disabled="true" block-size="10" activeColor="#1890ff" step></slider>
+				<slider  class="sliders" @sliderChange="schedule(1)" min="0" :max="Number(useStore.musicTime.points) * 60 + Number(useStore.musicTime.seconds)" :value="Number(useStore.musicNowTime.points) * 60 + Number(useStore.musicNowTime.seconds)" disabled="true" block-size="20" activeColor="#1890ff" step></slider>
 			</view>
 			<view class="time">{{useStore.musicTime.points}}:{{useStore.musicTime.seconds}}</view>
 		</view> 

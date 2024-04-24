@@ -1,10 +1,10 @@
 <script setup>
-    import {onShow} from '@dcloudio/uni-app'
     import {ref} from "vue";
     import {bannerApi, toplistApi, newsongApi, personalizedApi} from '/base/api'
     import {navigateTo} from '/base/utils'
     import navIcons from "/base/data/navIcons";
     import Sidebar from '../../components/sidebar/Sidebar.vue'
+	import musicBarVue from "../../components/musicBar/musicBar.vue";
 
     const pageSearch = '/pages/search/search'
     const pageMusicPlay = '/pages/musicPlay/musicPlay'
@@ -46,10 +46,12 @@
         navigateTo("/pages/acquiesce/acquiesce?id=" + id)
     }
 
+
 </script>
 
 <template>
     <view class="content">
+		<musicBarVue></musicBarVue>
         <view class="header">
             <uni-icons class="bars" type="bars" size="24" @click="()=>{sidebar.showDrawer()}"></uni-icons>
             <view class="search" @click="navigateTo(pageSearch)">
@@ -108,7 +110,6 @@
                     </view>
                 </view>
             </uni-section>
-
         </view>
         <Sidebar ref="sidebar" />
     </view>
@@ -116,8 +117,12 @@
 
 <style lang="scss" scoped>
     .content {
+        width: 100%;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
         position: relative;
-        padding-bottom: 95rpx;
+        overflow: hidden;
         .header {
             padding: 30rpx;
             display: flex;
@@ -137,9 +142,10 @@
         }
 
         .main {
-            width: 100%;
-            height: 100%;
-
+            flex: 1;
+            overflow: hidden;
+            overflow-y: scroll;
+            padding-bottom: 80rpx;
             .swiper-wrap {
                 padding: 30rpx;
 
@@ -217,9 +223,11 @@
                 overflow: auto;
                 padding: 0 30rpx;
                 box-sizing: border-box;
+
                 .musiclist {
                     display: flex;
                     flex-direction: column;
+
                     .musiclist-item {
                         width: 300rpx;
                         display: flex;
@@ -233,7 +241,6 @@
                             margin-right: 15rpx;
                             border-radius: 10rpx;
                             background: #FFFFFF;
-
                         }
 
                         .musiclist-item-name {
@@ -245,7 +252,6 @@
                     }
                 }
             }
-
 
             .newsong::-webkit-scrollbar {
                 display: none;
