@@ -15,6 +15,7 @@ import { userPlayListApi,playListChange,commentApi } from '../../../base/api';
 	const popup = ref(null)
 	const popup2 = ref(null)
 	const popup3 = ref(null)
+	const popup4 = ref(null)
 	if(!profile.value){
 		profile.value = userStore.setProfileData()
 	}
@@ -23,7 +24,6 @@ import { userPlayListApi,playListChange,commentApi } from '../../../base/api';
 	const getPlayList = async ()=>{
 		const res = await userPlayListApi(profile.value.userId)
 		playList.value = res.playlist
-		console.log(playList.value)
 	}
 	//获取评论
 	const getComment = async ()=>{
@@ -39,15 +39,14 @@ import { userPlayListApi,playListChange,commentApi } from '../../../base/api';
 	{deep:true}
 	)
 		
-	
-	
+	//下一首播放
 	const nextPlay = ()=>{
 		musicStore.musicBehind(props.detailItem,props.detailItem.id)
 		popup.value.open()
 		emits('closeDialog')
 	}
 	
-	
+	//收藏
 	const toLike = ()=>{
 		if(!profile.value.userId){
 			popup2.value.open()
@@ -62,12 +61,17 @@ import { userPlayListApi,playListChange,commentApi } from '../../../base/api';
 		}
 	}
 	
+	//收藏到歌单
 	const add = async (item)=>{
 		const res = await playListChange('add',item.id,props.detailItem.id)
-		profile.value = userStore.setProfileData()
+		if(res.body.code===502){
+			popup4.value.open()
+		}
 		getPlayList()
 	}
 	
+	
+	//阻止冒泡
 	const fn = (e)=>{
 		e.stopPropagation()
 	}
@@ -193,6 +197,9 @@ import { userPlayListApi,playListChange,commentApi } from '../../../base/api';
 	</uni-popup>
 	<uni-popup class="mesWrap" ref="popup2" type="message">
 		<uni-popup-message class="mes" type="error" message="请登录" :duration="800"></uni-popup-message>
+	</uni-popup>
+	<uni-popup class="mesWrap" ref="popup4" type="message">
+		<uni-popup-message class="mes" type="error" message="歌曲已存在" :duration="800"></uni-popup-message>
 	</uni-popup>
 	<view>
 		<uni-popup ref="popup3" type="bottom" border-radius="10px 10px 0 0" background-color="#fff">
