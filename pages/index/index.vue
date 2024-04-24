@@ -1,4 +1,5 @@
 <script setup>
+    import {onShow} from '@dcloudio/uni-app'
     import {ref} from "vue";
     import {bannerApi, toplistApi, newsongApi, personalizedApi} from '/base/api'
     import {navigateTo} from '/base/utils'
@@ -15,7 +16,6 @@
     const topListTJ = ref([])
     const musicList = ref([])
     const sidebar = ref(null)
-
 
     bannerApi().then(res => {
         banners.value = res.banners

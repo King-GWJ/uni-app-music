@@ -48,16 +48,33 @@ export const useMusicstore=defineStore("musicStore",()=>{
 	}
 	
 	// 搜索调这个方法
-	const musicSearch = (item,id) => {
+	const musicSearch = (t,i) => {
 		// 搜索的音乐push到musicList全部数组里面 并且放在数组第一个位置
-		// item 点击的音乐信息 id 音乐的id
-		musicList.value.unshift(item)
-		musicLove.value = musicList.value[0]
-		musicIndex.value = 0
+		// t点击的音乐信息 i 音乐的id
+		const index = musicList.value.findIndex(item => item.id === t.id)
+		if(index === -1){
+			musicList.value.unshift(t)
+			musicLove.value = musicList.value[0]
+			musicIndex.value = 0
+		}else{
+			musicLove.value = musicList.value[index]
+			musicIndex.value = index
+		}
+		songUrlApi(musicList.value[musicIndex.value].id,'standard').then(res => {
+			musicBack.value = res.data[0].url
+			audio.src=musicBack.value
+			audio.autoplay = true
+			audio.loop = true
+		})
+		clearInterval(musicTimer.value)
+		musicNowTime.value.seconds = '00'
+		musicNowTime.value.points = '00'
+		musicTime.value.seconds = '00'
+		musicTime.value.points = '00'
 	}
 	
 	// 监听音乐数组改变获取音乐播放的rul
-	const musicUrlList = watch(musicList,(newValue,oldValue) => {
+	const musicUrlList = watch(musicList.value.length,(newValue,oldValue) => {
 		musicLove.value = musicList.value[musicIndex.value]
 		if(musicHistory.value.find(item => item.id === musicLove.value.id)){
 		}else{
