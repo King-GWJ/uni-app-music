@@ -3,6 +3,7 @@
 	import {watch,computed,ref} from "vue"
 	import {useMusicstore} from '../../store/music.js'
 	
+	
 	 const tabList = ref([
             {
                 isSelect: true,
@@ -17,17 +18,13 @@
 		const curIndex=ref(0)
 		const selectList=ref([]) //接收选择的歌曲
 		const useStore=useMusicstore()
-		const list=useStore.musicLove //当前选择的歌曲
-		const showList=ref(false)
+		// const list=useStore.musicList //已选择歌曲例表
+		const showList=ref(false) //例表显示隐藏
+		const curActive=ref(true) //歌曲切换图片高亮
 		const selectSong=ref([]) //已选择的歌曲例表
-		console.log(list)
-		
-		//添加歌曲例表
-		const lisenSong=()=>{
-			
-		}
-		
-		
+	
+		console.log(useStore.musicList)
+	
 		//切换tab
 		const getTabIndex = (index) => {
 		    curIndex.value = index
@@ -57,11 +54,14 @@
 				<image src="../../icon/songlist/icon-sels.png"></image>
 				<view>为你推荐更对喜欢的歌曲</view>
 			</view>
-			<view class="songlist">
-		        <view class="item">
+			<view class="songlist" @click.stop="">
+		        <view :class="{item, active:  useStore.musicIndex=== index}"   @click="useStore.musicIndex= index"    v-for="(item,index) in useStore.musicList" :key="item.name">
 					<view class="text">
-						<image src="../../icon/songlist/icon-lvdong.png"></image>
-						<view>{{list.name}}</view>
+						<image  v-if="useStore.musicIndex=== index"  src="../../icon/songlist/icon-lvdongq.png"></image>
+						<image  v-else  src="../../icon/songlist/icon-lvdongw.png"></image>
+						<view class="songtitle">
+							<view>{{item.name}}</view><view class="singerName">·{{item.ar.map(v=>v.name).join('/')}}</view>
+						</view>
 					</view>
 					<view class="close">
 						<!-- <view>来源</view> -->
@@ -73,15 +73,11 @@
 		 <!-- 历史播放 -->
 		 <view v-else="curIndex===1" class="listBody">
 			    <view class="swiper">
-					 <uni-swiper-dot class="uni-swiper-dot-box" :info="info" :current="current" :mode="mode"  field="content">
-						<swiper class="swiper-box">
-							<swiper-item >
-								<view class="swiper-item" >
-									<text style="color: #fff; font-size: 32px;"></text>
-								</view>
-							</swiper-item>
-						</swiper>
-					</uni-swiper-dot>
+					<view class="album">
+						<view class="avatar"></view>
+						<view class="content">123</view>
+					</view>
+					 
 			    </view>
 			<view class="allSong">
 				<view class="songText">全部歌曲12首</view>
@@ -185,15 +181,20 @@
 		}
 		.songlist{
 			flex:1;
+			height:20%;
 			overflow: hidden;
 			overflow-y: auto;
 			.item{
 				height:rpx(40);
-				background:burlywood;
+				/* background:burlywood; */
 				display:flex;
 				align-items: center;
 				justify-content: space-between;
 				padding:0 rpx(15);
+				overflow:hidden;
+				white-space: nowrap;
+				text-overflow: ellipsis;
+				-webkit-box-ordinal: vertical;
 				&.active{
 					background:#eee;
 					color:red;
@@ -201,11 +202,13 @@
 				.text{
 					display:flex;
 					align-items: center;
+					font-size:rpx(15);
+					overflow:hidden;
 				}
 				image{
-					width:rpx(16);
-					height:rpx(16);
-					margin:0 rpx(5);
+					width:rpx(23);
+					height:rpx(23);
+					margin:0 rpx(3) 0 0;
 				}
 				.close{
 					width:rpx(30);
@@ -214,6 +217,20 @@
 						width:rpx(30);
 						height:rpx(30);
 					}
+				}
+				.songtitle{
+					display:flex;
+					padding:0 rpx(10) 0 0;
+					align-items: cenyer;
+					overflow:hidden;
+					white-space: nowrap;
+					text-overflow: ellipsis;
+					-webkit-box-ordinal: vertical;
+				}
+				.singerName{
+					color:	#696969;
+					font-size:rpx(12);
+					line-height: rpx(20);
 				}
 				
 			}
@@ -227,8 +244,29 @@
 		display: flex;
 		flex-direction: column;
 		.swiper{
+			display:flex;
 			height:rpx(80);
+			padding:0 rpx(15);
+			align-items: center;
 			background: skyblue;
+			&::-webkit-scrollbar{height:0px};
+			.album{
+				background:#eee;
+				width:rpx(210);
+				height:rpx(60);
+				border-radius: rpx(5);
+				display:flex;
+				align-items: center;
+				.avatar{
+					width:rpx(60);
+					height:rpx(60);
+					border-radius: rpx(5);
+					background: royalblue;
+				}
+				.content{
+					margin:0 rpx(10);
+				}
+			}
 			image{
 				width:rpx(20);
 			}
@@ -255,7 +293,6 @@
 			height:rpx(290);
 			overflow:hidden;
 			overflow-y: auto;
-			/* background:red; */
 			.item{
 				height:rpx(40);
 				background:burlywood;
@@ -264,10 +301,6 @@
 				justify-content: space-between;
 				padding:0 rpx(15);
 			}
-		}
-		
-		uni-swiper{
-			
 		}
 	}
 	.footer{

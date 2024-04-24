@@ -16,36 +16,36 @@
 					<view class="text2">微信</view>
 				</view>
 				<view class="item">
-					<image src="../../icon/songlist/icon-wx.png"></image>
+					<image src="../../icon/songlist/icon-py.png"></image>
 					<view class="text2">微信朋友圈</view>
 				</view>
 				<view class="item">
-					<image src="../../icon/songlist/icon-wx.png"></image>
+					<image src="../../icon/songlist/icon-qq.png"></image>
 					<view class="text2">QQ好友</view>
 				</view>
 				<view class="item">
-					<image src="../../icon/songlist/icon-wx.png"></image>
+					<image src="../../icon/songlist/icon-qqspace.png"></image>
 					<view class="text2">QQ空间</view>
 				</view>
 				<view class="item">
-					<image src="../../icon/songlist/icon-wx.png"></image>
+					<image src="../../icon/songlist/icon-wangyiyun.png"></image>
 					<view class="text2">云音乐动态</view>
 				</view>
 				<view class="item">
-					<image src="../../icon/songlist/icon-wx.png"></image>
-					<view class="text2">微信</view>
+					<image src="../../icon/songlist/icon-xin.png"></image>
+					<view class="text2">私信</view>
 				</view>
 				<view class="item">
-					<image src="../../icon/songlist/icon-wx.png"></image>
-					<view class="text2">微信朋友圈</view>
+					<image src="../../icon/songlist/icon-wb.png"></image>
+					<view class="text2">微博</view>
 				</view>
-				<view class="item">
-					<image src="../../icon/songlist/icon-wx.png"></image>
-					<view class="text2">QQ好友</view>
+				<view class="item crl">
+					<image  src="../../icon/songlist/icon-lj.png"></image>
+					<view class="text2">复制链接</view>
 				</view>
-				<view class="item">
-					<image src="../../icon/songlist/icon-wx.png"></image>
-					<view class="text2">QQ空间</view>
+				<view class="item crl">
+					<image  src="../../icon/songlist/icon-gd.png"></image>
+					<view class="text2">更多</view>
 				</view>
 				<view class="item">
 					<image src="../../icon/songlist/icon-wx.png"></image>
@@ -114,6 +114,12 @@
 				font-size: rpx(13);
 				width:rpx(65);
 				text-align: center;
+			}
+			.crl{
+				width:rpx(50);
+				height:rpx(50);
+				background:#bebebe;
+				border-radius: 50%;
 			}
 		}
 		

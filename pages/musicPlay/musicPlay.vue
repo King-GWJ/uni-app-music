@@ -5,21 +5,29 @@
 	import {useMusicstore} from '../../store/music.js'
     import Curplay from "../../components/showlist/curplay.vue"
 	import Share from "../../components/showlist/share.vue"
+	import Lyric from "../../components/showlist/lyric.vue" 
 	
+	const useStore = useMusicstore() 
+	const showLyric=ref(false) //歌词显示隐藏
 	const showPlay=ref(false)  //歌曲信息显示隐藏
 	const shareShow=ref(false) //分享显示隐藏
-	const useStore = useMusicstore() 
+	
+
+	
+	
+	
+	//切换歌曲
 	const subtract = (num) => { // 上一首/下一首
 		useStore.musicSubtract(num)
-
 	}
-
-	//跳转评论页
-	// const commentPage=()=>{
-	// 	uni.navigateTo({
-	// 	  url: "/pages/commentPage/commentPage"
-	// 	})
-	// }
+    
+	//返回首页
+	const Backprve=()=>{
+		uni.switchTab({
+			url: '/pages/index/index'
+		})
+	}
+	
 
 </script>
 
@@ -29,7 +37,10 @@
 	<view class="musicPlay">
 		<view class="background"><image :src="useStore.musicLove.al.picUrl" ></image></view>
 		<view class="header">
-			<view class="bangdan"></view>
+			<p @click="Backprve">
+				<image src="../../icon/songlist/icon-bback.png"></image>
+			</p>
+			<view>{{}}</view>
 			<p @click="shareShow=true">
 				<image src="../../icon/songlist/icon-fenxiang.png" />
 			</p>
@@ -37,14 +48,14 @@
 		<!-- 蒙层 -->
 		<view class="mask"></view>
 		<view class="circle">
-			<view class="outer">
+			<view  :class="[useStore.isplay?'outerActive':'outer']">
 				<view class="undertone">
 					<!-- <view class="masks"></view>
 					<view class="backImage"><image :src="useStore.musicLove.al.picUrl" ></image></view> -->
-					<view class="images"><image :src="useStore.musicLove.al.picUrl" ></image></view>
+					<view class="images" ><image :src="useStore.musicLove.al.picUrl" ></image></view>
 				</view>
 			</view>
-			<view class="sun"></view>
+			<view class="sun" @click="showLyric=true"></view>
 		</view>
 		<!-- 压唱片的部分 -->
 		<view class="fixed">
@@ -81,8 +92,8 @@
 				</p>
 
 				<p @click="useStore.play()">
-					<image v-if="useStore.isplay" src="../../icon/songlist/icon-bofang.png" />
-					<image v-else src="../../icon/songlist/icon-a.png" />
+					<image v-if="useStore.isplay"  src="../../icon/songlist/icon-a.png" />
+					<image v-else src="../../icon/songlist/icon-bofang.png" />
 				</p>
 				<p @click="subtract(1)">
 					<image src="../../icon/songlist/icon-next.png" />
@@ -105,6 +116,7 @@
 		</footer>
 		<Curplay  v-if="showPlay" @click.stop.prevent="showPlay=false"/>
 		<Share v-if="shareShow" @click.stop.prevent="shareShow=false"/>
+		<Lyric v-if="showLyric" @click.stop="showLyric=flase"/>
 	</view>
 </template>
 
@@ -136,6 +148,7 @@
 		// background: palevioletred;
 		display: flex;
 		align-items: center;
+		justify-content: space-between;
 		padding:0 15px;
 		z-index: 1;
 		p{
@@ -158,7 +171,7 @@
 		width: 100%;
 		height: 100%;
 		background: rgba(0, 0, 0, .2);
-		backdrop-filter: blur(30px);
+		backdrop-filter: blur(40px);
 	}
 	.circle{
 		flex:1;
@@ -171,9 +184,28 @@
 			left: 16%;
 			top: 20%;
 			position: relative;
-			// border: 1px solid #808080;
+			// 旋转
+         }
+		 .outerActive{
+			 animation: rotate 2s linear infinite;
+			 width: rpx(260);
+			 height: rpx(260);
+			 border-radius: 50%;
+			 background: rgba(200, 200, 200, 0.5);
+			 left: 16%;
+			 top: 20%;
+			 position: relative;
+		 }
+		 @keyframes rotate {
+		 		  from {
+		 		    transform: rotate(0deg);
+		 		  }
+		 		  to {
+		 		    transform: rotate(360deg);
+		 		  }
 		}
-
+		 	
+		 
 		.undertone {
 			width: rpx(240);
 			height: rpx(240);
@@ -183,7 +215,9 @@
 			top: 50%;
 			left: 50%;
 			transform: translate(-50%,-50%);
+			
 		}
+		
         .backImage{
         	width: rpx(240);
         	height: rpx(240);
@@ -243,6 +277,8 @@
 				box-shadow: 0 1px 3px 2px lightslategrey;
 			}
 		}
+		
+		
 			.image{
 				width:rpx(125);
 				height:rpx(125);

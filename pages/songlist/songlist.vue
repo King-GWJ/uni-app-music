@@ -15,7 +15,7 @@
 	const float=ref(false) //显示隐藏
 	const songDetail=ref([])
     const itemSong=ref({})
-
+    const isVip=ref(1)
 	onLoad((options)=>{
 		console.log(options.id)
 		//获取详情歌单数据
@@ -35,7 +35,7 @@
 	
 	//跳转播放页
 	const playPage=(item,index)=>{
-	  useStore.musicAllList(songList.value.tracks,item,index)
+	  useStore.musicAllList(songList.value.tracks,item,index,songList.value.name)
 	  uni.switchTab({
 		url: `/pages/musicPlay/musicPlay?id=${item.id}&index=${index}`
 	  })
@@ -59,11 +59,11 @@
 	  })
 	}
 
-	//判断是否有mv
-	// const mv=()=>{
-	// 	return songList.video? '../../icon/songlist/icon-mv.png' : ''
-
-	// }
+	//判断是否为vip歌曲
+	// const isVip = computed(() => {
+	//   return songList.copyright>0 ?  '../../icon/songlist/icon-vipv.png' : ''
+	// })
+	
 
 </script>
 
@@ -114,7 +114,8 @@
 						   <view class="alia">{{item.alia[0]}}</view>
 					   </view>
 					   <view class="singer">
-						   <!-- <view><image :src="item.picUrl"></image></view> -->
+						   <view v-if="songList.isVip"> <image src="../../icon/songlist/icon-vipv.png"></image></view>
+						   <!-- <view v-else><image></image></view> -->
 						   <view class="singerName">{{item.ar.map(v=>v.name).join("/")}}</view>
 					   </view>
 					</view>
@@ -287,6 +288,11 @@
 				   .singer{
 					   font-size:rpx(13);
 					   color:#696969;
+					   display: flex;
+					   image{
+						   width:rpx(20);
+						   height:rpx(20);
+					   }
 					   .singerName{
 						   overflow:hidden;
 						   white-space: nowrap;
