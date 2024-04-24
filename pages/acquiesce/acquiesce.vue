@@ -28,7 +28,7 @@
 			<view class="allImg">
 				<image src="../../icon/songlist/red-bofang.png" mode=""></image>
 			</view>
-			<view class="allText" @click="useStore.musicAllList(list,list[0],0)">
+			<view class="allText" @click="playAll(list,list[0],0)">
 				播放全部
 				<view class="">
 					VIP 歌曲免费畅听
@@ -111,6 +111,12 @@
 		itemSong.value=t
 		float.value=!f
 	}
+	const playAll = (l,t,i) => {
+		useStore.musicAllList(l,t,i)
+		uni.switchTab({
+			url: `/pages/musicPlay/musicPlay?id=${t.id}`,
+		})
+	}
 </script>
 
 <style lang="scss" scoped>
@@ -129,7 +135,7 @@
 	.header{
 		width: 100%;
 		height: rpx(140);
-		background: linear-gradient(to bottom, #7B7F92, #E5E6E8);
+		background: linear-gradient(to bottom, #7B7F92, #FFFFFF);
 		padding-right: rpx(10);
 		padding: 0 rpx(10);
 		color: #fff;
@@ -140,12 +146,18 @@
 				.dateMonth{
 					display: flex;
 					align-items: center;
+					position: relative;
 					.dateMonthA{
 						font-size: rpx(36);
 					}
 					.dateDay{
 						margin-left: rpx(6);
 						font-size: rpx(20);
+						position: absolute;
+						left:0;
+						bottom: 0;
+						margin-left: rpx(26);
+						margin-bottom: rpx(7);
 					}
 				}
 				
@@ -156,7 +168,7 @@
 				justify-content: space-between;
 				.history{
 					padding: 0 rpx(20);
-					background-color:#9396A3 ;
+					background-color:#898D9E ;
 					border-radius: rpx(100);
 				}
 			}
@@ -228,6 +240,11 @@
 				margin-left: rpx(10);
 				.textName{
 					font-size: rpx(14);
+					height: rpx(20);
+					overflow: hidden;
+					text-overflow: ellipsis;
+					white-space: nowrap;
+					width: rpx(160);
 				}
 				.textNumber{
 					display: flex;

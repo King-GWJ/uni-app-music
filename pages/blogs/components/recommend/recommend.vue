@@ -158,7 +158,6 @@
 		limit: 9,
 		offset: 3
 	}).then(res => {
-		console.log(res);
 		// voiceApi.value = res.banners
 	})
 

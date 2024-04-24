@@ -59,7 +59,7 @@
         </view>
         <view class="main">
             <view class="login">
-                <image :src="profile?.avatarUrl" mode="widthFix" class="login-img"></image>
+                <image :src="profile?.avatarUrl" mode="widthFix" class="login-img" v-show="isLogin"></image>
                 <view class="login-name" v-show="isLogin">
                     {{ profile?.nickname }}
                 </view>
@@ -113,7 +113,7 @@
             .login {
                 display: flex;
                 flex-direction: column;
-                justify-content: start;
+                justify-content: flex-start;
                 align-items: center;
                 margin-top: 10rpx;
 

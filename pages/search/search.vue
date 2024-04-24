@@ -15,6 +15,7 @@
 	const showDialog = ref(false)
 	const detailItem = ref({})
 	const musicStore = useMusicstore()
+
 	
 	//获取本地数据
 	historyList.value = JSON.parse(localStorage.getItem('history')) || []
@@ -111,10 +112,13 @@
 	const closeDetail = (e) => {
 		showDialog.value = false
 	}
+	
+	
 </script>
 
 <template>
 	<view class="box">
+		
 		<view class="header">
 			<view class="inp-wrap">
 				<view class="search-icon"></view>
