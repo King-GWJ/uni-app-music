@@ -270,7 +270,7 @@ const closeDetail = (e) => {
 	position: absolute;
 	left: 0;
 	top: rpx(45);
-	height: rpx(560);
+	height: rpx(610);
 	background-color: rgb(244, 246, 249);
 	width: 100%;
 	color: rgb(40, 50, 72);
@@ -308,7 +308,7 @@ const closeDetail = (e) => {
 
 .searchResult {
 	position: absolute;
-	height: rpx(570);
+	height: rpx(610);
 	overflow-y: auto;
 	overflow-x: hidden;
 	left: 0;
