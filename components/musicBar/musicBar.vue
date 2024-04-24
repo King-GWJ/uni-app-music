@@ -9,13 +9,6 @@ const artist = ref('')
 const flag = ref(true)
 
 
-if(musicStore.musicLove.al){
-	url.value = musicStore.musicLove.al.picUrl
-	name.value = musicStore.musicLove.name
-	artist.value = musicStore.musicLove.ar[0].name
-}
-
-
 console.log(musicStore.musicLove)
 
 
