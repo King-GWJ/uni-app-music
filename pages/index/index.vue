@@ -122,7 +122,7 @@
         display: flex;
         flex-direction: column;
         position: relative;
-
+        overflow: hidden;
         .header {
             padding: 30rpx;
             display: flex;
@@ -143,6 +143,8 @@
 
         .main {
             flex: 1;
+            overflow: hidden;
+            overflow-y: scroll;
             .swiper-wrap {
                 padding: 30rpx;
 
