@@ -149,5 +149,8 @@
         "navigationBarBackgroundColor": "#d43b32",
         "backgroundColor": "#F8F8F8"
     },
+    "easycom": {
+        "autoscan": true
+    },
     "uniIdRouter": {}
 }
