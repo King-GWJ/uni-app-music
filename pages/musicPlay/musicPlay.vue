@@ -32,10 +32,6 @@
 		 console.log(123);
 		 console.log(e);
 	 }
-	 
-	 const  sliderClick = () => {
-		 
-	 }
 
 </script>
 
@@ -83,7 +79,7 @@
 		</view>
 		<view class="volume" >
 			<view class="time">{{useStore.musicNowTime.points}}:{{useStore.musicNowTime.seconds}}</view>
-			<view class="slider" @click="sliderClick()">
+			<view class="slider">
 				<slider  class="sliders" @sliderChange="schedule(1)" min="0" :max="Number(useStore.musicTime.points) * 60 + Number(useStore.musicTime.seconds)" :value="Number(useStore.musicNowTime.points) * 60 + Number(useStore.musicNowTime.seconds)" disabled="true" block-size="20" activeColor="#1890ff" step></slider>
 			</view>
 			<view class="time">{{useStore.musicTime.points}}:{{useStore.musicTime.seconds}}</view>
