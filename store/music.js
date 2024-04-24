@@ -38,13 +38,18 @@ export const useMusicstore=defineStore("musicStore",()=>{
 	})
 	// 历史播放音乐
 	const musicHistory = ref([])
+	// 音乐类型
+	const musicType = ref('')
+
 
 	
 	// 获取全部音乐，当前音乐，当前音乐下标
-	const musicAllList = (l,t,i) => { 
+	const musicAllList = (l,t,i,n) => { 
 		musicList.value = l
 		musicLove.value = t
 		musicIndex.value = i
+		musicType.value = n
+		clearInterval(musicTimer.value)
 	}
 	
 	// 搜索调这个方法
@@ -76,10 +81,38 @@ export const useMusicstore=defineStore("musicStore",()=>{
 	// 监听音乐数组改变获取音乐播放的rul
 	const musicUrlList = watch(musicList.value.length,(newValue,oldValue) => {
 		musicLove.value = musicList.value[musicIndex.value]
-		if(musicHistory.value.find(item => item.id === musicLove.value.id)){
-		}else{
-			musicHistory.value.push(musicLove.value)
-		}
+		// if(!musicHistory.value.find(item => item.name === musicType.value.find)){
+		// 	musicHistory.value.push({
+		// 		name: musicType.value,
+		// 		music: musicLove.value
+		// 	})
+		// }else{
+		// 	if(musicType.value.find)
+		// }
+		// musicType = [
+		// 	{
+		// 		name: xx榜,
+		// 		music : [
+		// 			{
+		// 				XXX
+		// 			},
+		// 			{
+		// 				XXX
+		// 			}
+		// 		]
+		// 	},
+		// 	{
+		// 		name: xx榜,
+		// 		music : [
+		// 			{
+		// 				XXX
+		// 			},
+		// 			{
+		// 				XXX
+		// 			}
+		// 		]
+		// 	}
+		// ]
 		clearInterval(musicTimer.value)
 		musicNowTime.value.seconds = '00'
 		musicNowTime.value.points = '00'
@@ -90,7 +123,9 @@ export const useMusicstore=defineStore("musicStore",()=>{
 			audio.src=musicBack.value
 			audio.autoplay = true
 			audio.loop = true
+			isplay.value = true
 		})
+		
 	})
 	
 	// 监听当前播放音乐下标改变获取rul
@@ -110,11 +145,13 @@ export const useMusicstore=defineStore("musicStore",()=>{
 			audio.src=musicBack.value
 			audio.autoplay = true
 			audio.loop = true
+			isplay.value = true
 		})
 	})
 	
 	// 切换上一首或者下一首  同时判断是不是第一首或者最后一首
 	const musicSubtract = (num) => {
+		clearInterval(musicTimer.value)
 		isplay.value = false
 		musicIndex.value += num
 		if(musicIndex.value < 0){
@@ -128,11 +165,11 @@ export const useMusicstore=defineStore("musicStore",()=>{
 	const play=()=>{
 		if(!audio.paused){
 			audio.pause()
-			isplay.value = true
+			isplay.value = false
 			clearInterval(musicTimer.value)
 		}else{
 			audio.play()
-			isplay.value = false
+			isplay.value = true
 			computeMusic()
 		}
 	}
@@ -216,6 +253,6 @@ export const useMusicstore=defineStore("musicStore",()=>{
 		musicTime,
 		musicNowTime,
 		musicHistory,
+		musicType,
 	}
-	
 })

@@ -61,16 +61,13 @@
 	const current = ref(0)
 	const mode = ref('index')
 	toplistApi().then(res => {
-		console.log(res.list);
 		list.value = res.list
 	})
 	const data = ref([])
 	personalizedApi().then(res => {
-		console.log(res.result);
 		data.value = res.result
 	})
 	const skip = (item) => {
-		console.log(item.id);
 		uni.navigateTo({
 			url: `/pages/songlist/songlist?id=${item.id}`,
 		});
