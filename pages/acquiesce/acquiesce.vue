@@ -90,10 +90,10 @@
 	const currentDate = new Date()
 	const month = currentDate.getMonth() + 1
 	const day = currentDate.getDate()
-	const toggle = (l,t,i) => {
-		useStore.musicAllList(l,t,i)
+	const toggle = (l,t,i,) => {
+		useStore.musicAllList(l,t,i,'每日推荐')
 		uni.switchTab({
-			url: `/pages/musicPlay/musicPlay?id=${t.id}`,
+			url: '/pages/musicPlay/musicPlay',
 		});
 	}
 	onLoad((options) => {
@@ -103,7 +103,6 @@
 			})
 		}else{
 			songsApi().then(res => {
-				console.log(res);
 				list.value = res.data.dailySongs
 			})
 		}	
@@ -121,9 +120,6 @@
 </script>
 
 <style lang="scss" scoped>
-*{
-	box-sizing: border-box;
-}
 .box{
 	width: 100%;
 	height: 100%;
