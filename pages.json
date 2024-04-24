@@ -36,8 +36,7 @@
             "path": "pages/recommended/recommended",
             "style": {
                 "navigationBarTitleText": "排行榜",
-                "enablePullDownRefresh": false,
-                "navigationStyle": "custom"
+                "enablePullDownRefresh": false
             }
         },
         {
@@ -92,8 +91,7 @@
             "path": "pages/acquiesce/acquiesce",
             "style": {
                 "navigationBarTitleText": "每日推荐",
-                "enablePullDownRefresh": false,
-                "navigationStyle": "custom"
+                "enablePullDownRefresh": false
             }
         },
         {
@@ -155,6 +153,9 @@
         "navigationBarTitleText": "uni-app",
         "navigationBarBackgroundColor": "#d43b32",
         "backgroundColor": "#F8F8F8"
+    },
+    "easycom": {
+        "autoscan": true
     },
     "uniIdRouter": {}
 }

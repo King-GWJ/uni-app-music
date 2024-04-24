@@ -106,8 +106,7 @@ export const useMusicstore = defineStore("musicStore", () => {
 	}
 	
 	// 监听音乐数组改变获取音乐播放的rul
-	const musicUrlList = watch(musicList.value.length,(newValue,oldValue) => {
-		console.log(123);
+	const musicUrlList = watch(musicLove.value.length,(newValue,oldValue) => {
 		musicLove.value = musicList.value[musicIndex.value]
 		if(!musicHistory.value.find(item => item.name === musicType.value)){
 			musicHistory.value.push({
@@ -120,7 +119,6 @@ export const useMusicstore = defineStore("musicStore", () => {
 				musicType.value[index].music.push(musicLove.value)
 			}
 		}
-		console.log(musicType.value);
 		clearInterval(musicTimer.value)
 		musicNowTime.value.seconds = '00'
 		musicNowTime.value.points = '00'
@@ -150,7 +148,6 @@ export const useMusicstore = defineStore("musicStore", () => {
 			audio.loop = true
 			isplay.value = true
 		})
-		isplay.value = true
 	})
 
 	// 切换上一首或者下一首  同时判断是不是第一首或者最后一首
@@ -165,7 +162,7 @@ export const useMusicstore = defineStore("musicStore", () => {
 		}
 	}
 
-	//播放
+	//播放 和 暂停
 	const play=()=>{
 		if(!audio.paused){
 			audio.pause()

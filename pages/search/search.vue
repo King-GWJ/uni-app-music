@@ -3,6 +3,7 @@
 	import { searchSuggestApi, searchApi, hotApi } from '../../base/api'
 	import SearchDialogVue from './components/SearchDialog.vue';
 	import { useMusicstore } from '../../store/music';
+	import musicBarVue from '../../components/musicBar/musicBar.vue';
 	
 	const searchVal = ref('')
 	const suggestList = ref([])
@@ -48,15 +49,13 @@ const searchSuggest = () => {
 
 //开始搜索
 const search = async (val = searchVal.value, off = offset.value) => {
-	// uni.navigateTo({
-	// 	url:'/pages/searchResult/searchResult'
-	// })
 	searchVal.value = val
 	suggestShow.value = false
 	const res = await searchApi(val, off)
 	res.result.songs.forEach(v => {
 		searchList.value.push(v)
 	})
+	console.log(searchList.value)
 	setTimeout(() => {
 		resultShow.value = true
 	}, 20)
@@ -118,7 +117,7 @@ const closeDetail = (e) => {
 
 <template>
 	<view class="box">
-
+		<musicBarVue></musicBarVue>
 		<view class="header">
 			<view class="inp-wrap">
 				<view class="search-icon"></view>
@@ -194,22 +193,51 @@ const closeDetail = (e) => {
 					青花瓷
 				</view>
 			</view>
-			<view class="top">
-				<view class="hotTitle">
-					热搜列表   
-				</view>
-				<view class="hotItemWrap">
-					<view :class="{ 'hotItem': 1, 'itemActive': index < 3 }" @click="search(item.first)"
-						v-for="(item, index) in hotList" :key="index">
-						<view :class="{ 'order': 1, 'active': index < 3 }">
-							{{ index + 1 }}
-						</view> {{ item.first }}
-						<view v-if="index < 3" class="hotIcon">
-							爆
+			<swiper class="swiper-wrap" :indicator-dots="false" :autoplay="true" :interval="3000" :duration="1000">
+				<swiper-item>
+					<view class="swiper-item">
+						<view class="top">
+							<view class="hotTitle">
+								热搜列表   
+							</view>
+							<view class="hotItemWrap">
+								<view :class="{ 'hotItem': 1, 'itemActive': index < 3 }" @click="search(item.first)"
+									v-for="(item, index) in hotList" :key="index">
+									<view :class="{ 'order': 1, 'active': index < 3 }">
+										{{ index + 1 }}
+									</view> {{ item.first }}
+									<view v-if="index < 3" class="hotIcon">
+										爆
+									</view>
+								</view>
+							</view>
 						</view>
+						
 					</view>
-				</view>
-			</view>
+				</swiper-item>
+				<swiper-item>
+					<view class="swiper-item">
+						<view class="top">
+							<view class="hotTitle">
+								热搜列表   
+							</view>
+							<view class="hotItemWrap">
+								<view :class="{ 'hotItem': 1, 'itemActive': index < 3 }" @click="search(item.first)"
+									v-for="(item, index) in hotList" :key="index">
+									<view :class="{ 'order': 1, 'active': index < 3 }">
+										{{ index + 1 }}
+									</view> {{ item.first }}
+									<view v-if="index < 3" class="hotIcon">
+										爆
+									</view>
+								</view>
+							</view>
+						</view>
+						
+					</view>
+				</swiper-item>
+			</swiper>
+			
 		</view>
 		<SearchDialogVue :showDialog="showDialog" @closeDialog="closeDetail(e)" :detailItem="detailItem">
 		</SearchDialogVue>
@@ -274,7 +302,7 @@ const closeDetail = (e) => {
 	background-color: rgb(244, 246, 249);
 	width: 100%;
 	color: rgb(40, 50, 72);
-
+	z-index: 2;
 	.suggestItem {
 		display: flex;
 		width: 100%;
@@ -315,7 +343,7 @@ const closeDetail = (e) => {
 	top: rpx(45);
 	background-color: white;
 	width: 100%;
-
+	z-index: 2;
 	&:last-child {
 		border-bottom: none;
 	}
@@ -521,4 +549,10 @@ const closeDetail = (e) => {
 	background: url(../../icon/fresh.svg) no-repeat center;
 	background-size: contain;
 }
+
+
+.swiper-wrap{
+	height: rpx(500);
+}
+
 </style>
