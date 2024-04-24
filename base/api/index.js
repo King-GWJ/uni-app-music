@@ -1,4 +1,5 @@
 export const baseUrl = "http://121.89.213.194:5001"
+// export const baseUrl = "https://zyxcl.xyz/music/api"
 
 // 封装请求函数
 export const request = ({
@@ -150,6 +151,7 @@ export const userPlayListApi = (uid) => {
 		method: 'GET',
 		data: {
 			uid,
+			timestamp: Date.now()
 		}
 	})
 }
@@ -329,3 +331,15 @@ export const userFollowedsApi = (val) => {
   })
 }
 
+//歌单添加删除歌曲
+export const playListChange = (op,pid,tracks) =>{
+	return request({
+		url:'/playlist/tracks',
+		data:{
+			op,
+			pid,
+			tracks,
+			timestamp: Date.now()
+		}
+	})
+}

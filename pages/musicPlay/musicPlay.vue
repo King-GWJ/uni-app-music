@@ -3,20 +3,23 @@
 	import {songDetailApi,lyricApi,songUrlApi,SongdetailApi} from "../../base/api/index.js"
 	import {watch,computed,ref} from "vue"
 	import {useMusicstore} from '../../store/music.js'
-
+    import Curplay from "../../components/showlist/curplay.vue"
+	import Share from "../../components/showlist/share.vue"
+	
+	const showPlay=ref(false)  //歌曲信息显示隐藏
+	const shareShow=ref(false) //分享显示隐藏
 	const useStore = useMusicstore() 
 	const subtract = (num) => { // 上一首/下一首
 		useStore.musicSubtract(num)
 
 	}
 
-		
-	//返回上一页
-	const backPrve=()=>{
-		uni.navigateTo({
-		  // url: "/pages/vippage/vippage"
-		});
-	}
+	//跳转评论页
+	// const commentPage=()=>{
+	// 	uni.navigateTo({
+	// 	  url: "/pages/commentPage/commentPage"
+	// 	})
+	// }
 
 </script>
 
@@ -27,7 +30,7 @@
 		<view class="background"><image :src="useStore.musicLove.al.picUrl" ></image></view>
 		<view class="header">
 			<view class="bangdan"></view>
-			<p>
+			<p @click="shareShow=true">
 				<image src="../../icon/songlist/icon-fenxiang.png" />
 			</p>
 		</view>
@@ -60,12 +63,12 @@
 			</p>
 		</view>
 		<view class="volume">
-			<view class="time">0</view>
+			<view class="time">{{useStore.musicNowTime.points}}:{{useStore.musicNowTime.seconds}}</view>
 			<view class="slider">
 				<slider  class="sliders" min="0" max="100" value="0" disabled="true" block-size="10" activeColor="#1890ff" step></slider>
 			</view>
-			<view class="time">100</view>
-		</view>
+			<view class="time">{{useStore.musicTime.points}}:{{useStore.musicTime.seconds}}</view>
+		</view> 
 		<view class="play">
 			<span @click="useStore.musicToggle()">
 				<image  v-if="useStore.musicMode === 1 " src="../../icon/songlist/icon-meiti-suijibofang.png" />
@@ -85,7 +88,7 @@
 					<image src="../../icon/songlist/icon-next.png" />
 				</p>
 			</view>
-			<span>
+			<span @click="showPlay=true">
 				<image src="../../icon/songlist/icon-liebiao.png" />
 			</span>
 		</view>
@@ -96,10 +99,12 @@
 			<p>
 				<image src="../../icon/songlist/icon-xiazai.png" />
 			</p>
-			<p>
+			<p >
 				<image src="../../icon/songlist/icon-shenglve.png" />
 			</p>
 		</footer>
+		<Curplay  v-if="showPlay" @click.stop.prevent="showPlay=false"/>
+		<Share v-if="shareShow" @click.stop.prevent="shareShow=false"/>
 	</view>
 </template>
 
@@ -255,6 +260,10 @@
 		align-items: center;
 		padding: 0 rpx(25);
         z-index: 1;
+		overflow:hidden;
+		white-space: nowrap;
+		text-overflow: ellipsis;
+		-webkit-box-ordinal: vertical;
 		// color:#DCDCDC;
 		.songTitle {
 			flex:1;
@@ -288,6 +297,11 @@
 			margin-top:rpx(2);
 			font-size:rpx(13);
 			color:#DCDCDC;
+			width:rpx(160);
+			overflow:hidden;
+			white-space: nowrap;
+			text-overflow: ellipsis;
+			-webkit-box-ordinal: vertical;
 		}
 		.collent {
 			width: rpx(30);

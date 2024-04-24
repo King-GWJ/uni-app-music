@@ -9,7 +9,16 @@
         // 获取登录状态
         userStore.getProfile()
     })
+	import aaa from './components/showlist/showlist.vue'
 </script>
+
+<template>
+  <view>
+ 
+    
+    <aaa />
+  </view>
+</template>
 
 <style lang="scss">
     // @import "/uni_modules/uni-scss/index.scss";
