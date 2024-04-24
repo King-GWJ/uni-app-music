@@ -17,6 +17,7 @@
 				{{item.signature}}
 			</view>
 		</view>
+		<musicBar></musicBar>
 	</view>
 </template>
 

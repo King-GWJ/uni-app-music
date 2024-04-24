@@ -13,7 +13,7 @@
 					  <radioPlay v-else-if="list[curIndex].component === 'radioPlay'" />
 					  <recommend v-else />
 		</view>
-
+	<musicBar></musicBar>
 	</view>
 </template>
 

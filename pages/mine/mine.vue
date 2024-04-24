@@ -6,7 +6,6 @@
     import {navigateTo} from "../../base/utils";
     import {useUserStore} from "../../store/user";
     import {userPlayListApi} from "../../base/api";
-	import musicBarVue from "../../components/musicBar/musicBar.vue";
     const curCookie = uni.getStorageSync("curCookie");
 
     const pageSearch = '/pages/search/search'
@@ -24,15 +23,11 @@
         isLogin.value = !!curCookie;
         if (!profile.value) {
             profile.value = userStore.setProfileData()
-        } else {
-            userPlayListApi(profile.value?.userId).then(res => {
-                playList.value = res.playlist
-            })
         }
     })
 
-    watch(profile, () => {
-        userPlayListApi(profile.value?.userId).then(res => {
+    watch(profile,()=>{
+        userPlayListApi(profile.value?.userId).then(res=>{
             playList.value = res.playlist
         })
     })
@@ -58,14 +53,13 @@
 
 <template>
     <view class="content">
-		
         <view class="header">
             <uni-icons class="bars" type="bars" size="24" @click="()=>{sidebar.showDrawer()}"></uni-icons>
             <uni-icons class="bars" type="search" size="24" @click="navigateTo(pageSearch)"></uni-icons>
         </view>
         <view class="main">
             <view class="login">
-                <image :src="profile?.avatarUrl" mode="widthFix" class="login-img" v-show="isLogin"></image>
+                <image :src="profile?.avatarUrl" mode="widthFix" class="login-img"></image>
                 <view class="login-name" v-show="isLogin">
                     {{ profile?.nickname }}
                 </view>
@@ -81,12 +75,11 @@
                             :title="item.name"
                             to="/pages/acquiesce/acquiesce?id="
                             :avatar="item.coverImgUrl"
-                            :note='item.trackCount+"首"'></uni-list-chat>
+                            :note='item.trackCount+"首"' ></uni-list-chat>
                     </uni-list>
                 </view>
                 <view v-if="tabIndex === 1" class="view">
                     播客
-                    <custom-music></custom-music>
                 </view>
                 <view v-if="tabIndex === 2" class="view">
                     动态
@@ -96,21 +89,15 @@
         </view>
 
         <Sidebar ref="sidebar" />
-		<musicBarVue></musicBarVue>
     </view>
+	<musicBar></musicBar>
 </template>
 
 <style lang="scss" scoped>
     .content {
-        width: 100%;
-        height: 100%;
-        display: flex;
-        flex-direction: column;
-        overflow: hidden;
-        overflow-y: scroll;
+        padding-bottom: 95rpx;
         position: relative;
         background-color: rgba(125, 118, 124, 0.9);
-
         .header {
             display: flex;
             width: 100%;
@@ -121,7 +108,8 @@
         }
 
         .main {
-            flex: 1;
+            width: 100%;
+            height: 100%;
             .login {
                 display: flex;
                 flex-direction: column;
@@ -139,8 +127,13 @@
             }
 
             .connect {
+                width: 100%;
                 background-color: #FFFFFF;
                 border-radius: 40rpx 40rpx 0 0;
+                margin-top: 100rpx;
+                .view{
+                    min-height: 800rpx;
+                }
             }
         }
 
