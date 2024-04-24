@@ -91,7 +91,14 @@
                 "navigationBarTitleText": "搜索结果",
                 "enablePullDownRefresh": false
             }
-        }
+        },
+		{
+			"path": "pages/blogs/components/recommend/detail/detail",
+			"style": {
+			    "navigationBarTitleText": "搜索结果",
+			    "enablePullDownRefresh": false
+			}
+		}
     ],
     "tabBar": {
         "color": "#333333",
