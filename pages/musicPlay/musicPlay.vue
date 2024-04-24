@@ -11,8 +11,8 @@
 	const showLyric=ref(false) //歌词显示隐藏
 	const showPlay=ref(false)  //歌曲信息显示隐藏
 	const shareShow=ref(false) //分享显示隐藏
-	
-
+	const isCollect=ref(false) //添加收藏
+    
 	
 	
 	
@@ -28,7 +28,15 @@
 		})
 	}
 	
-
+    //点击收藏
+	const Collect=()=>{
+		console.log(2);
+		isCollect.value=!isCollect.value
+	}
+	
+	
+	
+	
 </script>
 
 
@@ -66,8 +74,9 @@
 				<p class="nameSog"><p class="name">{{useStore.musicLove.name}}  {{useStore.musicLove.alia[0]}}<span>{{useStore.musicLove.pop}}</span> </p></p>
 				<p class="singer">{{useStore.musicLove.ar.map(v=>v.name).join('/')}}</p>
 			</view>
-			<p class="collent">
-				<image src="../../icon/songlist/icon-collent.png" />
+			<p class="collent" @click="Collect()">
+				<image v-if="isCollect"  src="../../icon/songlist/icon-collent.png"></image>
+				<image v-else src="../../icon/songlist/icon-collect.png"></image>
 			</p>
 			<p class="talk">
 				<image src="../../icon/songlist/icon-talk.png" />

@@ -366,3 +366,12 @@ export const getalbumApi = (id) => {
 	})
 }
 
+//分享歌曲
+export const getashareApi = (id) => {
+	return request({
+		url: '/share/resource',
+		data: {
+			id: id
+		}
+	})
+}

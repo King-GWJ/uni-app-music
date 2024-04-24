@@ -102,7 +102,7 @@ export const useMusicstore = defineStore("musicStore", () => {
 	}
 	
 	// 监听音乐数组改变获取音乐播放的rul
-	const musicUrlList = watch(musicList.value.length,(newValue,oldValue) => {
+	const musicUrlList = watch(musicLove.value.length,(newValue,oldValue) => {
 		console.log(123);
 		musicLove.value = musicList.value[musicIndex.value]
 		if(!musicHistory.value.find(item => item.name === musicType.value)){

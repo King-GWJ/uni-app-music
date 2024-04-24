@@ -30,6 +30,8 @@
 		    curIndex.value = index
 		}
 		
+		
+		
 </script>
 
 <template>
