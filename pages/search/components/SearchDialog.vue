@@ -2,7 +2,7 @@
 import { ref, watch } from 'vue';
 import { useMusicstore } from '../../../store/music';
 import { useUserStore } from '../../../store/user';
-import { userPlayListApi,playListChange } from '../../../base/api';
+import { userPlayListApi,playListChange,commentApi } from '../../../base/api';
 
 
 	const props = defineProps(['showDialog','detailItem'])
@@ -11,6 +11,7 @@ import { userPlayListApi,playListChange } from '../../../base/api';
 	const userStore = useUserStore()
 	const profile = ref(userStore.profile)
 	const playList = ref([])
+	const totalComment = ref(0)
 	const popup = ref(null)
 	const popup2 = ref(null)
 	const popup3 = ref(null)
@@ -18,19 +19,26 @@ import { userPlayListApi,playListChange } from '../../../base/api';
 		profile.value = userStore.setProfileData()
 	}
 	
+	//获取用户歌单列表
 	const getPlayList = async ()=>{
 		const res = await userPlayListApi(profile.value.userId)
 		playList.value = res.playlist
 		console.log(playList.value)
 	}
+	//获取评论
+	const getComment = async ()=>{
+		const res = await commentApi('music',props.detailItem.id)
+		totalComment.value = res.total
+	}
 	
 	getPlayList()
-	// userPlayListApi(profile.value.userId).then(res=>{
-	// 	console.log(res.playlist)
-	// 	playList.value = res.playlist
+	//监听传过来的参数
+	watch(()=>props,()=>{
+		getComment()
+	},
+	{deep:true}
+	)
 		
-	// })
-	
 	
 	
 	const nextPlay = ()=>{
@@ -41,7 +49,6 @@ import { userPlayListApi,playListChange } from '../../../base/api';
 	
 	
 	const toLike = ()=>{
-		console.log(profile.value.userId)
 		if(!profile.value.userId){
 			popup2.value.open()
 			setTimeout(()=>{
@@ -53,22 +60,15 @@ import { userPlayListApi,playListChange } from '../../../base/api';
 			popup3.value.open()
 			emits('closeDialog')
 		}
-		
 	}
 	
 	const add = async (item)=>{
 		const res = await playListChange('add',item.id,props.detailItem.id)
-		console.log(res)
 		profile.value = userStore.setProfileData()
 		getPlayList()
-		// playListChange('add',item.id,props.detailItem.id).then(res=>{
-		// 	console.log(res)
-		// 	getPlayList()
-		// })
 	}
 	
 	const fn = (e)=>{
-		
 		e.stopPropagation()
 	}
 	
@@ -119,7 +119,7 @@ import { userPlayListApi,playListChange } from '../../../base/api';
 					<view class="itemIcon recommend">
 					</view>
 					<view class="itemContent">
-						评论
+						评论({{totalComment}})
 					</view>
 				</view>
 				<view class="item">

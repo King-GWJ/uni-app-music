@@ -51,6 +51,7 @@ export const useMusicstore=defineStore("musicStore",()=>{
 	const musicSearch = (item,id) => {
 		// 搜索的音乐push到musicList全部数组里面 并且放在数组第一个位置
 		// item 点击的音乐信息 id 音乐的id
+		console.log(item,id);
 		musicList.value.unshift(item)
 		musicIndex.value = 0
 		musicLove.value = musicList.value[musicIndex.value]
