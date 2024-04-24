@@ -108,15 +108,17 @@
                     </view>
                 </view>
             </uni-section>
-
         </view>
         <Sidebar ref="sidebar" />
-        <custom-music></custom-music>
     </view>
 </template>
 
 <style lang="scss" scoped>
     .content {
+        width: 100%;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
         position: relative;
 
         .header {
@@ -138,6 +140,7 @@
         }
 
         .main {
+            flex: 1;
             .swiper-wrap {
                 padding: 30rpx;
 
