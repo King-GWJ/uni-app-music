@@ -50,6 +50,20 @@ export const useMusicstore=defineStore("musicStore",()=>{
 		musicIndex.value = i
 		musicType.value = n
 		clearInterval(musicTimer.value)
+		const arr = musicHistory.value.find(item => item.name === musicType.value)
+		if(arr){
+			const index = musicHistory.value.findIndex(item => item.name === musicType.value)
+			if(musicHistory.value[index].music.find(item => item.name === musicLove.value.name)){
+			}else{
+				musicHistory.value[index].music.push(musicLove.value)
+			}
+			
+		}else{
+			musicHistory.value.push({
+				name: musicType.value,
+				music: [musicLove.value]
+			})
+		}
 	}
 	
 	// 搜索调这个方法
@@ -80,39 +94,20 @@ export const useMusicstore=defineStore("musicStore",()=>{
 	
 	// 监听音乐数组改变获取音乐播放的rul
 	const musicUrlList = watch(musicList.value.length,(newValue,oldValue) => {
+		console.log(123);
 		musicLove.value = musicList.value[musicIndex.value]
-		// if(!musicHistory.value.find(item => item.name === musicType.value.find)){
-		// 	musicHistory.value.push({
-		// 		name: musicType.value,
-		// 		music: musicLove.value
-		// 	})
-		// }else{
-		// 	if(musicType.value.find)
-		// }
-		// musicType = [
-		// 	{
-		// 		name: xx榜,
-		// 		music : [
-		// 			{
-		// 				XXX
-		// 			},
-		// 			{
-		// 				XXX
-		// 			}
-		// 		]
-		// 	},
-		// 	{
-		// 		name: xx榜,
-		// 		music : [
-		// 			{
-		// 				XXX
-		// 			},
-		// 			{
-		// 				XXX
-		// 			}
-		// 		]
-		// 	}
-		// ]
+		if(!musicHistory.value.find(item => item.name === musicType.value)){
+			musicHistory.value.push({
+				name: musicType.value,
+				music: [musicLove.value]
+			})
+		}else{
+			const index = musicHistory.value.findIndex(item => item.name === musicType.value.find)
+			if(!musicType.value[index].find(item => item.id === musicLove.value.id)){
+				musicType.value[index].music.push(musicLove.value)
+			}
+		}
+		console.log(musicType.value);
 		clearInterval(musicTimer.value)
 		musicNowTime.value.seconds = '00'
 		musicNowTime.value.points = '00'
@@ -131,10 +126,6 @@ export const useMusicstore=defineStore("musicStore",()=>{
 	// 监听当前播放音乐下标改变获取rul
 	const musicUrlIndex = watch(musicIndex,(newValue,oldValue) => {
 		musicLove.value = musicList.value[musicIndex.value]
-		if(musicHistory.value.find(item => item.id === musicLove.value.id)){
-		}else{
-			musicHistory.value.push(musicLove.value)
-		}
 		clearInterval(musicTimer.value)
 		musicNowTime.value.seconds = '00'
 		musicNowTime.value.points = '00'
