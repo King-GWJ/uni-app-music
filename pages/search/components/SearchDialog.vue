@@ -302,14 +302,15 @@ import { userPlayListApi,playListChange,commentApi } from '../../../base/api';
 .dialogWrap{
 	position: absolute;
 	width: 100vw;
-	height: rpx(665);
-	background: rgba(0, 0, 0,.2)
+	height: rpx(669);
+	background: rgba(0, 0, 0,.2);
+	z-index: 2;
 }
 .dialog{
 	display: flex;
 	flex-direction: column;
 	position: absolute;
-	z-index: 2;
+	z-index: 3;
 	width: 100%;
 	height: rpx(400);
 	overflow: auto;
