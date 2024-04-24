@@ -42,8 +42,16 @@
 	onShow(() => {
 		if (!profile.value) {
 			profile.value = userStore.setProfileData()
+		}else{
+			userFollowApi({
+				uid: profile.value.userId
+			}).then(res => {
+				console.log("aaa:", res);
+				Follows.value = res.follow
+			})
 		}
 	})
+	
 	watch(profile, () => {
 		userFollowApi({
 			uid: profile.value.userId
