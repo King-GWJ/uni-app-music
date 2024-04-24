@@ -158,7 +158,7 @@ export const useMusicstore = defineStore("musicStore", () => {
 		}
 	}
 
-	//播放
+	//播放 和 暂停
 	const play=()=>{
 		if(!audio.paused){
 			audio.pause()

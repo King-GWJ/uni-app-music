@@ -18,9 +18,6 @@ if(musicStore.musicLove.al){
 
 console.log(musicStore.musicLove)
 
-watch(musicStore.musicLove.al,()=>{
-	console.log(1)
-})
 
 const goPlay = () =>{
 	uni.switchTab({
@@ -28,9 +25,22 @@ const goPlay = () =>{
 	})
 }
 
+musicStore.audio.onPlay(()=>{
+		url.value = musicStore.musicLove.al.picUrl
+		name.value = musicStore.musicLove.name
+		artist.value = musicStore.musicLove.ar[0].name
+		flag.value = false
+})
+
+musicStore.audio.onPause(()=>{
+		flag.value = true
+})
+
+
 const change = (e)=>{
-	musicStore.audio.pause()
+	musicStore.play()
 	flag.value = !flag.value
+	
 	e.stopPropagation()
 }
 

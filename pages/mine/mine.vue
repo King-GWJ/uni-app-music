@@ -6,7 +6,7 @@
     import {navigateTo} from "../../base/utils";
     import {useUserStore} from "../../store/user";
     import {userPlayListApi} from "../../base/api";
-
+	import musicBarVue from "../../components/musicBar/musicBar.vue";
     const curCookie = uni.getStorageSync("curCookie");
 
     const pageSearch = '/pages/search/search'
@@ -58,6 +58,7 @@
 
 <template>
     <view class="content">
+		
         <view class="header">
             <uni-icons class="bars" type="bars" size="24" @click="()=>{sidebar.showDrawer()}"></uni-icons>
             <uni-icons class="bars" type="search" size="24" @click="navigateTo(pageSearch)"></uni-icons>
@@ -95,7 +96,7 @@
         </view>
 
         <Sidebar ref="sidebar" />
-
+		<musicBarVue></musicBarVue>
     </view>
 </template>
 
