@@ -7,7 +7,10 @@
 				</span>
 				<view class="name">
 					<text>{{item.nickname}}</text>
-					<image :src="(item.vipRights.associator.iconUrl || item.avatarDetail.identityIconUrl)" mode=""></image>
+					<image
+						:src="(item.vipRights.associator ? item.vipRights.associator.iconUrl:item.avatarDetail.identityIconUrl)"
+						mode="">
+					</image>
 				</view>
 			</view>
 			<view class="">
@@ -34,16 +37,18 @@
 
 
 	const userStore = useUserStore()
+	const profile = ref(userStore.profile)
 	const Follows = ref([])
 	onShow(() => {
-		userStore.getAccount()
+		if (!profile.value) {
+			profile.value = userStore.setProfileData()
+		}
 	})
-	watch(() => userStore.profile, () => {
-		const profile = userStore.profile
+	watch(profile, () => {
 		userFollowApi({
-			uid: profile.userId
+			uid: profile.value.userId
 		}).then(res => {
-			console.log(res);
+			console.log("aaa:", res);
 			Follows.value = res.follow
 		})
 	})
@@ -58,8 +63,8 @@
 			flex-direction: column;
 
 			.avatar {
-					display:flex;
-					align-items:center;
+				display: flex;
+				align-items: center;
 
 				.img {
 					margin: 10px;

@@ -319,6 +319,17 @@ export const userFollowApi = (val) => {
   })
 }
 
+// 获取用户粉丝列表
+export const userFollowedsApi = (val) => {
+  return request({
+    url: '/user/followeds',
+    data: {
+      uid: val.uid,
+	  limit:val.limit || 30
+    }
+  })
+}
+
 //歌单添加删除歌曲
 export const playListChange = (op,pid,tracks) =>{
 	return request({

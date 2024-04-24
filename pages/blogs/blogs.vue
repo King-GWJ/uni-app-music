@@ -8,11 +8,10 @@
 			</view>
 		</view>
 		<view class="main">
-			<view v-for="(item,index) in list" :key="index">
-				<view :hidden="curIndex === index? false : true" >
-					<component :is="item.component"></component>
-				</view>
-			</view>
+					  <audioBook v-if="list[curIndex].component === 'audioBook'" />
+					  <listening v-else-if="list[curIndex].component === 'listening'" />
+					  <radioPlay v-else-if="list[curIndex].component === 'radioPlay'" />
+					  <recommend v-else />
 		</view>
 
 	</view>
@@ -35,22 +34,22 @@
 		data() {
 			return {
 				list: [{
-						component: audioBook,
+						component: 'audioBook',
 						name: '有声书',
 						isShow: true
 					},
 					{
-						component: listening,
+						component: 'listening',
 						name: "听书",
 						isShow: false
 					},
 					{
-						component: radioPlay,
+						component: 'radioPlay',
 						name: '广播剧',
 						isShow: false
 					},
 					{
-						component: recommend,
+						component: 'recommend',
 						name: '推荐',
 						isShow: false
 					}
