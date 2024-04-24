@@ -23,11 +23,15 @@
         isLogin.value = !!curCookie;
         if (!profile.value) {
             profile.value = userStore.setProfileData()
+        } else {
+            userPlayListApi(profile.value?.userId).then(res => {
+                playList.value = res.playlist
+            })
         }
     })
 
-    watch(profile,()=>{
-        userPlayListApi(profile.value?.userId).then(res=>{
+    watch(profile, () => {
+        userPlayListApi(profile.value?.userId).then(res => {
             playList.value = res.playlist
         })
     })
@@ -59,7 +63,7 @@
         </view>
         <view class="main">
             <view class="login">
-                <image :src="profile?.avatarUrl" mode="widthFix" class="login-img"></image>
+                <image :src="profile?.avatarUrl" mode="widthFix" class="login-img" v-show="isLogin"></image>
                 <view class="login-name" v-show="isLogin">
                     {{ profile?.nickname }}
                 </view>
@@ -80,6 +84,7 @@
                 </view>
                 <view v-if="tabIndex === 1" class="view">
                     播客
+                    <custom-music></custom-music>
                 </view>
                 <view v-if="tabIndex === 2" class="view">
                     动态
@@ -95,9 +100,15 @@
 
 <style lang="scss" scoped>
     .content {
-        padding-bottom: 95rpx;
+        width: 100%;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        overflow: hidden;
+        overflow-y: scroll;
         position: relative;
         background-color: rgba(125, 118, 124, 0.9);
+
         .header {
             display: flex;
             width: 100%;
@@ -108,8 +119,9 @@
         }
 
         .main {
-            width: 100%;
-            height: 100%;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
             .login {
                 display: flex;
                 flex-direction: column;
@@ -127,13 +139,10 @@
             }
 
             .connect {
-            height: 100%;
+                flex: 1;
+                padding-bottom: 80rpx;
                 background-color: #FFFFFF;
                 border-radius: 40rpx 40rpx 0 0;
-                margin-top: 100rpx;
-                .view{
-                    min-height: 800rpx;
-                }
             }
         }
 
