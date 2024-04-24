@@ -13,13 +13,13 @@
 		useStore.musicSubtract(num)
 
 	}
-
-	//跳转评论页
-	// const commentPage=()=>{
-	// 	uni.navigateTo({
-	// 	  url: "/pages/commentPage/commentPage"
-	// 	})
-	// }
+    
+	const Backprve=()=>{
+		uni.switchTab({
+			url: '/pages/index/index'
+		})
+	}
+	
 
 </script>
 
@@ -29,7 +29,9 @@
 	<view class="musicPlay">
 		<view class="background"><image :src="useStore.musicLove.al.picUrl" ></image></view>
 		<view class="header">
-			<view class="bangdan"></view>
+			<p @click="Backprve">
+				<image src="../../icon/songlist/icon-bback.png"></image>
+			</p>
 			<p @click="shareShow=true">
 				<image src="../../icon/songlist/icon-fenxiang.png" />
 			</p>
@@ -136,6 +138,7 @@
 		// background: palevioletred;
 		display: flex;
 		align-items: center;
+		justify-content: space-between;
 		padding:0 15px;
 		z-index: 1;
 		p{
@@ -172,8 +175,16 @@
 			top: 20%;
 			position: relative;
 			// border: 1px solid #808080;
+			// 旋转
+			@keyframes rotate{
+				0%{
+					transform: rotateZ(0deg);
+				}
+				100%{
+					transform: rotateZ(360deg);
+				}
 		}
-
+    }
 		.undertone {
 			width: rpx(240);
 			height: rpx(240);

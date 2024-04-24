@@ -19,7 +19,7 @@ export const useMusicstore=defineStore("musicStore",()=>{
 	//切换页面时候选择的音乐数据
 	const musicLove = ref([])
 	//切换页面时候的音乐下标
-	const musicIndex = ref(0)
+	const musicIndex = ref(-1)
 	//音乐的url
 	const musicBack = ref('')
 	//播放模式 1顺序播放 2单曲循环 3随机播放
@@ -58,7 +58,8 @@ export const useMusicstore=defineStore("musicStore",()=>{
 	}
 	
 	// 监听音乐数组改变获取音乐播放的rul
-	const musicUrl = watch(musicLove,(newValue,oldValue) => {
+	const musicUrl = watch(musicIndex,(newValue,oldValue) => {
+		musicLove.value = musicList.value[musicIndex.value]
 		if(musicHistory.value.find(item => item.id === musicLove.value.id)){
 		}else{
 			musicHistory.value.push(musicLove.value)
@@ -85,7 +86,7 @@ export const useMusicstore=defineStore("musicStore",()=>{
 		}else if(musicIndex.value === musicList.value.length){
 			musicIndex.value = 0
 		}
-		musicLove.value = musicList.value[musicIndex.value]
+		
 	}
 	
 	//播放
