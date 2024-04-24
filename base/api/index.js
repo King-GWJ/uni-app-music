@@ -1,5 +1,5 @@
-export const baseUrl = "http://121.89.213.194:5001"
-// export const baseUrl = "https://zyxcl.xyz/music/api"
+// export const baseUrl = "http://121.89.213.194:5001"
+export const baseUrl = "https://zyxcl.xyz/music/api"
 
 // 封装请求函数
 export const request = ({

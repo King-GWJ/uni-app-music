@@ -14,7 +14,8 @@
 	
 
 	
-	
+	console.log(useStore.musicNowTime);
+	console.log(useStore.musicTime);
 	
 	//切换歌曲
 	const subtract = (num) => { // 上一首/下一首
@@ -27,7 +28,14 @@
 			url: '/pages/index/index'
 		})
 	}
-	
+	 const schedule = (e) => {
+		 console.log(123);
+		 console.log(e);
+	 }
+	 
+	 const  sliderClick = () => {
+		 
+	 }
 
 </script>
 
@@ -73,10 +81,10 @@
 				<image src="../../icon/songlist/icon-talk.png" />
 			</p>
 		</view>
-		<view class="volume">
+		<view class="volume" >
 			<view class="time">{{useStore.musicNowTime.points}}:{{useStore.musicNowTime.seconds}}</view>
-			<view class="slider">
-				<slider  class="sliders" min="0" max="100" value="0" disabled="true" block-size="10" activeColor="#1890ff" step></slider>
+			<view class="slider" @click="sliderClick()">
+				<slider  class="sliders" @sliderChange="schedule(1)" min="0" :max="Number(useStore.musicTime.points) * 60 + Number(useStore.musicTime.seconds)" :value="Number(useStore.musicNowTime.points) * 60 + Number(useStore.musicNowTime.seconds)" disabled="true" block-size="20" activeColor="#1890ff" step></slider>
 			</view>
 			<view class="time">{{useStore.musicTime.points}}:{{useStore.musicTime.seconds}}</view>
 		</view> 

@@ -85,6 +85,7 @@
                 </view>
                 <view v-if="tabIndex === 1" class="view">
                     播客
+                    <custom-music></custom-music>
                 </view>
                 <view v-if="tabIndex === 2" class="view">
                     动态
@@ -100,7 +101,6 @@
 
 <style lang="scss" scoped>
     .content {
-        padding-bottom: 95rpx;
         position: relative;
         background-color: rgba(125, 118, 124, 0.9);
 
@@ -114,9 +114,6 @@
         }
 
         .main {
-            width: 100%;
-            height: 100%;
-
             .login {
                 display: flex;
                 flex-direction: column;
@@ -134,14 +131,8 @@
             }
 
             .connect {
-                width: 100%;
                 background-color: #FFFFFF;
                 border-radius: 40rpx 40rpx 0 0;
-                margin-top: 100rpx;
-
-                .view {
-                    min-height: 800rpx;
-                }
             }
         }
 

@@ -4,7 +4,7 @@
     "description": "",
     "main": "main.js",
     "scripts": {
-        "test": "echo \"Error: no test specified\" && exit 1"
+        "deploy": "gh-pages -d unpackage/dist/build/web"
     },
     "repository": {
         "type": "git",
@@ -15,5 +15,8 @@
         "pinia": "^2.1.7",
         "vite": "^5.2.9",
         "vue": "^3.4.23"
+    },
+    "devDependencies": {
+        "gh-pages": "^6.1.1"
     }
 }
