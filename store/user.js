@@ -21,16 +21,11 @@ export const useUserStore = defineStore('user', () => {
 
     //获取登录状态
     const getProfile = () => {
-        if (!uni.setStorageSync("curCookie")) {
             loginStatusApi().then(res => {
-                if (res.code === 200) {
-                    storeData(res, false)
+                if (res.data.code === 200) {
+                    storeData(res.data, false)
                 }
             })
-        } else {
-            profile.value = null
-            uni.setStorageSync('profile', "")
-        }
     }
 
     //获取用户信息
@@ -87,7 +82,6 @@ export const useUserStore = defineStore('user', () => {
 
     //存储用户信息
     const storeData = (res, isLogin) => {
-		console.log(res);
         if (res.cookie) {
             uni.setStorageSync('curCookie', res.cookie)
         }

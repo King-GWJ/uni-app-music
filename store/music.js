@@ -19,7 +19,7 @@ export const useMusicstore=defineStore("musicStore",()=>{
 	//切换页面时候选择的音乐数据
 	const musicLove = ref([])
 	//切换页面时候的音乐下标
-	const musicIndex = ref(-1)
+	const musicIndex = ref(null)
 	//音乐的url
 	const musicBack = ref('')
 	//播放模式 1顺序播放 2单曲循环 3随机播放
@@ -48,17 +48,33 @@ export const useMusicstore=defineStore("musicStore",()=>{
 	}
 	
 	// 搜索调这个方法
-	const musicSearch = (item,id) => {
+	const musicSearch = (t,i) => {
 		// 搜索的音乐push到musicList全部数组里面 并且放在数组第一个位置
-		// item 点击的音乐信息 id 音乐的id
-		musicList.value.unshift(item)
-		musicIndex.value = 0
-		musicLove.value = musicList.value[musicIndex.value]
-		
+		// t点击的音乐信息 i 音乐的id
+		const index = musicList.value.findIndex(item => item.id === t.id)
+		if(index === -1){
+			musicList.value.unshift(t)
+			musicLove.value = musicList.value[0]
+			musicIndex.value = 0
+		}else{
+			musicLove.value = musicList.value[index]
+			musicIndex.value = index
+		}
+		songUrlApi(musicList.value[musicIndex.value].id,'standard').then(res => {
+			musicBack.value = res.data[0].url
+			audio.src=musicBack.value
+			audio.autoplay = true
+			audio.loop = true
+		})
+		clearInterval(musicTimer.value)
+		musicNowTime.value.seconds = '00'
+		musicNowTime.value.points = '00'
+		musicTime.value.seconds = '00'
+		musicTime.value.points = '00'
 	}
 	
 	// 监听音乐数组改变获取音乐播放的rul
-	const musicUrl = watch(musicIndex,(newValue,oldValue) => {
+	const musicUrlList = watch(musicList.value.length,(newValue,oldValue) => {
 		musicLove.value = musicList.value[musicIndex.value]
 		if(musicHistory.value.find(item => item.id === musicLove.value.id)){
 		}else{
@@ -75,6 +91,28 @@ export const useMusicstore=defineStore("musicStore",()=>{
 			audio.autoplay = true
 			audio.loop = true
 		})
+		isplay.value = true
+	})
+	
+	// 监听当前播放音乐下标改变获取rul
+	const musicUrlIndex = watch(musicIndex,(newValue,oldValue) => {
+		musicLove.value = musicList.value[musicIndex.value]
+		if(musicHistory.value.find(item => item.id === musicLove.value.id)){
+		}else{
+			musicHistory.value.push(musicLove.value)
+		}
+		clearInterval(musicTimer.value)
+		musicNowTime.value.seconds = '00'
+		musicNowTime.value.points = '00'
+		musicTime.value.seconds = '00'
+		musicTime.value.points = '00'
+		songUrlApi(musicList.value[musicIndex.value].id,'standard').then(res => {
+			musicBack.value = res.data[0].url
+			audio.src=musicBack.value
+			audio.autoplay = true
+			audio.loop = true
+		})
+		isplay.value = true
 	})
 	
 	// 切换上一首或者下一首  同时判断是不是第一首或者最后一首
@@ -86,18 +124,17 @@ export const useMusicstore=defineStore("musicStore",()=>{
 		}else if(musicIndex.value === musicList.value.length){
 			musicIndex.value = 0
 		}
-		
 	}
 	
 	//播放
 	const play=()=>{
 		if(!audio.paused){
 			audio.pause()
-			isplay.value = true
+			isplay.value = false
 			clearInterval(musicTimer.value)
 		}else{
 			audio.play()
-			isplay.value = false
+			isplay.value = true
 			computeMusic()
 		}
 	}
@@ -111,8 +148,15 @@ export const useMusicstore=defineStore("musicStore",()=>{
 	}
 	
 	//添加到下一首
-	const musicBehind = (t,i) => {
-		musicList.value.splice(musicIndex.value,0,t)
+	const musicBehind = (t) => {
+		if(musicList.value.length === 0){
+			musicList.value.push(t)
+			musicLove.value = t
+			musicIndex.value = 0
+		}else{
+			musicList.value.splice(musicIndex.value,0,t)
+		}
+		
 	}
 	
 	// 获取音乐时长
@@ -132,7 +176,6 @@ export const useMusicstore=defineStore("musicStore",()=>{
 				let b = Number(musicNowTime.value.points) + 1
 				musicNowTime.value.points = b >= 10 ? b + '' : '0' + b
 			}
-				
 			if(musicNowTime.value.seconds === musicTime.value.seconds && musicNowTime.value.points === musicTime.value.points){
 				clearInterval(musicTimer.value)
 				musicNowTime.value.seconds = '00'

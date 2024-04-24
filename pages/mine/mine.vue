@@ -6,6 +6,7 @@
     import {navigateTo} from "../../base/utils";
     import {useUserStore} from "../../store/user";
     import {userPlayListApi} from "../../base/api";
+
     const curCookie = uni.getStorageSync("curCookie");
 
     const pageSearch = '/pages/search/search'
@@ -23,11 +24,15 @@
         isLogin.value = !!curCookie;
         if (!profile.value) {
             profile.value = userStore.setProfileData()
+        } else {
+            userPlayListApi(profile.value?.userId).then(res => {
+                playList.value = res.playlist
+            })
         }
     })
 
-    watch(profile,()=>{
-        userPlayListApi(profile.value?.userId).then(res=>{
+    watch(profile, () => {
+        userPlayListApi(profile.value?.userId).then(res => {
             playList.value = res.playlist
         })
     })
@@ -75,7 +80,7 @@
                             :title="item.name"
                             to="/pages/acquiesce/acquiesce?id="
                             :avatar="item.coverImgUrl"
-                            :note='item.trackCount+"首"' ></uni-list-chat>
+                            :note='item.trackCount+"首"'></uni-list-chat>
                     </uni-list>
                 </view>
                 <view v-if="tabIndex === 1" class="view">
@@ -98,6 +103,7 @@
         padding-bottom: 95rpx;
         position: relative;
         background-color: rgba(125, 118, 124, 0.9);
+
         .header {
             display: flex;
             width: 100%;
@@ -110,6 +116,7 @@
         .main {
             width: 100%;
             height: 100%;
+
             .login {
                 display: flex;
                 flex-direction: column;
@@ -131,7 +138,8 @@
                 background-color: #FFFFFF;
                 border-radius: 40rpx 40rpx 0 0;
                 margin-top: 100rpx;
-                .view{
+
+                .view {
                     min-height: 800rpx;
                 }
             }

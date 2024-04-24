@@ -57,7 +57,7 @@
 			<view class="songlist" @click.stop="">
 		        <view :class="{item, active:  useStore.musicIndex=== index}"   @click="useStore.musicIndex= index"    v-for="(item,index) in useStore.musicList" :key="item.name">
 					<view class="text">
-						<image  v-if="curActive"  src="../../icon/songlist/icon-lvdongq.png"></image>
+						<image  v-if="useStore.musicIndex=== index"  src="../../icon/songlist/icon-lvdongq.png"></image>
 						<image  v-else  src="../../icon/songlist/icon-lvdongw.png"></image>
 						<view class="songtitle">
 							<view>{{item.name}}</view><view class="singerName">·{{item.ar.map(v=>v.name).join('/')}}</view>
@@ -221,6 +221,7 @@
 				.songtitle{
 					display:flex;
 					padding:0 rpx(10) 0 0;
+					align-items: cenyer;
 					overflow:hidden;
 					white-space: nowrap;
 					text-overflow: ellipsis;
@@ -228,7 +229,8 @@
 				}
 				.singerName{
 					color:	#696969;
-					font-size:rpx(13);
+					font-size:rpx(12);
+					line-height: rpx(20);
 				}
 				
 			}
