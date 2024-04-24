@@ -41,7 +41,13 @@ export const searchSuggestApi = (val) => {
 
 // //搜索接口
 export const searchApi = (val, offset) => {
-	return request({ url: '/search', data: { keywords: val, offset: offset } })
+	return request({
+		url: '/search',
+		data: {
+			keywords: val,
+			offset: offset
+		}
+	})
 }
 
 // 游客登录
@@ -266,7 +272,12 @@ export const personalizeApi = (val) => {
 }
 // 歌单详情
 export const SongdetailApi = (id) => {
-	return request({ url: '/playlist/detail', data: { id } })
+	return request({
+		url: '/playlist/detail',
+		data: {
+			id
+		}
+	})
 }
 
 // 歌曲详情
@@ -300,36 +311,37 @@ export const commentApi = (type, id) => {
 }
 
 // 音乐播放url
-export const songUrlApi = (id,level) => {
-  return request({
-    url: '/song/url/v1',
-    data: {
-      id: id,
-	  level: level
-    }
-  })
+export const songUrlApi = (id, level) => {
+	return request({
+		url: '/song/url/v1',
+		data: {
+			id: id,
+			level: level
+		}
+	})
 }
 
 // 用户关注列表
 export const userFollowApi = (val) => {
-  return request({
-    url: '/user/follows',
-    data: {
-      uid: val.uid,
-    }
-  })
+	return request({
+		url: '/user/follows',
+		data: {
+			uid: val.uid,
+		}
+	})
 }
 
 // 获取用户粉丝列表
 export const userFollowedsApi = (val) => {
-  return request({
-    url: '/user/followeds',
-    data: {
-      uid: val.uid,
-	  limit:val.limit || 30
-    }
-  })
+	return request({
+		url: '/user/followeds',
+		data: {
+			uid: val.uid,
+			limit: val.limit || 30
+		}
+	})
 }
+
 
 //歌单添加删除歌曲
 export const playListChange = (op,pid,tracks) =>{
@@ -343,3 +355,14 @@ export const playListChange = (op,pid,tracks) =>{
 		}
 	})
 }
+
+// 查看专辑
+export const getalbumApi = (id) => {
+	return request({
+		url: '/album',
+		data: {
+			id: id
+		}
+	})
+}
+
