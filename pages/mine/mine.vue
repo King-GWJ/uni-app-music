@@ -57,7 +57,7 @@
 </script>
 
 <template>
-    <view class="content">
+    <view class="content" style="height: 100%;">
 		
         <view class="header">
             <uni-icons class="bars" type="bars" size="24" @click="()=>{sidebar.showDrawer()}"></uni-icons>
@@ -139,6 +139,8 @@
             }
 
             .connect {
+            height: 100%;
+
                 background-color: #FFFFFF;
                 border-radius: 40rpx 40rpx 0 0;
             }
