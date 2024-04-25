@@ -70,6 +70,12 @@ import { userPlayListApi,playListChange,commentApi } from '../../../base/api';
 		getPlayList()
 	}
 	
+	//跳转评论
+	const goComment = () =>{
+		uni.navigateTo({
+			url:'/pages/comment/comment'
+		})
+	}
 	
 	//阻止冒泡
 	const fn = (e)=>{
@@ -122,7 +128,7 @@ import { userPlayListApi,playListChange,commentApi } from '../../../base/api';
 				<view class="item">
 					<view class="itemIcon recommend">
 					</view>
-					<view class="itemContent">
+					<view class="itemContent" @click="goComment">
 						评论({{totalComment}})
 					</view>
 				</view>
@@ -364,68 +370,66 @@ import { userPlayListApi,playListChange,commentApi } from '../../../base/api';
 
 
 .nextPaly{
-	background: url(../../../icon/nextPlay.svg) no-repeat center;
+	background: url(../../../icon/nextPlay.png) no-repeat center;
 	background-size: rpx(18);
 }
 
 .like{
-	background: url(../../../icon/like.svg) no-repeat center;
+	background: url(../../../icon/like.png) no-repeat center;
 	background-size: contain;
 }
 
 .download{
-	background: url(../../../icon/download.svg) no-repeat center;
+	background: url(../../../icon/download.png) no-repeat center;
 	background-size: contain;
 }
 
 .recommend{
-	background: url(../../../icon/recommend.svg) no-repeat center;
+	background: url(../../../icon/recommend.png) no-repeat center;
 	background-size: contain;
 }
 
 .share{
-	background: url(../../../icon/share.svg) no-repeat center;
+	background: url(../../../icon/share.png) no-repeat center;
 	background-size: rpx(18);
 }
 
 .singer{
-	background: url(../../../icon/singer.svg) no-repeat center;
+	background: url(../../../icon/singer.png) no-repeat center;
 	background-size: contain;
 }
 
-
-
 .albums{
-	background: url(../../../icon/albums.svg) no-repeat center;
+	background: url(../../../icon/albums.png) no-repeat center;
 	background-size: contain;
 }
 
 .cloud{
-	background: url(../../../icon/cloud.svg) no-repeat center;
+	background: url(../../../icon/cloud.png) no-repeat center;
 	background-size: contain;
 }
 .buy{
-	background: url(../../../icon/buy.svg) no-repeat center;
+	background: url(../../../icon/buy.png) no-repeat center;
 	background-size: rpx(18);
 }
 .card{
-	background: url(../../../icon/card.svg) no-repeat center;
+	background: url(../../../icon/card.png) no-repeat center;
 	background-size: contain;
 }
 .music{
 	width: rpx(100);
 	height: rpx(100);
-	background: url(../../../icon/music.svg) no-repeat center;
+	background: url(../../../icon/music.png) no-repeat center;
 	background-size: rpx(45);
 }
 
 .ding{
-	background: url(../../../icon/ding.svg) no-repeat center;
+	background: url(../../../icon/ding.png) no-repeat center;
 	background-size: contain;
 }
 
 .close{
-	background: url(../../../icon/close.svg) no-repeat center;
+	background: url(../../../icon/close.png) no-repeat center;
 	background-size: contain;
 }
 

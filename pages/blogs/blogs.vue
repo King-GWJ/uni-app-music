@@ -1,78 +1,61 @@
 <template>
 	<view>
-		<view class="header">
-			<view v-for="(item,index) in list" :key="index" @click="curIndex=index">
-				<view>
-					{{item.name}}
-				</view>
+			<TabToggle :tabList="tabList" @tabIndexEvent="getTabIndex"></TabToggle>
+		<view class="main">
+			<view v-if="tabIndex === 0" class="view">
+				<audioBook />
+			</view>
+			<view v-if="tabIndex === 1" class="view">
+				<listening />
+			</view>
+			<view v-if="tabIndex === 2" class="view">
+				<radioPlay />
+			</view>
+			<view v-if="tabIndex === 3" class="view">
+				<recommend />
 			</view>
 		</view>
-		<view class="main">
-					  <audioBook v-if="list[curIndex].component === 'audioBook'" />
-					  <listening v-else-if="list[curIndex].component === 'listening'" />
-					  <radioPlay v-else-if="list[curIndex].component === 'radioPlay'" />
-					  <recommend v-else />
-		</view>
-	<musicBar></musicBar>
+		<musicBar></musicBar>
 	</view>
 </template>
 
-<script>
+<script setup>
 	import recommend from '@/pages/blogs/components/recommend/recommend.vue'
 	import audioBook from '@/pages/blogs/components/audioBook/audioBook.vue'
 	import listening from '@/pages/blogs/components/listening/listening.vue'
 	import radioPlay from '@/pages/blogs/components/radioPlay/radioPlay.vue'
-
-
-	export default {
-		components: {
-			audioBook,
-			recommend,
-			listening,
-			radioPlay
+	import TabToggle from "../../components/tab/TabToggle.vue";
+	import { ref } from "vue"
+	
+	const tabIndex = ref(0)
+	const tabList = ref([{
+			name: '有声书',
+			isSelect: true,
 		},
-		data() {
-			return {
-				list: [{
-						component: 'audioBook',
-						name: '有声书',
-						isShow: true
-					},
-					{
-						component: 'listening',
-						name: "听书",
-						isShow: false
-					},
-					{
-						component: 'radioPlay',
-						name: '广播剧',
-						isShow: false
-					},
-					{
-						component: 'recommend',
-						name: '推荐',
-						isShow: false
-					}
-				],
-				curIndex: 3
-			}
+		{
+			name: "听书",
+			isSelect: false,
 		},
-		methods: {
-			changeIndex(e){
-				this.curIndex = e.target.num
-			}
-
+		{
+			name: '广播剧',
+			isSelect: false,
+		},
+		{
+			name: '推荐',
+			isSelect: false,
 		}
-	}
+	])
+		const getTabIndex = (index) => {
+			tabIndex.value = index
+		}
 </script>
 
 <style scoped>
 	.header {
-		display:flex;
-		justify-content:space-around;
-		height:30px;
-		line-height:30px;
-		
-	}
+		display: flex;
+		justify-content: space-around;
+		height: 30px;
+		line-height: 30px;
 
+	}
 </style>
