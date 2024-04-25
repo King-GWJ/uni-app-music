@@ -108,6 +108,14 @@
 			    "navigationBarTitleText": "搜索结果",
 			    "enablePullDownRefresh": false
 			}
+		},
+		{
+			"path" : "pages/mv/mv",
+			"style" : 
+			{
+				"navigationBarTitleText" : "MV",
+				"enablePullDownRefresh" : false
+			}
 		}
     ],
     "tabBar": {

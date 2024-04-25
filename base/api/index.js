@@ -375,3 +375,13 @@ export const getashareApi = (id) => {
 		}
 	})
 }
+
+//mv
+export const mvDetailApi = (id) => {
+	return request({
+		url: '/mv/url',
+		data: {
+			id: id
+		}
+	})
+}
