@@ -19,6 +19,7 @@
         if (typeof option.id !== 'undefined') {
             songsTitle.value = option.title
             SongdetailApi(option.id).then(res => {
+                console.log("ggg", res)
                 songListDetail.value = res
             })
             trackAllApi(option.id).then(res => {
@@ -36,7 +37,7 @@
     }
 
     const getMusicPlay = (index) => {
-        userStore.musicAllList(songsList.value,songsList.value[index],index,songsTitle.value)
+        userStore.musicAllList(songsList.value, songsList.value[index], index, songsTitle.value)
         reLaunch("/pages/musicPlay/musicPlay")
     }
 
@@ -55,19 +56,49 @@
         </view>
         <view class="details">
             <view class="details_content">
-                <image class="content_imag" :src="detailList?.coverImgUrl" mode="widthFix" @click="navigateTo(item.url)"></image>
+                <view class="details_content_icon">
+                    <image class="content_imag" :src="detailList.coverImgUrl" mode="widthFix" @click="navigateTo(item.url)"></image>
+                    <view class="play_num">
+                        <text>{{ detailList.playCount }}</text>
+                    </view>
+                </view>
                 <view class="content_view">
                     <text>{{ detailList?.name }}</text>
                     <view class="content_view_user">
-                        <image class="content_view_user_imag" :src="detailList?.creator.avatarUrl" mode="widthFix"></image>
-                        <text class="content_view_user_text">{{ detailList?.creator.nickname }}</text>
+                        <image class="content_view_user_imag" :src="detailList.creator.avatarUrl" mode="widthFix"></image>
+                        <text class="content_view_user_text">{{ detailList.creator.nickname }}</text>
+                    </view>
+                    <view class="content_view_type">
+                        <view class="content_view_type_content" v-for="item in detailList.algTags">
+                            <text>{{ item }}</text>
+                            <uni-icons color="#ffffff" type="right" size="10" @click="getTageBack"></uni-icons>
+
+                        </view>
                     </view>
                 </view>
             </view>
+
             <text class="details_remark">{{ detailList?.description }}</text>
 
-            <view>
-
+            <view class="details_controls">
+                <view class="item">
+                    <view class="item_content">
+                        <image class="item_content_imag" src="/icon/icon-share.png" mode="widthFix"></image>
+                        <text>1234</text>
+                    </view>
+                </view>
+                <view class="item">
+                    <view class="item_content">
+                        <image class="item_content_imag" src="/icon/icon-massage.png" mode="widthFix"></image>
+                        <text>1234</text>
+                    </view>
+                </view>
+                <view class="item">
+                    <view class="item_content">
+                        <image class="item_content_imag" src="/icon/icon-share.png" mode="widthFix"></image>
+                        <text>1234</text>
+                    </view>
+                </view>
             </view>
 
         </view>
@@ -127,12 +158,23 @@
                 display: flex;
                 align-items: center;
 
-                .content_imag {
+                .details_content_icon {
                     width: 200rpx;
                     height: 200rpx;
-                    background: #7b767f;
-                    border-radius: 10%;
                     margin-right: 20rpx;
+                    position: relative;
+                    .content_imag {
+                        width: 100%;
+                        height: 100%;
+                        background: #7b767f;
+                        border-radius: 10%;
+                    }
+                    .play_num{
+                        position: absolute;
+                        top: 15rpx;
+                        right: 15rpx;
+
+                    }
                 }
 
                 .content_view {
@@ -157,6 +199,25 @@
                             margin: 0 10rpx;
                         }
                     }
+
+                    .content_view_type {
+                        display: flex;
+                        align-items: center;
+                        font-size: 10px;
+                        color: #FFFFFF;
+                        margin-top: 10rpx;
+
+                        .content_view_type_content {
+                            background-color: #938e97;
+                            padding: 6rpx 6rpx 6rpx 10rpx;
+                            margin-right: 10rpx;
+                            border-radius: 10rpx;
+
+                            &:last-child {
+                                margin-right: 0;
+                            }
+                        }
+                    }
                 }
             }
 
@@ -165,6 +226,30 @@
                 color: #e4e1e6;
                 margin: 25rpx 0;
 
+            }
+
+            .details_controls{
+                display: flex;
+                justify-content: space-around;
+                margin-bottom: 30rpx;
+                .item{
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    background-color: #99949d;
+                    width: 200rpx;
+                    height: 85rpx;
+                    border-radius: 50rpx;
+                    .item_content{
+                        display: flex;
+                        align-items: center;
+                        .item_content_imag{
+                            width: 30rpx;
+                            height: 30rpx;
+                            margin-right: 10rpx;
+                        }
+                    }
+                }
             }
         }
 
@@ -186,6 +271,7 @@
                 border-bottom: 1rpx solid #cbcacd;
                 border-radius: 40rpx 40rpx 0 0;
                 margin-bottom: 30rpx;
+
                 .main_top_imag {
                     width: 35rpx;
                     height: 35rpx;
