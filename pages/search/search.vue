@@ -35,7 +35,6 @@ hotApi().then(res => {
 let timer = null
 //开始搜索建议
 const searchSuggest = () => {
-
 	if (timer) clearTimeout(timer)
 	timer = setTimeout(async () => {
 		const res = await searchSuggestApi(searchVal.value)
@@ -302,7 +301,7 @@ const closeDetail = (e) => {
 	background-color: rgb(244, 246, 249);
 	width: 100%;
 	color: rgb(40, 50, 72);
-	z-index: 2;
+	z-index: 7;
 	.suggestItem {
 		display: flex;
 		width: 100%;
@@ -343,7 +342,7 @@ const closeDetail = (e) => {
 	top: rpx(45);
 	background-color: white;
 	width: 100%;
-	z-index: 2;
+	z-index: 8;
 	&:last-child {
 		border-bottom: none;
 	}
