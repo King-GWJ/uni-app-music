@@ -5,8 +5,9 @@
 	import {useMusicstore} from '../../store/music.js'
     import Curplay from "../../components/showlist/curplay.vue"
 	import Share from "../../components/showlist/share.vue"
-	import Lyric from "../../components/showlist/lyric.vue" 
-	
+	import Lyric from "../../components/showlist/lyric.vue"
+    import {reLaunch} from "../../base/utils";
+
 	const useStore = useMusicstore() 
 	const showLyric=ref(false) //歌词显示隐藏
 	const showPlay=ref(false)  //歌曲信息显示隐藏
@@ -20,24 +21,17 @@
 	const subtract = (num) => { // 上一首/下一首
 		useStore.musicSubtract(num)
 	}
-    
-	//返回上一页
-	const BackIndex=()=>{
-		uni.switchTab({
-			url: '/pages/index/index'
-		})
-	}
 	
     //点击收藏
 	const Collect=()=>{
 		isCollect.value=!isCollect.value
 	}
-	
+
+    //返回上一页
 	const back=()=>{
-		console.log(123)
-		uni.navigateTo({
-			url:"/pages/songlist/songlist"
-		})
+        const launchOptionsSync = uni.getLaunchOptionsSync();
+        reLaunch("/" + launchOptionsSync.path)
+        uni.showTabBar()
 	  
 	 } 
 	// 	onLoad(()=>{
