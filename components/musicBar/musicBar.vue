@@ -169,7 +169,7 @@
 			.play {
 				width: rpx(50);
 				height: rpx(50);
-				background: url(../../icon/play.svg) no-repeat center;
+				background: url(../../icon/play.png) no-repeat center;
 				background-size: rpx(25);
 			}
 
