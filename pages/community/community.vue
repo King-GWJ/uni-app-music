@@ -6,7 +6,7 @@
 
 		<view v-if="tabIndex === 0" class="view">
 			<view class="nav">
-			<view class="top" v-for="(item,index) in Follows">
+				<view class="top" v-for="(item,index) in Follows">
 					<span class="img">
 						<image :src="item.avatarUrl" mode=""></image>
 					</span>
@@ -32,13 +32,18 @@
 				<view class="content">
 					{{item.signature}}
 				</view>
-				<forward></forward>
+				<view class="component">
+					<forward></forward>
+				</view>
 			</view>
 		</view>
 		<view v-if="tabIndex === 1" class="view">
-			播客
+			播客s
 		</view>
-		<musicBar class="bar"></musicBar>
+		<view class="music">
+			<musicBar class="bar"></musicBar>
+		</view>
+
 	</view>
 </template>
 
@@ -101,36 +106,39 @@
 <style lang="scss">
 	.community {
 		width: 100%;
-		box-sizing:border-box;
-		padding-bottom:50px;
+		box-sizing: border-box;
+		padding-bottom: 50px;
+
 		.view {
 			min-height: 800rpx;
 			overflow: auto;
+
 			.watch {
 				width: 100%;
-				margin-left:40rpx;
-				margin-top:10rpx;
+				margin-left: 40rpx;
+				margin-top: 10rpx;
 			}
 		}
+
 		.nav {
 			padding: 0 20rpx;
 			width: 100vw;
-			display:flex;
-			flex-wrap:nowrap;
-			overflow-x:auto;
+			display: flex;
+			flex-wrap: nowrap;
+			overflow-x: auto;
 			height: 220rpx;
-			border-bottom:1px solid #eee;
+			border-bottom: 1px solid #eee;
 
 			.top {
 				display: flex;
-				flex-direction:column;
+				flex-direction: column;
 				align-items: center;
-				margin-right:20px;
-				
-				.text{
-					display:block;
-					width:70px;
-					text-align: left; 
+				margin-right: 20px;
+
+				.text {
+					display: block;
+					width: 70px;
+					text-align: left;
 					white-space: nowrap;
 					-webkit-box-orient: vertical;
 					/* 控制只有第二行才会溢出隐藏 */
@@ -138,15 +146,16 @@
 					/* 确保文本溢出时显示省略号 */
 					overflow: hidden;
 					text-overflow: ellipsis;
-					
+
 				}
+
 				.img {
 					margin: 10px;
 					width: 50px;
 					height: 50px;
 					flex-shrink: 0;
 					display: inline-block;
-		
+
 					image {
 						width: 100%;
 						height: 100%;
@@ -154,47 +163,56 @@
 					}
 				}
 			}
-		}	
+		}
 
-			.li {
-				padding: 0 20rpx;
+		.li {
+			padding: 0 20rpx;
+			display: flex;
+			flex-direction: column;
+			border-bottom: 1px solid #eee;
+
+			.avatar {
 				display: flex;
-				flex-direction: column;
-				border-bottom:1px solid #eee;
-				.avatar {
-					display: flex;
-					align-items: center;
+				align-items: center;
 
-					.img {
-						margin: 10px;
-						width: 40px;
-						height: 40px;
-						flex-shrink: 0;
-						display: inline-block;
-
-						image {
-							width: 100%;
-							height: 100%;
-							border-radius: 50%;
-						}
-					}
-				}
-
-				.name {
-					display: flex;
-					flex-direction: column;
+				.img {
+					margin: 10px;
+					width: 40px;
+					height: 40px;
+					flex-shrink: 0;
+					display: inline-block;
 
 					image {
-						width: 60px;
-						height: 20px;
+						width: 100%;
+						height: 100%;
+						border-radius: 50%;
 					}
 				}
-				.content {
-					margin-left:120rpx;
+			}
+
+			.name {
+				display: flex;
+				flex-direction: column;
+
+				image {
+					width: 60px;
+					height: 20px;
 				}
 			}
-		.bar {
-			position: sticky!important;
+
+			.content {
+				margin-left: 120rpx;
+			}
+
+			.component {
+				margin: 40rpx;
+				margin-left: 100rpx;
+			}
+		}
+
+		.music {
+			position: sticky;
+			bottom: 50px;
 		}
 	}
 </style>
