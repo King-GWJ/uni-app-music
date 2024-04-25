@@ -55,8 +55,10 @@
 
 <script setup>
 	import { toplistApi, personalizedApi } from '../../base/api/index.js'
+	import { useMusicstore } from '../../store/music.js'
 	import {ref} from 'vue'
 	const header = ref(['官方','精选','曲风','全球','语种','特别','数组'])
+	const useStore = useMusicstore()
 	const list = ref([])
 	const current = ref(0)
 	const mode = ref('index')
@@ -68,6 +70,7 @@
 		data.value = res.result
 	})
 	const skip = (item) => {
+		useStore.musicListId = item.id
 		uni.navigateTo({
 			url: `/pages/songlist/songlist?id=${item.id}`,
 		});
