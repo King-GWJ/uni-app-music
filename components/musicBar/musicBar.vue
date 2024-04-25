@@ -46,9 +46,6 @@
 			name.value = musicStore.musicLove.name
 			artist.value = musicStore.musicLove.ar[0].name
 		}
-
-
-
 		if (musicStore.audio.paused) {
 			flag.value = true
 		} else {
@@ -71,7 +68,7 @@
 	<view class="musicBar" @click="goPlay">
 		<view class="barInfo">
 			<view class="imgWrap">
-				<image class="img" :src="url" mode="widthFix"></image>
+				<image :class="[{ img:true}, { imgPlay: !flag }]" :src="url" mode="widthFix"></image>
 			</view>
 
 			<view class="name">
@@ -123,6 +120,11 @@
 				width: rpx(35);
 				height: rpx(35);
 				border-radius: rpx(50);
+				
+			}
+			
+			.imgPlay{
+				animation: rotate 3s linear infinite;
 			}
 
 			.name {
@@ -163,5 +165,14 @@
 			}
 		}
 
+	}
+	
+	@keyframes rotate{
+		0%{
+			transform: rotateZ(0deg);
+		}
+		100%{
+			transform: rotateZ(360deg);
+		}
 	}
 </style>
