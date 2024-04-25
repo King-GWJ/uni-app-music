@@ -130,6 +130,7 @@
 			.name {
 				line-height: rpx(50);
 				margin-left: rpx(10);
+				width: rpx(170);
 				color: rgb(61, 70, 91);
 				font-size: rpx(10);
 				white-space: nowrap;
