@@ -8,6 +8,9 @@ import {
 import {
 	songUrlApi,
 	mvDetailApi,
+	songDetailApi,
+	mvUrlApi,
+	mvInfoApi
 } from "../base/api/index.js"
 
 export const useMusicstore = defineStore("musicStore", () => {
@@ -46,7 +49,9 @@ export const useMusicstore = defineStore("musicStore", () => {
 	const musicType = ref('')
 	// MV
 	const musicLookMv = ref('')
-
+	// 歌曲详情
+	const musicDetails = ref(null)
+	
 	// 调接口播放音乐
 	const musicApi = () => {
 		songUrlApi(musicList.value[musicIndex.value].id,'standard').then(res => {
@@ -225,10 +230,21 @@ export const useMusicstore = defineStore("musicStore", () => {
 		musicHistory.value = []
 	}
 
-	//mv
-	const musicMv = (id) => {
-		mvDetailApi(id).then(res => {
+	// mv
+	const musicMv = (item) => {
+		audio.pause()
+		isplay.value = false
+		clearInterval(musicTimer.value)
+		musicDetails.value = item
+		mvDetailApi(item.id).then(res => {
+			console.log('mv播放地址',res);
 			musicLookMv.value = res.data.url
+		})
+		mvUrlApi(item.id).then(res => {
+			console.log('mv数据',res);
+		})
+		mvInfoApi(item.id).then(res => {
+			console.log('mv品论',res);
 		})
 	}
 	return {
@@ -254,5 +270,6 @@ export const useMusicstore = defineStore("musicStore", () => {
 		musicHistoryAll,
 		musicMv,
 		musicLookMv,
+		musicDetails,
 	}
 })

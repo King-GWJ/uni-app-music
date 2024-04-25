@@ -376,12 +376,33 @@ export const getashareApi = (id) => {
 	})
 }
 
-//mv
+//mv播放地址
 export const mvDetailApi = (id) => {
 	return request({
 		url: '/mv/url',
+		method: 'POST',
 		data: {
 			id: id
+		}
+	})
+}
+// mv详情数据
+export const mvUrlApi = (id) => {
+	return request({
+		url: '/mv/detail',
+		method: 'POST',
+		data: {
+			mvid: id
+		}
+	})
+}
+// mv评论详情
+export const mvInfoApi = (id) => {
+	return request({
+		url: '/mv/detail/info',
+		method: 'POST',
+		data: {
+			mvid: id
 		}
 	})
 }

@@ -118,8 +118,7 @@
 		})
 	}
 	const toggleBack = (item) => {
-		console.log(item);
-		useStore.musicMv(item.mv)
+		useStore.musicMv(item)
 		uni.navigateTo({
 			url:'/pages/mv/mv'
 		})
