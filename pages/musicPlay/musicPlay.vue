@@ -11,32 +11,36 @@
 	const showLyric=ref(false) //歌词显示隐藏
 	const showPlay=ref(false)  //歌曲信息显示隐藏
 	const shareShow=ref(false) //分享显示隐藏
+	const isCollect=ref(false) //添加收藏
+    
 	
-
-	
-	console.log(useStore.musicNowTime);
-	console.log(useStore.musicTime);
+	 uni.hideTabBar()
 	
 	//切换歌曲
 	const subtract = (num) => { // 上一首/下一首
 		useStore.musicSubtract(num)
 	}
     
-	//返回首页
+	//返回上一页
 	const Backprve=()=>{
-		uni.switchTab({
-			url: '/pages/index/index'
-		})
+		// 获取当前页面栈
+		const pages = getCurrentPages()
+		const len = pages.length;
+		// 返回上一页
+		uni.navigateBack({delta: 1});
+		// 返回前两页
+		if(len >= 3) {
+		    uni.navigateBack({delta: 2});
+		} else {
+		   
+		    uni.navigateBack({delta: len - 1}); // 返回首页
+		}
 	}
-	 const schedule = (e) => {
-		 console.log(123);
-		 console.log(e);
-	 }
-	 
-	 const  sliderClick = () => {
-		 
-	 }
-
+	
+    //点击收藏
+	const Collect=()=>{
+		isCollect.value=!isCollect.value
+	}
 </script>
 
 
@@ -48,7 +52,7 @@
 			<p @click="Backprve">
 				<image src="../../icon/songlist/icon-bback.png"></image>
 			</p>
-			<view>{{}}</view>
+			
 			<p @click="shareShow=true">
 				<image src="../../icon/songlist/icon-fenxiang.png" />
 			</p>
@@ -74,8 +78,9 @@
 				<p class="nameSog"><p class="name">{{useStore.musicLove.name}}  {{useStore.musicLove.alia[0]}}<span>{{useStore.musicLove.pop}}</span> </p></p>
 				<p class="singer">{{useStore.musicLove.ar.map(v=>v.name).join('/')}}</p>
 			</view>
-			<p class="collent">
-				<image src="../../icon/songlist/icon-collent.png" />
+			<p class="collent" @click="Collect()">
+				<image v-if="isCollect"  src="../../icon/songlist/icon-collect.png"></image>
+				<image v-else src="../../icon/songlist/icon-collent.png"></image>
 			</p>
 			<p class="talk">
 				<image src="../../icon/songlist/icon-talk.png" />
@@ -83,7 +88,7 @@
 		</view>
 		<view class="volume" >
 			<view class="time">{{useStore.musicNowTime.points}}:{{useStore.musicNowTime.seconds}}</view>
-			<view class="slider" @click="sliderClick()">
+			<view class="slider">
 				<slider  class="sliders" @sliderChange="schedule(1)" min="0" :max="Number(useStore.musicTime.points) * 60 + Number(useStore.musicTime.seconds)" :value="Number(useStore.musicNowTime.points) * 60 + Number(useStore.musicNowTime.seconds)" disabled="true" block-size="20" activeColor="#1890ff" step></slider>
 			</view>
 			<view class="time">{{useStore.musicTime.points}}:{{useStore.musicTime.seconds}}</view>
