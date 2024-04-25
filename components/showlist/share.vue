@@ -1,9 +1,5 @@
 
 <script setup>
-	// import {useUserStore} from '../../store/user.js'
-	
-	// const userStore = useUserStore()
-	// console.log(userStore.getAccount)
 	
 	const list=[
 		{
@@ -98,31 +94,31 @@
 				<view class="all">
 					 <view class="every">
 					 	<view class="Shareto">
-					 		<image src=""></image>
+					 		<image src="../../icon/songlist/i-image1.jpg"></image>
 					 	</view>
 					 	<view class="path">一起听</view>
 					 </view>
 					 <view class="every">
 					 	<view class="Shareto">
-					 		<image src=""></image>
+					 		<image src="../../icon/songlist/image1.webp"></image>
 					 	</view>
 					 	<view class="path">发送至密友桌面</view>
 					 </view>
 					 <view class="every">
 					 	<view class="Shareto">
-					 		<image src=""></image>
+					 		<image src="../../icon/songlist/image5.jpg"></image>
 					 	</view>
 					 	<view class="path">微信状态</view>
 					 </view>
 					 <view class="every">
 					 	<view class="Shareto">
-					 		<image src=""></image>
+					 		<image src="../../icon/songlist/image3.jpg"></image>
 					 	</view>
 					 	<view class="path">歌曲卡片</view>
 					 </view>
 					 <view class="every">
 					 	<view class="Shareto">
-					 		<image src="../../icon/songlist/i-image1.jpg"></image>
+					 		<image src="../../icon/songlist/image4.jpg"></image>
 					 	</view>
 					 	<view class="path">歌曲卡片</view>
 					 </view>
@@ -146,7 +142,7 @@
 		z-index: 2;
 	}
 	.page{
-		margin-top: 85%;
+		margin-top:100%;
 		height:rpx(300);
 		background:#fff;
 		border-radius: rpx(18) rpx(18) 0 0;
@@ -223,7 +219,7 @@
 			display: flex;
 			flex-direction: column;
 			align-items: center;
-			background: blue;
+			// background: blue;
 			.Shareto{
 				width:rpx(93);
 				height:rpx(95);
@@ -233,6 +229,7 @@
 				image{
 					width:100%;
 					height:100%;
+					border-radius: rpx(5);
 				}
 			}
 			.path{
