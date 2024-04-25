@@ -74,10 +74,10 @@ export const useMusicstore = defineStore("musicStore", () => {
 
 	// 获取全部音乐，当前音乐，当前音乐下标
 	const musicAllList = (l,t,i,n) => { 
-		musicList.value = l
-		musicLove.value = t
-		musicIndex.value = i
-		musicType.value = n
+		musicList.value = l//当前的歌单列表数据
+		musicLove.value = t//当前选中的item
+		musicIndex.value = i//当前选中的index
+		musicType.value = n//历史播放记录存储标识
 		clearInterval(musicTimer.value)
 		const arr = musicHistory.value.find(item => item.name === musicType.value)
 		if(arr){
