@@ -246,6 +246,9 @@ export const useMusicstore = defineStore("musicStore", () => {
 		mvInfoApi(item.id).then(res => {
 			console.log('mv品论',res);
 		})
+		audio.pause()
+		isplay.value = false
+		clearInterval(musicTimer.value)
 	}
 	return {
 		audio,
