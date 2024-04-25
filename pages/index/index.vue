@@ -1,15 +1,16 @@
 <script setup>
     import {ref} from "vue";
     import {bannerApi, toplistApi, newsongApi, personalizedApi} from '/base/api'
-    import {navigateTo} from '/base/utils'
+    import {navigateTo,reLaunch} from '/base/utils'
     import navIcons from "/base/data/navIcons";
     import Sidebar from '../../components/sidebar/Sidebar.vue'
 	import musicBarVue from "../../components/musicBar/musicBar.vue";
+    import {useMusicstore} from "../../store/music";
 
     const pageSearch = '/pages/search/search'
-    const pageMusicPlay = '/pages/musicPlay/musicPlay'
 
     const curCookie = uni.getStorageSync("curCookie");
+    const userStore = useMusicstore();
 
     const banners = ref([])
     const playListTJ = ref([])
@@ -41,11 +42,17 @@
         return twoDimArray;
     }
 
-
     const getDetail = (id) => {
-        navigateTo("/pages/acquiesce/acquiesce?id=" + id)
+        navigateTo("/pages/songsList/songsList?id=" + id+"&title=推荐歌单")
+    }
+    const getDetail1 = (id) => {
+        navigateTo("/pages/songlist/songlist?id=" + id)
     }
 
+    const getMusicPlay = (item,index) => {
+        userStore.musicAllList(musicList.value,item,index,"新歌新碟")
+        reLaunch("/pages/musicPlay/musicPlay")
+    }
 
 </script>
 
@@ -90,7 +97,7 @@
             <uni-section type="line" title="新歌新碟">
                 <view class="newsong">
                     <view class="musiclist" v-for="value in musicList">
-                        <view class="musiclist-item" v-for="item in value" :key="item.id" @click="navigateTo(pageMusicPlay)">
+                        <view class="musiclist-item" v-for="(item,index) in value" :key="item.id" @click="getMusicPlay(item,index)">
                             <image :src="item.picUrl" mode="widthFix"></image>
                             <view class="musiclist-item-name">
                                 {{ item.name }}
@@ -102,7 +109,7 @@
 
             <uni-section type="line" title="排行榜">
                 <view class="playlist">
-                    <view class="playlist-item" v-for="item in topListTJ" :key="item.id" @click="getDetail(item.id)">
+                    <view class="playlist-item" v-for="item in topListTJ" :key="item.id" @click="getDetail1(item.id)">
                         <image :src="item.coverImgUrl" mode="widthFix"></image>
                         <view class="playlist-item-name">
                             {{ item.name }}
@@ -111,7 +118,7 @@
                 </view>
             </uni-section>
         </view>
-        <Sidebar ref="sidebar" />
+        <sidebar ref="sidebar" />
     </view>
 </template>
 
@@ -227,9 +234,9 @@
                 .musiclist {
                     display: flex;
                     flex-direction: column;
-
                     .musiclist-item {
                         width: 300rpx;
+                        height: 150rpx;
                         display: flex;
                         align-items: center;
                         margin-right: 20rpx;
@@ -237,7 +244,7 @@
 
                         image {
                             width: 150rpx;
-                            height: 150rpx;
+                            height: 100%;
                             margin-right: 15rpx;
                             border-radius: 10rpx;
                             background: #FFFFFF;

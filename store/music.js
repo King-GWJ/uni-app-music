@@ -2,23 +2,21 @@ import {
 	defineStore
 } from "pinia"
 import {
-	computed,
 	watch,
 	ref
 } from "vue"
 import {
+	songUrlApi,
+	mvDetailApi,
 	songDetailApi,
-	songUrlApi
+	mvUrlApi,
+	mvInfoApi
 } from "../base/api/index.js"
 
 export const useMusicstore = defineStore("musicStore", () => {
 
 	//音频对象
 	const audio = uni.createInnerAudioContext()
-	//当前播放列表
-	const curPlaylist = ref([])
-	//当前播放歌曲下标
-	const curIndex = ref(0)
 	//是否在播放
 	const isplay = ref(false)
 	//歌单例表
@@ -49,6 +47,11 @@ export const useMusicstore = defineStore("musicStore", () => {
 	const musicHistory = ref([])
 	// 音乐类型
 	const musicType = ref('')
+	// MV
+	const musicLookMv = ref('')
+	// 歌曲详情
+	const musicDetails = ref(null)
+	
 	// 调接口播放音乐
 	const musicApi = () => {
 		songUrlApi(musicList.value[musicIndex.value].id,'standard').then(res => {
@@ -71,10 +74,10 @@ export const useMusicstore = defineStore("musicStore", () => {
 
 	// 获取全部音乐，当前音乐，当前音乐下标
 	const musicAllList = (l,t,i,n) => { 
-		musicList.value = l
-		musicLove.value = t
-		musicIndex.value = i
-		musicType.value = n
+		musicList.value = l//当前的歌单列表数据
+		musicLove.value = t//当前选中的item
+		musicIndex.value = i//当前选中的index
+		musicType.value = n//历史播放记录存储标识
 		clearInterval(musicTimer.value)
 		const arr = musicHistory.value.find(item => item.name === musicType.value)
 		if(arr){
@@ -89,6 +92,7 @@ export const useMusicstore = defineStore("musicStore", () => {
 				name: musicType.value,
 				music: [musicLove.value]
 			})
+			
 		}
 	}
 
@@ -225,10 +229,29 @@ export const useMusicstore = defineStore("musicStore", () => {
 	const musicHistoryAll = () => {
 		musicHistory.value = []
 	}
+
+	// mv
+	const musicMv = (item) => {
+		audio.pause()
+		isplay.value = false
+		clearInterval(musicTimer.value)
+		musicDetails.value = item
+		mvDetailApi(item.id).then(res => {
+			console.log('mv播放地址',res);
+			musicLookMv.value = res.data.url
+		})
+		mvUrlApi(item.id).then(res => {
+			console.log('mv数据',res);
+		})
+		mvInfoApi(item.id).then(res => {
+			console.log('mv品论',res);
+		})
+		audio.pause()
+		isplay.value = false
+		clearInterval(musicTimer.value)
+	}
 	return {
 		audio,
-		curPlaylist,
-		curIndex,
 		isplay,
 		play,
 		musicAllList,
@@ -248,6 +271,8 @@ export const useMusicstore = defineStore("musicStore", () => {
 		timestampToYMD,
 		musicHistoryOne,
 		musicHistoryAll,
-		
+		musicMv,
+		musicLookMv,
+		musicDetails,
 	}
 })

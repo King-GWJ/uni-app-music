@@ -48,6 +48,14 @@
             }
         },
         {
+            "path": "pages/songsList/songsList",
+            "style": {
+                "navigationBarTitleText": "歌单",
+                "enablePullDownRefresh": false,
+                "navigationStyle": "custom"
+            }
+        },
+        {
             "path": "pages/musicPlay/musicPlay",
             "style": {
                 "navigationBarTitleText": "播放音乐",
@@ -75,8 +83,7 @@
             "path": "pages/login/login",
             "style": {
                 "navigationBarTitleText": "登录",
-                "enablePullDownRefresh": false,
-                "navigationStyle": "custom"
+                "enablePullDownRefresh": false
             }
         },
         {
@@ -110,6 +117,14 @@
 			}
 		},
 		{
+			"path" : "pages/mv/mv",
+			"style" : 
+			{
+				"navigationBarTitleText" : "MV",
+				"enablePullDownRefresh" : false
+            }
+        },
+        {
 			"path" : "pages/comment/comment",
 			"style" : 
 			{

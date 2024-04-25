@@ -73,7 +73,6 @@
 		});
 	}
 	const change = (e) => {
-		console.log(e);
 		current.value = e.detail.current
 	}
 

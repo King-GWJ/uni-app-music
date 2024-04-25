@@ -1,45 +1,7 @@
 
 <script setup>
 	
-	const list=[
-		{
-			src:"../../icon/songlist/icon-py.png",
-			title:微信
-		},
-		{
-			src:"../../icon/songlist/icon-py.png",
-			title:微信朋友圈
-		},
-		{
-			src:"../../icon/songlist/icon-qq.png",
-			title:QQ好友
-		},
-		{
-			src:"../../icon/songlist/icon-qqspace.png",
-			title:QQ空间
-		},
-		{
-			src:"../../icon/songlist/icon-wangyiyun.png",
-			title:云音乐动态
-		},
-		{
-			src:"../../icon/songlist/icon-xin.png",
-			title:私信
-		},
-		{
-			src:"../../icon/songlist/icon-wb.png",
-			title:微博
-		},
-		{
-			src:"../../icon/songlist/icon-lj.png",
-			title:复制链接
-		},
-		{
-			src:"../../icon/songlist/icon-gd.png",
-			title:更多
-		},
-	]
-	
+
 	
 </script>
 
