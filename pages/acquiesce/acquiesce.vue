@@ -64,7 +64,7 @@
 						</view>
 					</view>
 				</view>
-				<view v-if="item.mv" class="musicMv">
+				<view v-if="item.mv" class="musicMv" @click="toggleBack(item)">
 					<image src="../../icon/songlist/incon-blackbofang.png" mode=""></image>
 				</view>
 				<view class="musicIcon" @click="itemDetail(float,item)" >
@@ -115,6 +115,13 @@
 		useStore.musicAllList(l,t,i)
 		uni.switchTab({
 			url: `/pages/musicPlay/musicPlay?id=${t.id}`,
+		})
+	}
+	const toggleBack = (item) => {
+		console.log(item);
+		useStore.musicMv(item.mv)
+		uni.navigateTo({
+			url:'/pages/mv/mv'
 		})
 	}
 </script>

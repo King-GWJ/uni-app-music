@@ -109,6 +109,14 @@
 			}
 		},
 		{
+			"path" : "pages/mv/mv",
+			"style" : 
+			{
+				"navigationBarTitleText" : "MV",
+				"enablePullDownRefresh" : false
+            }
+        },
+        {
 			"path" : "pages/comment/comment",
 			"style" : 
 			{

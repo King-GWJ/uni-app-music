@@ -2,23 +2,18 @@ import {
 	defineStore
 } from "pinia"
 import {
-	computed,
 	watch,
 	ref
 } from "vue"
 import {
-	songDetailApi,
-	songUrlApi
+	songUrlApi,
+	mvDetailApi,
 } from "../base/api/index.js"
 
 export const useMusicstore = defineStore("musicStore", () => {
 
 	//音频对象
 	const audio = uni.createInnerAudioContext()
-	//当前播放列表
-	const curPlaylist = ref([])
-	//当前播放歌曲下标
-	const curIndex = ref(0)
 	//是否在播放
 	const isplay = ref(false)
 	//歌单例表
@@ -49,6 +44,9 @@ export const useMusicstore = defineStore("musicStore", () => {
 	const musicHistory = ref([])
 	// 音乐类型
 	const musicType = ref('')
+	// MV
+	const musicLookMv = ref('')
+
 	// 调接口播放音乐
 	const musicApi = () => {
 		songUrlApi(musicList.value[musicIndex.value].id,'standard').then(res => {
@@ -89,6 +87,7 @@ export const useMusicstore = defineStore("musicStore", () => {
 				name: musicType.value,
 				music: [musicLove.value]
 			})
+			
 		}
 	}
 
@@ -225,10 +224,15 @@ export const useMusicstore = defineStore("musicStore", () => {
 	const musicHistoryAll = () => {
 		musicHistory.value = []
 	}
+
+	//mv
+	const musicMv = (id) => {
+		mvDetailApi(id).then(res => {
+			musicLookMv.value = res.data.url
+		})
+	}
 	return {
 		audio,
-		curPlaylist,
-		curIndex,
 		isplay,
 		play,
 		musicAllList,
@@ -248,6 +252,7 @@ export const useMusicstore = defineStore("musicStore", () => {
 		timestampToYMD,
 		musicHistoryOne,
 		musicHistoryAll,
-		
+		musicMv,
+		musicLookMv,
 	}
 })

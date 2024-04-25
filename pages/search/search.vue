@@ -267,7 +267,7 @@ const closeDetail = (e) => {
 			.search-icon {
 				width: rpx(40);
 				height: rpx(40);
-				background: url(../../icon/search.svg) no-repeat center;
+				background: url(../../icon/search.png) no-repeat center;
 				background-size: rpx(15);
 			}
 
@@ -279,7 +279,7 @@ const closeDetail = (e) => {
 			.close-icon {
 				width: rpx(40);
 				height: rpx(40);
-				background: url(../../icon/close.svg) no-repeat center;
+				background: url(../../icon/close.png) no-repeat center;
 				background-size: rpx(20);
 			}
 		}
@@ -310,7 +310,7 @@ const closeDetail = (e) => {
 		.suggestIcon {
 			width: rpx(30);
 			height: rpx(30);
-			background: url(../../icon/search.svg) no-repeat center;
+			background: url(../../icon/search.png) no-repeat center;
 			background-size: rpx(15);
 		}
 
@@ -402,14 +402,14 @@ const closeDetail = (e) => {
 			.playIcon {
 				width: rpx(50);
 				height: rpx(50);
-				background: url(../../icon/play.svg) no-repeat center;
+				background: url(../../icon/play.png) no-repeat center;
 				background-size: rpx(25);
 			}
 
 			.detailIcon {
 				width: rpx(30);
 				height: rpx(50);
-				background: url(../../icon/detail.svg) no-repeat center;
+				background: url(../../icon/detail.png) no-repeat center;
 				background-size: rpx(20);
 			}
 		}
@@ -538,14 +538,14 @@ const closeDetail = (e) => {
 .clearHistory {
 	width: rpx(20);
 	height: rpx(20);
-	background: url(../../icon/clear.svg) no-repeat center;
+	background: url(../../icon/clear.png) no-repeat center;
 	background-size: contain;
 }
 
 .fresh {
 	width: rpx(20);
 	height: rpx(20);
-	background: url(../../icon/fresh.svg) no-repeat center;
+	background: url(../../icon/fresh.png) no-repeat center;
 	background-size: contain;
 }
 
