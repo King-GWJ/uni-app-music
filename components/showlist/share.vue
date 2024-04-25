@@ -1,5 +1,50 @@
 
 <script setup>
+	// import {useUserStore} from '../../store/user.js'
+	
+	// const userStore = useUserStore()
+	// console.log(userStore.getAccount)
+	
+	const list=[
+		{
+			src:"../../icon/songlist/icon-py.png",
+			title:微信
+		},
+		{
+			src:"../../icon/songlist/icon-py.png",
+			title:微信朋友圈
+		},
+		{
+			src:"../../icon/songlist/icon-qq.png",
+			title:QQ好友
+		},
+		{
+			src:"../../icon/songlist/icon-qqspace.png",
+			title:QQ空间
+		},
+		{
+			src:"../../icon/songlist/icon-wangyiyun.png",
+			title:云音乐动态
+		},
+		{
+			src:"../../icon/songlist/icon-xin.png",
+			title:私信
+		},
+		{
+			src:"../../icon/songlist/icon-wb.png",
+			title:微博
+		},
+		{
+			src:"../../icon/songlist/icon-lj.png",
+			title:复制链接
+		},
+		{
+			src:"../../icon/songlist/icon-gd.png",
+			title:更多
+		},
+	]
+	
+	
 </script>
 
 
@@ -47,13 +92,42 @@
 					<image  src="../../icon/songlist/icon-gd.png"></image>
 					<view class="text2">更多</view>
 				</view>
-				<view class="item">
-					<image src="../../icon/songlist/icon-wx.png"></image>
-					<view class="text2">云音乐动态</view>
-				</view>
-				
 			</view>
-			<view class="hash"></view>
+			<view class="hash">
+				<view class="text3">你还可以分享</view>
+				<view class="all">
+					 <view class="every">
+					 	<view class="Shareto">
+					 		<image src=""></image>
+					 	</view>
+					 	<view class="path">一起听</view>
+					 </view>
+					 <view class="every">
+					 	<view class="Shareto">
+					 		<image src=""></image>
+					 	</view>
+					 	<view class="path">发送至密友桌面</view>
+					 </view>
+					 <view class="every">
+					 	<view class="Shareto">
+					 		<image src=""></image>
+					 	</view>
+					 	<view class="path">微信状态</view>
+					 </view>
+					 <view class="every">
+					 	<view class="Shareto">
+					 		<image src=""></image>
+					 	</view>
+					 	<view class="path">歌曲卡片</view>
+					 </view>
+					 <view class="every">
+					 	<view class="Shareto">
+					 		<image src="../../icon/songlist/i-image1.jpg"></image>
+					 	</view>
+					 	<view class="path">歌曲卡片</view>
+					 </view>
+				</view>
+			</view>
 		</view>
 	</view>
 	
@@ -94,6 +168,8 @@
 		display: flex;
 		overflow: hidden;
 		overflow-x: auto;
+		padding: 0 rpx(5) rpx(15) rpx(5);
+		border-bottom:1px solid #eee;
 		&::-webkit-scrollbar{height:0px};
 		.item{
 			width:rpx(65);
@@ -101,17 +177,16 @@
 			border-radius: 50%;
 			display: flex;
 			justify-content: center;
-			// text-align: center;
 			align-items: center;
 			flex-direction: column;
 			margin:0 rpx(4);
 			image{
-				width:rpx(50);
-				height:rpx(50);
+				width:rpx(40);
+				height:rpx(40);
 				margin-bottom:rpx(5);
 			}
 			.text2{
-				font-size: rpx(13);
+				font-size: rpx(12);
 				width:rpx(65);
 				text-align: center;
 			}
@@ -126,7 +201,46 @@
 	}
 	.hash{
 		flex:1;
-		background: red;
+		padding:rpx(5) rpx(15);
+		display: flex;
+		flex-direction: column;
+		.text3{
+			font-size:rpx(13);
+			font-weight: 900;
+			font-family: "黑体";
+			padding:rpx(10) 0;
+		}
+		.all{
+			display: flex;
+			overflow: hidden;
+			overflow-x: auto;
+			&::-webkit-scrollbar{height:0px};
+		}
+		.every{
+			flex:1;
+			display: flex;
+			padding: 0 rpx(5) rpx(15) rpx(5);
+			display: flex;
+			flex-direction: column;
+			align-items: center;
+			background: blue;
+			.Shareto{
+				width:rpx(93);
+				height:rpx(95);
+				background: #fff;
+				border-radius: rpx(5);
+				
+				image{
+					width:100%;
+					height:100%;
+				}
+			}
+			.path{
+				margin-top:rpx(5);
+				font-size: rpx(13);
+				
+			}
+		}
 	}
 	
 </style>

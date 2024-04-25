@@ -19,7 +19,7 @@
 
 <template>
 	<view class="setting">
-	  <view class="showlist">
+	  <view class="showlist" @click.stop="" >
 	    <view class="showtop">
 	      <view class="text">
 	        <view class="cover"><image :src="data.al.picUrl"/></view>

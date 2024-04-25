@@ -97,7 +97,6 @@
 	
    .header{
 		height:rpx(40);
-		// background: palevioletred;
 		display: flex;
 		align-items: center;
 		justify-content: space-between;
