@@ -187,11 +187,7 @@ export const useMusicstore = defineStore("musicStore", () => {
 				musicNowTime.value.points = b >= 10 ? b + '' : '0' + b
 			}
 			if(musicNowTime.value.seconds === musicTime.value.seconds && musicNowTime.value.points === musicTime.value.points){
-				clearInterval(musicTimer.value)
-				musicNowTime.value.seconds = '00'
-				musicNowTime.value.points = '00'
-				musicTime.value.seconds = '00'
-				musicTime.value.points = '00'
+				musicTimerRemove()
 				if(musicMode.value === 1){
 					// 列表循环
 					audio.loop = false
