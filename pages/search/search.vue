@@ -35,7 +35,6 @@ hotApi().then(res => {
 let timer = null
 //开始搜索建议
 const searchSuggest = () => {
-
 	if (timer) clearTimeout(timer)
 	timer = setTimeout(async () => {
 		const res = await searchSuggestApi(searchVal.value)

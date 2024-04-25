@@ -68,7 +68,7 @@
 	<view class="musicBar" @click="goPlay">
 		<view class="barInfo">
 			<view class="imgWrap">
-				<image :class="[{ img:true}, { imgPlay: !flag }]" :src="url" mode="widthFix"></image>
+				<image  :class="[{ img:true}, { imgPlay: !flag },{Paused:flag}]" :src="url" mode="widthFix"></image>
 			</view>
 
 			<view class="name">
@@ -127,6 +127,11 @@
 				animation: rotate 3s linear infinite;
 			}
 
+			.Paused{
+				animation: rotate 3s linear infinite;
+				animation-play-state: paused;
+			}
+
 			.name {
 				line-height: rpx(50);
 				margin-left: rpx(10);
@@ -176,4 +181,6 @@
 			transform: rotateZ(360deg);
 		}
 	}
+	
+	
 </style>
