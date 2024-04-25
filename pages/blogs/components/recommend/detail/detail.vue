@@ -18,14 +18,26 @@
 		</view>
 		<view class="main">
 			<view class="">
-				<view class="">
-					播放全部({{list?.length}})
+				<view class="top">
+					<img src="../../../../../icon/play2.svg" alt=""><text>播放全部</text>({{list?.length}})
 				</view>
 			</view>
-			<view class="list" v-for="(item,index) in list" :key="index" @click="goDetail({i:index,t:item,l:list,n:'新专辑'})">
-				<text>{{item.name}}</text>
-				<view>
-					{{(item.ar.map(item => item.name)).join("/")}}
+			<view class="list" v-for="(item,index) in list" :key="index"
+				@click="goDetail({i:index,t:item,l:list,n:'新专辑'})">
+				<view class="left">
+					<text>{{index+1}}</text>
+				</view>
+				<view class="right">
+					<text>{{item.name}}</text>
+					<view>
+						{{(item.ar.map(item => item.name)).join("/")}}
+					</view>					
+				</view>
+				<view class="play">
+					<img src="../../../../../icon/play.svg" alt="" />
+				</view>
+				<view class="point" @click.stop="">
+					<img src="../../../../../icon/point.svg" alt="" />
 				</view>
 			</view>
 		</view>
@@ -53,15 +65,13 @@
 	const list = ref([])
 	const title = ref([])
 	const goDetail = (val) => {
-		useMusic.musicAllList(val.l,val.t,val.i,val.n)
-		console.log(val);
+		useMusic.musicAllList(val.l, val.t, val.i, val.n)
 		switchTab('../../../../../pages/musicPlay/musicPlay')
 	}
 	onLoad((options) => {
 		getalbumApi(options.id).then(res => {
 			list.value = res.songs
 			title.value = res.album
-			console.log(res.songs, res.album);
 		})
 	})
 </script>
@@ -103,7 +113,7 @@
 			algin-items: space-between;
 
 			.songs {
-				display:-webkit-box;
+				display: -webkit-box;
 				height: 32px;
 				line-height: 16px;
 				max-width: 180px;
@@ -147,17 +157,53 @@
 		overflow: auto;
 		display: flex;
 		flex-direction: column;
-		background-color: lime;
 		padding: 0 10px;
 
-		.list {
-			height: 60px;
+		.top {
 			display: flex;
-			flex-direction: column;
-			height: 60px;
-			color: white;
-			justify-content: center;
+			align-items: center;
+			margin-top: 20px;
 
+			img {
+				width: 22px;
+			}
+
+			text {
+				margin: 0 10px;
+			}
+		}
+
+		.list {
+			display:flex;
+			align-items:center;
+			position: relative;
+			.left{
+				margin-left:8px;
+			}
+			.right {
+				margin-left:20px;
+				height: 60px;
+				display: flex;
+				flex-direction: column;
+				height: 60px;
+				justify-content: center;
+			}
+			.play {
+				position: absolute;
+				right:20px;
+				top:30%;
+				img {
+					width: 20px;
+				}
+			}
+			.point {
+				position: absolute;
+				right:-2px;
+				top:30%;
+				img {
+					width: 20px;
+				}
+			}
 			text {
 				font-size: 15px;
 			}
