@@ -34,7 +34,7 @@
 					</view>					
 				</view>
 				<view class="play">
-					<img src="../../../../../icon/play.svg" alt="" />
+					<img src="../../../../../icon/play2.svg" alt="" />
 				</view>
 				<view class="point" @click.stop="">
 					<img src="../../../../../icon/point.svg" alt="" />
