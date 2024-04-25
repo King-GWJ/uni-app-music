@@ -41,6 +41,15 @@
         reLaunch("/pages/musicPlay/musicPlay")
     }
 
+    const conversion = (num) => {
+        if (typeof num === "number") {
+            const str = String(num)
+            if (str.length > 4) {
+                return str.substring(0, str.length - 4)+"万"
+            }
+        }
+        return num
+    }
 
 </script>
 
@@ -57,19 +66,19 @@
         <view class="details">
             <view class="details_content">
                 <view class="details_content_icon">
-                    <image class="content_imag" :src="detailList.coverImgUrl" mode="widthFix" @click="navigateTo(item.url)"></image>
+                    <image class="content_imag" :src="detailList?.coverImgUrl" mode="widthFix" @click="navigateTo(item.url)"></image>
                     <view class="play_num">
-                        <text>{{ detailList.playCount }}</text>
+                        <text>{{ conversion(detailList?.playCount) }}</text>
                     </view>
                 </view>
                 <view class="content_view">
                     <text>{{ detailList?.name }}</text>
                     <view class="content_view_user">
-                        <image class="content_view_user_imag" :src="detailList.creator.avatarUrl" mode="widthFix"></image>
-                        <text class="content_view_user_text">{{ detailList.creator.nickname }}</text>
+                        <image class="content_view_user_imag" :src="detailList?.creator.avatarUrl" mode="widthFix"></image>
+                        <text class="content_view_user_text">{{ detailList?.creator.nickname }}</text>
                     </view>
                     <view class="content_view_type">
-                        <view class="content_view_type_content" v-for="item in detailList.algTags">
+                        <view class="content_view_type_content" v-for="item in detailList?.algTags">
                             <text>{{ item }}</text>
                             <uni-icons color="#ffffff" type="right" size="10" @click="getTageBack"></uni-icons>
 
@@ -78,25 +87,27 @@
                 </view>
             </view>
 
-            <text class="details_remark">{{ detailList?.description }}</text>
+            <view class="details_remark">{{ detailList?.description }}</view>
 
             <view class="details_controls">
                 <view class="item">
                     <view class="item_content">
                         <image class="item_content_imag" src="/icon/icon-share.png" mode="widthFix"></image>
-                        <text>1234</text>
+                        <text>{{ conversion(detailList?.shareCount) }}</text>
                     </view>
                 </view>
                 <view class="item">
                     <view class="item_content">
                         <image class="item_content_imag" src="/icon/icon-massage.png" mode="widthFix"></image>
-                        <text>1234</text>
+                        <text>{{ conversion(detailList?.commentCount) }}</text>
                     </view>
                 </view>
                 <view class="item">
                     <view class="item_content">
-                        <image class="item_content_imag" src="/icon/icon-share.png" mode="widthFix"></image>
-                        <text>1234</text>
+                        <image class="item_content_imag"
+                               :src="detailList?.subscribed ? '/icon/icon-addsucc.png' : '/icon/icon-add-no.png'"
+                               mode="widthFix"></image>
+                        <text>{{ conversion(detailList?.subscribedCount) }}</text>
                     </view>
                 </view>
             </view>
@@ -163,13 +174,15 @@
                     height: 200rpx;
                     margin-right: 20rpx;
                     position: relative;
+
                     .content_imag {
                         width: 100%;
                         height: 100%;
                         background: #7b767f;
                         border-radius: 10%;
                     }
-                    .play_num{
+
+                    .play_num {
                         position: absolute;
                         top: 15rpx;
                         right: 15rpx;
@@ -222,17 +235,21 @@
             }
 
             .details_remark {
+                width: 95%;
                 font-size: 12px;
                 color: #e4e1e6;
                 margin: 25rpx 0;
-
+                white-space: nowrap;
+                overflow: hidden;
+                text-overflow: ellipsis;
             }
 
-            .details_controls{
+            .details_controls {
                 display: flex;
                 justify-content: space-around;
                 margin-bottom: 30rpx;
-                .item{
+
+                .item {
                     display: flex;
                     justify-content: center;
                     align-items: center;
@@ -240,10 +257,12 @@
                     width: 200rpx;
                     height: 85rpx;
                     border-radius: 50rpx;
-                    .item_content{
+
+                    .item_content {
                         display: flex;
                         align-items: center;
-                        .item_content_imag{
+
+                        .item_content_imag {
                             width: 30rpx;
                             height: 30rpx;
                             margin-right: 10rpx;
