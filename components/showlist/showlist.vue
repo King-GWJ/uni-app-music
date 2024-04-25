@@ -8,7 +8,7 @@
    import { useMusicstore } from '../../store/music.js'
    
    
-   const showList=false //例表显示隐藏
+   const showList=ref(false) //例表显示隐藏
    const selectSong=ref([])
    const useStore=useMusicstore ()
    console.log(useStore.musicLove) //当前歌曲
@@ -21,11 +21,7 @@
    }
   
    
-   const CurPage=()=>{
-     uni.switchTab({
-   	 url: `/pages/curplay/curplay`
-     })
-   }
+   
 </script>
 
 
@@ -40,7 +36,7 @@
 				<image v-if="useStore.isPlay " src="../../icon/songlist/icon-bfang.png"/>
 				<image v-else   src="../../icon/songlist/icon-xiaz.png"/>
 			</p>
-			<p class="logo2" @clcik="CurPage"><image src="../../icon/songlist/icon-mus.png"/></p>
+			<p class="logo2" @click="showList=!showList"><image src="../../icon/songlist/icon-mus.png"/></p>
 
 		</view>
 		<CaurPlay v-if="showList" />

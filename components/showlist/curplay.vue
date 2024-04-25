@@ -2,6 +2,7 @@
 	import {songDetailApi,songUrlApi,SongdetailApi} from "../../base/api/index.js"
 	import {watch,computed,ref} from "vue"
 	import {useMusicstore} from '../../store/music.js'
+	import Historyplay from './historyPlay.vue'
 	
 	
 	 const tabList = ref([
@@ -16,22 +17,23 @@
         ])
 		
 		const curIndex=ref(0)
-		const selectList=ref([]) //接收选择的歌曲
 		const useStore=useMusicstore()
-		// const list=useStore.musicList //已选择歌曲例表
 		const showList=ref(false) //例表显示隐藏
 		const curActive=ref(true) //歌曲切换图片高亮
-		const selectSong=ref([]) //已选择的歌曲例表
-	
-		console.log(useStore.musicList)
 	
 		//切换tab
 		const getTabIndex = (index) => {
 		    curIndex.value = index
 		}
 		
-		
-		
+		//点击删除（当前播放）
+		const del=(item)=>{
+			const index=useStore.musicList.findIndex(v=>v.id===item)
+			if(index !== -1){
+				useStore.musicList.splice(index,1)
+				useStore.musicLove = useStore.musicList[index]
+			}
+		}
 </script>
 
 <template>
@@ -65,42 +67,26 @@
 							<view>{{item.name}}</view><view class="singerName">·{{item.ar.map(v=>v.name).join('/')}}</view>
 						</view>
 					</view>
-					<view class="close">
+					<view class="close" @click="del(item.id)">
 						<!-- <view>来源</view> -->
 						<view class="closes"><image src="../../icon/songlist/icon-closes.png"></image></view>
 					</view>
 				</view>
 			</view>
+			<!-- 底部 -->
+			<view class="footer">
+				<view class="vip">
+					<image src="../../icon/songList/icon-vvip.png"></image>
+					<view>含2首vip专享歌曲</view>
+				</view>
+				<view class="price">vip仅￥0.06天</view>
+			</view>
 		 </view>
 		 <!-- 历史播放 -->
 		 <view v-else="curIndex===1" class="listBody">
-			    <view class="swiper">
-					<view class="album">
-						<view class="avatar"></view>
-						<view class="content">123</view>
-					</view>
-					 
-			    </view>
-			<view class="allSong">
-				<view class="songText">全部歌曲12首</view>
-				<view class="logos">
-					<image src="../../icon/songlist/icon-load.png"></image>
-					<image src="../../icon/songlist/icon-tianjia.png"></image>
-					<image src="../../icon/songlist/icon-laj.png"></image>
-				</view>
-			</view>
-			<view class="songs">
-				<view class="item"></view>
-			</view>
+			 <Historyplay />
 		 </view>
-		 <!-- 底部 -->
-		<view class="footer">
-			<view class="vip">
-				<image src="../../icon/songList/icon-vvip.png"></image>
-				<view>含2首vip专享歌曲</view>
-			</view>
-			<view class="price">vip仅￥0.06天</view>
-		</view>
+		
 	   </view>
    </view>
 </template>
@@ -139,6 +125,9 @@
 		flex-direction: column;
 		.listBox{
 			flex:1;
+			overflow:hidden;
+			display: flex;
+			flex-direction: column;
 		}
 		.logo{
 			display:flex;
@@ -183,7 +172,6 @@
 		}
 		.songlist{
 			flex:1;
-			height:20%;
 			overflow: hidden;
 			overflow-y: auto;
 			.item{
@@ -245,65 +233,6 @@
 	.listBody{
 		display: flex;
 		flex-direction: column;
-		.swiper{
-			display:flex;
-			height:rpx(80);
-			padding:0 rpx(15);
-			align-items: center;
-			background: skyblue;
-			&::-webkit-scrollbar{height:0px};
-			.album{
-				background:#eee;
-				width:rpx(210);
-				height:rpx(60);
-				border-radius: rpx(5);
-				display:flex;
-				align-items: center;
-				.avatar{
-					width:rpx(60);
-					height:rpx(60);
-					border-radius: rpx(5);
-					background: royalblue;
-				}
-				.content{
-					margin:0 rpx(10);
-				}
-			}
-			image{
-				width:rpx(20);
-			}
-		}
-		.allSong{
-			height:rpx(40);
-			display: flex;
-			justify-content: space-between;
-			align-items: center;
-			padding:0 rpx(15);
-			font-size: rpx(14);
-			.logos{
-				display: flex;
-				align-items: center;
-			}
-			image{
-				width:rpx(18);
-				height:rpx(18);
-				margin:0 rpx(10);
-			}
-			
-		}
-		.songs{
-			height:rpx(290);
-			overflow:hidden;
-			overflow-y: auto;
-			.item{
-				height:rpx(40);
-				background:burlywood;
-				display:flex;
-				align-items: center;
-				justify-content: space-between;
-				padding:0 rpx(15);
-			}
-		}
 	}
 	.footer{
 		height:rpx(30);

@@ -50,8 +50,6 @@ export const useMusicstore = defineStore("musicStore", () => {
 	// 音乐类型
 	const musicType = ref('')
 
-
-
 	// 获取全部音乐，当前音乐，当前音乐下标
 	const musicAllList = (l,t,i,n) => { 
 		musicList.value = l
