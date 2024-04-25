@@ -107,12 +107,12 @@
 	.community {
 		width: 100%;
 		box-sizing: border-box;
-		padding-bottom: 50px;
 
 		.view {
 			min-height: 800rpx;
 			overflow: auto;
-
+			width: 100%;
+			padding-bottom: 100px;
 			.watch {
 				width: 100%;
 				margin-left: 40rpx;
