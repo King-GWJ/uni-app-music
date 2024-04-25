@@ -304,7 +304,7 @@ import { userPlayListApi,playListChange,commentApi } from '../../../base/api';
 	width: 100vw;
 	height: rpx(669);
 	background: rgba(0, 0, 0,.2);
-	z-index: 2;
+	z-index: 12;
 }
 .dialog{
 	display: flex;
