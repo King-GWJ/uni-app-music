@@ -32,12 +32,6 @@
 	const showPop = ref(false) //展示弹窗
     
 
-
-
-
-
-
-
 	//切换tab
 	const getTabIndex = (index) => {
 		curIndex.value = index
@@ -52,9 +46,9 @@
 		}
 	}
 
-	const aaa = () => {
-		showPop = !showPop
-	}
+	// const aaa = () => {
+	// 	showPop = !showPop
+	// }
 	
 	
 	const dialogToggle =(type) =>{
@@ -88,7 +82,7 @@
 					<view class="right">
 						<image src="../../icon/songlist/icon-xz.png"></image>
 						<image src="../../icon/songlist/icon-tj.png"></image>
-						<image @click="showPop =!showPop" class="ljt" src="../../icon/songlist/icon-ljt.png"></image>
+						<image class="ljt" src="../../icon/songlist/icon-ljt.png"></image>
 					</view>
 				</view>
 				<view class="tuijian">
