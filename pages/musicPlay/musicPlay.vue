@@ -14,8 +14,7 @@
 	const isCollect=ref(false) //添加收藏
     
 	
-	console.log(useStore.musicNowTime);
-	console.log(useStore.musicTime);
+	 uni.hideTabBar()
 	
 	//切换歌曲
 	const subtract = (num) => { // 上一首/下一首
