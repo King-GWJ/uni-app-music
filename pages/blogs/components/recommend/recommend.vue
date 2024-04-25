@@ -105,7 +105,7 @@
 <template>
 	<view class="recommend">
 		<view class="search">
-			<span><img src="@/icon/search.svg" alt=""></span>
+			<span><img src="@/icon/search.png" alt=""></span>
 			<input type="text" name="" id="" placeholder="大家都在听一人一首成名曲">
 		</view>
 
