@@ -16,6 +16,7 @@
 	const name = ref('请播放音乐')
 	const artist = ref('')
 	const flag = ref(true)
+	const popup3 = ref(null)
 
 	const goPlay = () => {
 		uni.switchTab({
@@ -60,6 +61,7 @@
 	}
 
 	const detail = (e) => {
+		popup3.value.open()
 		e.stopPropagation()
 	}
 </script>
@@ -72,9 +74,11 @@
 			</view>
 
 			<view class="name">
-				{{name}}
-				<view v-if="musicStore.musicLove.al">
-					-{{artist}}
+				<view class="musicName">
+					{{name}}
+				</view>
+				<view class="musicAfter" v-if="musicStore.musicLove.al">
+					&nbsp;-&nbsp;{{artist}}
 				</view>
 			</view>
 		</view>
@@ -88,6 +92,11 @@
 			</view>
 		</view>
 	</view>
+	<uni-popup ref="popup3" type="bottom" border-radius="10px 10px 0 0" background-color="#fff">
+		<view class="playList">
+			
+		</view>
+	</uni-popup>
 </template>
 
 
@@ -142,6 +151,14 @@
 				overflow: hidden;
 				text-overflow: ellipsis;
 				display: flex;
+				.musicName{
+					color: rgb(58,68,90);
+					font-size: rpx(13);
+					font-weight: 900;
+				}
+				.musicAfter{
+					color: rgb(124,130,144);
+				}
 			}
 		}
 
@@ -181,6 +198,9 @@
 			transform: rotateZ(360deg);
 		}
 	}
+	.playList{
+		min-height: rpx(200);
 	
+	}
 	
 </style>
