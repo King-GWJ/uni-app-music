@@ -21,12 +21,22 @@
 		useStore.musicSubtract(num)
 	}
     
-	//返回首页
+	//返回上一页
 	const Backprve=()=>{
-		uni.switchTab({
-			url: '/pages/index/index'
-		})
+		// 获取当前页面栈
+		const pages = getCurrentPages()
+		const len = pages.length;
+		// 返回上一页
+		uni.navigateBack({delta: 1});
+		// 返回前两页
+		if(len >= 3) {
+		    uni.navigateBack({delta: 2});
+		} else {
+		   
+		    uni.navigateBack({delta: len - 1}); // 返回首页
+		}
 	}
+	
     //点击收藏
 	const Collect=()=>{
 		isCollect.value=!isCollect.value

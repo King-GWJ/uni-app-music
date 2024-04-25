@@ -66,7 +66,7 @@ export const useMusicstore = defineStore("musicStore", () => {
 		musicTime.value.seconds = '00'
 		musicTime.value.points = '00'
 	}
-	
+
 	// 获取全部音乐，当前音乐，当前音乐下标
 	const musicAllList = (l,t,i,n) => { 
 		musicList.value = l

@@ -6,6 +6,7 @@
     import {navigateTo} from "../../base/utils";
     import {useUserStore} from "../../store/user";
     import {userPlayListApi} from "../../base/api";
+
     const curCookie = uni.getStorageSync("curCookie");
 
     const pageSearch = '/pages/search/search'
@@ -63,7 +64,7 @@
         </view>
         <view class="main">
             <view class="login">
-                <image :src="profile?.avatarUrl" mode="widthFix" class="login-img" v-show="isLogin"></image>
+                <image :src="profile ? profile.avatarUrl :'/icon/icon-avatar.png'" mode="widthFix" class="login-img"></image>
                 <view class="login-name" v-show="isLogin">
                     {{ profile?.nickname }}
                 </view>
@@ -72,19 +73,27 @@
                 </view>
             </view>
             <view class="connect">
-                <TabToggle :tabList="tabList" @tabIndexEvent="getTabIndex" />
+                <TabToggle class="toggle" :tabList="tabList" @tabIndexEvent="getTabIndex" />
                 <view v-if="tabIndex === 0" class="view">
+                    <uni-list :border="false" v-if="!isLogin">
+                        <uni-list-chat
+                            title="新建歌单"
+                            :to="pageLogin"
+                            avatar="/icon/icon-add.png"
+                        ></uni-list-chat>
+                    </uni-list>
+
                     <uni-list :border="false" v-for="(item,index) in playList" :key="index">
                         <uni-list-chat
                             :title="item.name"
-                            to="/pages/acquiesce/acquiesce?id="
+                            to="/pages/acquiesce/acquiesce?id=" + item.id
                             :avatar="item.coverImgUrl"
-                            :note='item.trackCount+"首"' ></uni-list-chat>
+                            :note='item.trackCount+"首"'></uni-list-chat>
                     </uni-list>
+
                 </view>
                 <view v-if="tabIndex === 1" class="view">
                     播客
-                    <!-- <custom-music></custom-music> -->
                 </view>
                 <view v-if="tabIndex === 2" class="view">
                     动态
@@ -95,7 +104,7 @@
 
         <Sidebar ref="sidebar" />
     </view>
-	<musicBar></musicBar>
+    <musicBar></musicBar>
 </template>
 
 <style lang="scss" scoped>
@@ -122,18 +131,18 @@
             flex: 1;
             display: flex;
             flex-direction: column;
+
             .login {
                 display: flex;
                 flex-direction: column;
                 justify-content: flex-start;
                 align-items: center;
-                margin-top: 10rpx;
+                margin: 15rpx 0;
 
                 .login-img {
                     width: 140rpx;
                     height: 140rpx;
                     margin: 15rpx;
-                    background: $theme-color;
                     border-radius: 50%;
                 }
             }
@@ -143,6 +152,14 @@
                 padding-bottom: 80rpx;
                 background-color: #FFFFFF;
                 border-radius: 40rpx 40rpx 0 0;
+
+                .toggle {
+                    position: sticky;
+                    top: 0;
+                    z-index: 1;
+                    background-color: #FFFFFF;
+                    border-radius: 40rpx 40rpx 0 0;
+                }
             }
         }
 
