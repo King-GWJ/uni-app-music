@@ -103,11 +103,12 @@
 			algin-items: space-between;
 
 			.songs {
-				height: 16px;
+				display:-webkit-box;
+				height: 32px;
 				line-height: 16px;
 				max-width: 180px;
 				font-size: 16px;
-				white-space: nowrap;
+				// white-space: nowrap;
 				-webkit-box-orient: vertical;
 				/* 控制只有第二行才会溢出隐藏 */
 				-webkit-line-clamp: 2;
