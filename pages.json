@@ -75,8 +75,7 @@
             "path": "pages/login/login",
             "style": {
                 "navigationBarTitleText": "登录",
-                "enablePullDownRefresh": false,
-                "navigationStyle": "custom"
+                "enablePullDownRefresh": false
             }
         },
         {

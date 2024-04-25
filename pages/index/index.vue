@@ -111,7 +111,7 @@
                 </view>
             </uni-section>
         </view>
-        <Sidebar ref="sidebar" />
+        <sidebar ref="sidebar" />
     </view>
 </template>
 
@@ -227,9 +227,9 @@
                 .musiclist {
                     display: flex;
                     flex-direction: column;
-
                     .musiclist-item {
                         width: 300rpx;
+                        height: 150rpx;
                         display: flex;
                         align-items: center;
                         margin-right: 20rpx;
@@ -237,7 +237,7 @@
 
                         image {
                             width: 150rpx;
-                            height: 150rpx;
+                            height: 100%;
                             margin-right: 15rpx;
                             border-radius: 10rpx;
                             background: #FFFFFF;
