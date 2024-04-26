@@ -14,8 +14,9 @@
 	const shareShow=ref(false) //分享显示隐藏
 	const isCollect=ref(false) //添加收藏
     
-	
-	 uni.hideTabBar()
+	onLoad(()=>{
+		uni.hideTabBar()
+	})
 	
 	//切换歌曲
 	const subtract = (num) => { // 上一首/下一首
@@ -32,19 +33,8 @@
         const launchOptionsSync = uni.getLaunchOptionsSync();
         reLaunch("/" + launchOptionsSync.path)
         uni.showTabBar()
-	  
 	 } 
-	// 	onLoad(()=>{
-	// 	const launchOptions = uni.getLaunchOptionsSync();
-	// 	// 打印启动参数
-	// 	console.log("111",launchOptions);
-	// 	// 检查是否有页面跳转传递的参数
-	// 	if (launchOptions.query) {
-	// 	  console.log('From navigateTo or redirectTo:', launchOptions.query);
-	// 	}
-	// })
-	
-	
+
 </script>
 
 
@@ -190,7 +180,7 @@
 		width: 100%;
 		height: 100%;
 		background: rgba(0, 0, 0, .2);
-		backdrop-filter: blur(40px);
+		backdrop-filter: blur(80px);
 	}
 	.circle{
 		flex:1;
@@ -273,7 +263,7 @@
 						rgba(255, 255, 255, 0.2) 55%,
 						transParent);
 			position: absolute;
-			top: 55%;
+			top: 52%;
 			left: 51%;
 			transform: translate(-50%,-50%);
 			border-radius: 50%;

@@ -44,6 +44,9 @@
 						</view>
 						<view class="good">
 							{{item.likedCount}}
+							<view class="goodIcon">
+								
+							</view>
 						</view>
 					</view>
 					<view class="itemContent">
@@ -76,7 +79,6 @@
 		justify-content: space-between;
 		align-items: center;
 		padding: rpx(5) 0 rpx(5) rpx(10);
-		
 		.title{
 			font-weight: 900;
 		}
@@ -85,13 +87,9 @@
 			justify-content: space-around;
 			width: rpx(150);
 			.typeItem{
-				
 				padding-right: rpx(10);
 				font-size: rpx(13);
 				color: rgb(153,153,153);
-				// &:last-child{
-				// 	border: none;
-				// }
 				&.bod{
 					border-right: 1px solid ;
 				}
@@ -135,9 +133,19 @@
 				color: rgb(102,102,102);
 			}
 			.good{
-				margin-right: rpx(10);
 				color: rgb(153,153,153);
 				margin-right: rpx(20);
+				display: flex;
+				font-size: rpx(13);
+				display: flex;
+				align-items:flex-end;
+				.goodIcon{
+					width: rpx(20);
+					height: rpx(20);
+					margin-left: rpx(5);
+					background: url(../../../icon/good.png) no-repeat center;
+					background-size: rpx(20);
+				}
 			}
 			margin-bottom: rpx(10);
 		}

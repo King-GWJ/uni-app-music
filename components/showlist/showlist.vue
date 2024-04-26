@@ -33,8 +33,8 @@
 			</view>
 			<view class="name" @click="playPage">{{useStore.musicLove.name}}</view>
 			<p class="logo">
-				<image v-if="useStore.isPlay " src="../../icon/songlist/icon-bfang.png"/>
-				<image v-else   src="../../icon/songlist/icon-xiaz.png"/>
+				<image v-if="useStore.isPlay " src="../../icon/songlist/icon-bf.png"/>
+				<image v-else   src="../../icon/songlist/icon-ztt.png"/>
 			</p>
 			<p class="logo2" @click="showList=!showList"><image src="../../icon/songlist/icon-mus.png"/></p>
 
