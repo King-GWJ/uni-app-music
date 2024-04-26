@@ -39,8 +39,12 @@
         const launchOptionsSync = uni.getLaunchOptionsSync();
         reLaunch("/" + launchOptionsSync.path)
         uni.showTabBar()
-	 } 
-
+	 }
+	 
+   
+    console.log(useStore.musicLove)
+   
+	 
 </script>
 
 
@@ -57,7 +61,7 @@
 					<p @click="back" class="top">
 						<image src="../../icon/songlist/icon-bback.png"></image>
 					</p>
-					<view class="title">歌名</view>
+					<view class="title">{{useStore.musicLove.name}}</view>
 					<p @click="shareShow=true" class="top">
 						<image src="../../icon/songlist/icon-fenxiang.png" />
 					</p>
@@ -78,7 +82,7 @@
 			<view class="sliderPlay">
 				<view class="name">
 					<view class="songName">
-						<view>{{useStore.musicLove.name}}{{useStore.musicLove.alia[0]}} </view>
+						<view class="song">{{useStore.musicLove.name}} <view v-if="useStore.musicLove.alia.length>0">-{{useStore.musicLove.alia[0]}}</view></view>
 						<view class="singer">{{useStore.musicLove.ar.map(item=>item.name).join('/')}}</view>
 					</view>
 					<view class="col" @click="Collect()">
@@ -102,7 +106,7 @@
 						<image  v-else-if="useStore.musicMode === 2 " src="../../icon/songlist/icon-danquxunhuan.png" />
 						<image  v-else-if="useStore.musicMode === 3 " src="../../icon/songlist/icon-meiti-suijibofang.png" />
 					</view>
-					<view class="btn">
+					<view :class="['code',{codeClick: useStore.musicBack.length < 1}]">
 						<image @click="subtract(-1)"  src="../../icon/songlist/icon-shangyishou.png"></image>
 						<view @click="useStore.play()">
 							<image v-if="useStore.isplay"  src="../../icon/songlist/icon-a.png" />
@@ -171,6 +175,7 @@
 			display: flex;
 			align-items: center;
 			justify-content: space-between;
+			color:#DCDCDC;
 			p{	
 				.title{
 					flex:1;
@@ -275,8 +280,8 @@
 				  to {
 					transform: rotate(360deg);
 				  }
-			}
-		}
+	    }
+      }
 	}
 	// Play
 	.sliderPlay{
@@ -284,6 +289,7 @@
 		height:40%;
 		display:flex;
 		flex-direction: column;
+		padding:0 rpx(5);
 		.name{
 			height:30%;
 			padding:0 rpx(15);
@@ -296,6 +302,15 @@
 				white-space: nowrap;
 				text-overflow: ellipsis;
 				-webkit-box-ordinal: vertical;
+				.song{
+					display: flex;
+					width:rpx(200);
+					padding:0 rpx(5) 0 0;
+					overflow:hidden;
+					white-space: nowrap;
+					text-overflow: ellipsis;
+					-webkit-box-ordinal: vertical;
+				}
 				.singer{
 					font-size: rpx(13);
 					color:	#B0C4DE;
@@ -342,7 +357,7 @@
 					height:100%;
 				}
 			}
-			.btn{
+			.code{
 				flex:1;
 				display: flex;
 				justify-content: space-around;
@@ -351,6 +366,9 @@
 					height:rpx(30);
 				}
 			}
+			.codeClick{
+			 pointer-events: none;
+		    }
 			.menu{
 				width:rpx(25);
 				height:rpx(25);

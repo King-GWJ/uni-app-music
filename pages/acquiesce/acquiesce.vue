@@ -132,6 +132,7 @@
 	overflow-y: auto;
 	&::-webkit-scrollbar{width:0px};
 	background-color: #FEFEFE;
+	box-sizing: border-box;
 	.custom-navigation{
 		background-color: burlywood;
 	}

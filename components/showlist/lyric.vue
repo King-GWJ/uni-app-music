@@ -3,6 +3,7 @@
 	import { onLoad } from '@dcloudio/uni-app'
 	import { lyricApi } from '../../base/api/index.js'
 	import { useMusicstore } from '../../store/music.js'
+	import { useUserStore } from '../../store/user.js'
 	
 	const lista=ref(['歌词','百科'])
 	const useStore=useMusicstore ()
@@ -15,12 +16,16 @@
 		});
 	}
 	
-	onLoad((options)=>{
-		console.log(options.id)
-		lyricApi(options.id).then(res =>{
-			console.log(res)
-		})
-	})
+	// const useStore=useUserStore()
+	// console.log( useStore.profile)
+	
+	
+	// onLoad((options)=>{
+	// 	console.log(options.id)
+	// 	lyricApi(options.id).then(res =>{
+	// 		console.log(res)
+	// 	})
+	// })
 	
 	
 	

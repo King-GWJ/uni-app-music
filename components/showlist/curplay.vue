@@ -231,7 +231,9 @@
 
 				&.active {
 					background: #eee;
-					color: red;
+					.Name{
+						color: red;
+					}
 				}
 
 				.text {
