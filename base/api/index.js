@@ -406,3 +406,10 @@ export const mvInfoApi = (id) => {
 		}
 	})
 }
+
+// mv推荐视频列表
+export const mvrecommendApi = (id) => {
+	return request({
+		url: '/video/timeline/recommend',
+	})
+}
