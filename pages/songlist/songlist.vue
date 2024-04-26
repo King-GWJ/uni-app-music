@@ -16,6 +16,8 @@
 	const songDetail=ref([])
     const itemSong=ref({})
     const isVip=ref(1)
+	
+	
 	onLoad((options)=>{
 		console.log(options.id)
 		//获取详情歌单数据
@@ -24,6 +26,17 @@
 			console.log(songList.value)
 		})
 	})
+
+    //榜单更新时间
+	const timestampMs = 1714008113960;
+	const timestampS = Math.floor(timestampMs / 1000);  //秒
+	const date = new Date(timestampS);
+	const formattedTime = date.toISOString();  // 转化格式
+	
+	console.log(formattedTime);  // 输出格式化的时间
+
+
+
 
 	//跳转vip界面
 	const goVip = () => {
@@ -59,10 +72,6 @@
 	  })
 	}
 
-	//判断是否为vip歌曲
-	// const isVip = computed(() => {
-	//   return songList.copyright>0 ?  '../../icon/songlist/icon-vipv.png' : ''
-	// })
 	
 	
 	
@@ -86,8 +95,8 @@
 			</view>
 		</view>
 		<view class="nav">
-			<view class="logo"><image src="../../icon/songlist/icon-tianjia.png"></image>{{(songList.subscribedCount/100/100).toFixed(2)}}</view>
-			<view class="logo"><image src="../../icon/songlist/icon-xiaoxi.png"></image>{{(songList.commentCount/10/100).toFixed(2)}}万</view>
+			<view class="logo"><image src="../../icon/songlist/icon-tianjia.png"></image>{{(songList.subscribedCount/100/100).toFixed(2)}}万</view>
+			<view class="logo"><image src="../../icon/songlist/icon-xiaoxi.png"></image>{{(songList.commentCount/10/100/10).toFixed(2)}}万</view>
 			<view class="logo"><image src="../../icon/songlist/icon-fx.png"></image>{{songList.shareCount}}</view>
 		</view>
 		<view class="main">
@@ -122,11 +131,14 @@
 					   <view class="singer">
 						   <view v-if="songList.isVip"> <image src="../../icon/songlist/icon-vipv.png"></image></view>
 						   <!-- <view v-else><image></image></view> -->
-						   <view class="singerName">{{item.ar.map(v=>v.name).join("/")}}</view>
+						   <view class="singerName">{{item.ar.map(v=>v.name).join("/")}}-{{item.name}}</view>
 					   </view>
 					</view>
-					<!-- @click.stop="showlist=true" -->
-					<view class="set" @click="itemDetail(float,item)"><image src="../../icon/songlist/icon-Vertical.png"></image></view>
+					<!-- <view class="mv"><image src=""></image></view> -->
+					<view class="set" @click="itemDetail(float,item)">
+						<view class="mv" v-if="item.mv>0"><image  src="../../icon/songlist/icon-mv.png"></image></view>
+						<view><image src="../../icon/songlist/icon-Vertical.png"></image></view>
+					</view>
 				</view>
 			</view>
 			<!-- 底部 -->
@@ -305,12 +317,13 @@
 					   display:flex;
 					   .alia{
 						   font-size:rpx(15);
-						   color:#708090;
+						   color:#808080;
 					   }
 				   }
 				   .singer{
 					   font-size:rpx(13);
 					   color:#696969;
+					   margin-top:rpx(5);
 					   display: flex;
 					   image{
 						   width:rpx(20);
@@ -325,11 +338,14 @@
 				   }
 			   }
 			   .set{
-				   width:rpx(20);
 				   margin-left: rpx(10);
+				   display: flex;
 				   image{
-					   width:rpx(20);
-					   height:rpx(20);
+					   width:rpx(23);
+					   height:rpx(22);
+				   }
+				   .mv{
+					    margin:0 rpx(5);
 				   }
 			   }
 		   }

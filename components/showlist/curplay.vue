@@ -1,19 +1,8 @@
 <script setup>
-	import {
-		songDetailApi,
-		songUrlApi,
-		SongdetailApi
-	} from "../../base/api/index.js"
-	import {
-		watch,
-		computed,
-		ref
-	} from "vue"
-	import {
-		useMusicstore
-	} from '../../store/music.js'
+	import {songDetailApi,songUrlApi,SongdetailApi} from "../../base/api/index.js"
+	import {watch,computed,ref} from "vue"
+	import {useMusicstore} from '../../store/music.js'
 	import Historyplay from './historyPlay.vue'
-	import Pop from './pop.vue'
 
 	const tabList = ref([{
 			isSelect: true,
@@ -29,8 +18,15 @@
 	const useStore = useMusicstore()
 	const showList = ref(false) //例表显示隐藏
 	const curActive = ref(true) //歌曲切换图片高亮
-	const showPop = ref(false) //展示弹窗
-    
+	let showPop = ref(false) //展示弹窗
+	
+	
+	//点击确认清空列表
+	const affirm=()=>{
+		showPop.value=!showPop
+		useStore.musicList=[]
+	}
+	
 
 	//切换tab
 	const getTabIndex = (index) => {
@@ -46,21 +42,7 @@
 		}
 	}
 
-	// const aaa = () => {
-	// 	showPop = !showPop
-	// }
-	
-	
-	const dialogToggle =(type) =>{
-		this.msgType = type
-		this.$refs.alertDialog.open()
-	}
-	
-	
-	//const  dialogClose=()=> {
-	// 	console.log('点击关闭')
-	// }
-	
+
 	
 </script>
 
@@ -78,11 +60,13 @@
 				<view class="logo">
 					<view class="xunhua">
 						<image src="../../icon/songlist/icon-xunh.png"></image>列表循环
+						<!-- <image  v-else-if="useStore.musicMode === 2" src="../../icon/songlist/icon-danquxunhuan.png"></image>单曲循环 -->
+						<!-- <image  v-else-if="useStore.musicMode === 3" src="../../icon/songlist/icon-meiti-suijibofang.png"></image>随机播放 -->
 					</view>
 					<view class="right">
 						<image src="../../icon/songlist/icon-xz.png"></image>
 						<image src="../../icon/songlist/icon-tj.png"></image>
-						<image class="ljt" src="../../icon/songlist/icon-ljt.png"></image>
+						<image  @click="showPop=!showPop"  class="ljt" src="../../icon/songlist/icon-ljt.png"></image>
 					</view>
 				</view>
 				<view class="tuijian">
@@ -122,17 +106,16 @@
 			<view v-else="curIndex===1" class="listBody">
 				<Historyplay />
 			</view>
-			<!-- 取消确认弹出框 -->
-			<!-- <uni-section title="对话框示例" type="line" class="hideOnPc">
-					<view class="example-body box">
-						<button class="button popup-success" @click="dialogToggle('success')"><text
-								class="button-text success-text">取消</text></button>
-						<button class="button popup-error" @click="dialogToggle('error')"><text
-								class="button-text error-text">确认</text></button>
+			<!-- 提示弹窗 -->
+			<view class="pop" v-if="showPop" @click="showPop=false">
+				<view class="uni">
+					<view class="text">确定要清空播放列表？</view>
+					<view class="btn">
+						<button @click="showPop=false">取消</button>
+						<button @click="affirm" class="affirm">确认</button>
 					</view>
-				</uni-section> -->
-			<!-- <Pop v-if="showPop"  @click="showPop=false"  @childClick="aaa"/> -->
-			
+				</view>
+			</view>
 		</view>
 	</view>
 </template>
@@ -339,6 +322,48 @@
 			margin-top: rpx(5);
 		}
 	}
+	// 提示弹窗
+	.pop{
+		// display: none;
+		position: fixed;
+		width:100%;
+		height:100%;
+		left:0;
+		top:0;
+		background: rgba(0,0,0,.5);
+	}
 	
+	.uni{
+		width:rpx(300);
+		height:rpx(100);
+		background: #fff;
+		position: absolute;
+		left:50%;
+		top:50%;
+		transform: translate(-50%,-50%);
+		border-radius: rpx(8);
+	}
+	.text{
+		padding:rpx(15) rpx(15);
+		font-size: rpx(14);
+		color:#696969;
+	}
+	.btn{
+		display: flex;
+		position: absolute;
+		right:0;
+		bottom:rpx(6);
+		button{
+			width:rpx(70);
+			height:rpx(25);
+			line-height: rpx(25);
+			font-size: rpx(13);
+			outline: 0;
+			border:0;
+			background: #fff;
+			margin:0 rpx(5);
+			color:red;
+		}
+	}
 	
 </style>

@@ -5,8 +5,9 @@
 	import {useMusicstore} from '../../store/music.js'
     import Curplay from "../../components/showlist/curplay.vue"
 	import Share from "../../components/showlist/share.vue"
-	import Lyric from "../../components/showlist/lyric.vue" 
-	
+	import Lyric from "../../components/showlist/lyric.vue"
+    import {reLaunch} from "../../base/utils";
+
 	const useStore = useMusicstore() 
 	const showLyric=ref(false) //歌词显示隐藏
 	const showPlay=ref(false)  //歌曲信息显示隐藏
@@ -17,28 +18,23 @@
 		uni.hideTabBar()
 	})
 	
-	
-	 
-	
 	//切换歌曲
 	const subtract = (num) => { // 上一首/下一首
 		useStore.musicSubtract(num)
-	}
-    
-	//返回上一页
-	const BackIndex=()=>{
-		uni.switchTab({
-			url: '/pages/index/index'
-		})
 	}
 	
     //点击收藏
 	const Collect=()=>{
 		isCollect.value=!isCollect.value
 	}
-	
-	
-	
+
+    //返回上一页
+	const back=()=>{
+        const launchOptionsSync = uni.getLaunchOptionsSync();
+        reLaunch("/" + launchOptionsSync.path)
+        uni.showTabBar()
+	 } 
+
 </script>
 
 
@@ -184,7 +180,7 @@
 		width: 100%;
 		height: 100%;
 		background: rgba(0, 0, 0, .2);
-		backdrop-filter: blur(40px);
+		backdrop-filter: blur(80px);
 	}
 	.circle{
 		flex:1;
@@ -267,7 +263,7 @@
 						rgba(255, 255, 255, 0.2) 55%,
 						transParent);
 			position: absolute;
-			top: 55%;
+			top: 52%;
 			left: 51%;
 			transform: translate(-50%,-50%);
 			border-radius: 50%;

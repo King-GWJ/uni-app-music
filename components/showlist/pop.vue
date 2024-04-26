@@ -1,25 +1,23 @@
 
 <script setup>
 	import {useMusicstore} from '../../store/music.js'
-	import { ref , defineProps,defineEmits} from "vue";
+	import { ref , defineProps} from "vue";
 	
 	const useStore=useMusicstore()
-	
 	const emits=defineEmits(['childClick'])
-	console.log( Props.aaa)
+	const props=defineProps({
+		show:Boolean
+	})
+	console.log(props.show)
+	
+	
+	
 	
 	//点击确认清空列表，返回首页
 	const affirm=()=>{
 		console.log(8);
-		// emits('childClick',1123)
-		console.log(123)
-		this.Props.aaa
 		useStore.musicList=[]
-		
-	}
-	
-	const aaa =() => {
-		console.log(12);
+		useStore.musicHistory=[]
 	}
 	
 </script>
@@ -28,12 +26,12 @@
 
 
 <template>
-	<view class="pop">
+	<view class="pop" @clcik.stop="">
 		<view class="uni">
 			<view class="text">确定要清空播放列表？</view>
 			<view class="btn">
-				<button @click="aaa">取消</button>
-				<button  @click="affirm" class="affirm">确认</button>
+				<button @click="">取消</button>
+				<button @click="affirm" class="affirm">确认</button>
 			</view>
 			
 		</view>
@@ -44,6 +42,7 @@
 
 <style lang="scss" scoped>
 	.pop{
+		// display: none;
 		position: fixed;
 		width:100%;
 		height:100%;

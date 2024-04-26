@@ -2,8 +2,10 @@
 <script setup>
 	import { onLoad } from '@dcloudio/uni-app'
 	import { lyricApi } from '../../base/api/index.js'
+	import { useMusicstore } from '../../store/music.js'
 	
-	const list=['歌词','百科']
+	const lista=ref(['歌词','百科'])
+	const useStore=useMusicstore ()
 	const curIndex=ref(0)  //当前下标
 	
 	//返回上一页
@@ -15,6 +17,9 @@
 	
 	onLoad((options)=>{
 		console.log(options.id)
+		lyricApi(options.id).then(res =>{
+			console.log(res)
+		})
 	})
 	
 	
@@ -44,11 +49,11 @@
 		<view class="lyricContent">
 			<view class="nav">
 				<view class="geci">
-					<view  class="text" v-for="item in list" :key="item">{{item}}</view>
+					<view class="text" v-for="(item,index) in lista" :key="item">999</view>
 				</view>
 			</view>
 			<swiper class="swiper" circular :indicator-dots="indicatorDots" :autoplay="autoplay" :interval="interval"
-				:duration="duration">
+				>
 				<swiper-item>
 					<view class="swiper-item uni-bg-red">A</view>
 				</swiper-item>
@@ -67,11 +72,11 @@
 			</p>
 		</view>
 		<view class="volume" >
-			<view class="time">{{useStore.musicNowTime.points}}:{{useStore.musicNowTime.seconds}}</view>
+			<view class="time"></view>
 			<view class="slider">
-				<slider  class="sliders" @sliderChange="schedule(1)" min="0" :max="Number(useStore.musicTime.points) * 60 + Number(useStore.musicTime.seconds)" :value="Number(useStore.musicNowTime.points) * 60 + Number(useStore.musicNowTime.seconds)" disabled="true" block-size="20" activeColor="#1890ff" step></slider>
+				<slider  class="sliders" @sliderChange="schedule(1)" disabled="true" block-size="20" activeColor="#1890ff" step></slider>
 			</view>
-			<view class="time">{{useStore.musicTime.points}}:{{useStore.musicTime.seconds}}</view>
+			<view class="time"></view>
 		</view> 
 		<!-- 播放 -->
 		<view class="play">
@@ -179,11 +184,13 @@
 					width:80px;
 					height:rpx(25);
 					line-height: rpx(25);
-					background: #C0C0C0;
 					margin:0 rpx(5);
 					text-align: center;
 					color:#fff;
 					border-radius: rpx(15);
+					&.active{
+						background: #C0C0C0;
+					}
 				}
 			}
 			.swiper{
