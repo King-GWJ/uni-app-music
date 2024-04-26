@@ -10,14 +10,14 @@
 				</swiper-item>
 			</swiper>
 		</view>
-		<view class="personalize">
+		<!-- <view class="personalize">
 			<view v-for="(item,index) in personalize" :key="index" :id="item.id">
 				<view class="">
 					<image :src="item.picUrl" mode=""></image>
 					{{item.name}}
 				</view>
 			</view>
-		</view>
+		</view> -->
 		<musicBar></musicBar>
 	</view>
 </template>
