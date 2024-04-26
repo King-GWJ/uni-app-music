@@ -86,9 +86,11 @@
 				
 			</view>
 			<view class="footerBottom">
-				<input type="text" placeholder="听说爱评论的人粉丝多"/>
+				<input class="inp" type="text" placeholder="听说爱评论的人粉丝多"/>
+				<view class="send">
+					发送
+				</view>
 			</view>
-			底部
 		</view>
 	</view>
 </template>
@@ -167,7 +169,15 @@
 		height: rpx(70);
 		background: white;
 		border-top: 1px solid rgb(233,233,233);
-		
+		display: flex;
+		flex-direction: column;
+		.footerBottom{
+			display: flex;
+			justify-content: space-between;
+			.inp{
+				background: rgb(242,243,244);
+			}
+		}
 	}
 }
 
