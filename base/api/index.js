@@ -385,3 +385,15 @@ export const mvDetailApi = (id) => {
 		}
 	})
 }
+
+//新版评论
+export const newCommentApi = (id,type,sortType) =>{
+	return request({
+		url:'/comment/new',
+		data:{
+			id,
+			type,
+			sortType
+		}
+	})
+}
