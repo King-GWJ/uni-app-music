@@ -8,7 +8,8 @@
         // 获取登录状态
         userStore.getProfile()
     })
-
+	
+	
 </script>
 
 <style lang="scss">
@@ -16,7 +17,7 @@
     /*每个页面公共css */
     page, uni-page-body {
         width: 100%;
-        //height: 100%;
+        height: 100%;
     }
 
 </style>

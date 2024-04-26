@@ -36,14 +36,21 @@
             "path": "pages/recommended/recommended",
             "style": {
                 "navigationBarTitleText": "排行榜",
-                "enablePullDownRefresh": false,
-                "navigationStyle": "custom"
+                "enablePullDownRefresh": false
             }
         },
         {
             "path": "pages/songlist/songlist",
             "style": {
                 "navigationBarTitleText": "歌曲列表",
+                "enablePullDownRefresh": false,
+                "navigationStyle": "custom"
+            }
+        },
+        {
+            "path": "pages/songsList/songsList",
+            "style": {
+                "navigationBarTitleText": "歌单",
                 "enablePullDownRefresh": false,
                 "navigationStyle": "custom"
             }
@@ -76,8 +83,7 @@
             "path": "pages/login/login",
             "style": {
                 "navigationBarTitleText": "登录",
-                "enablePullDownRefresh": false,
-                "navigationStyle": "custom"
+                "enablePullDownRefresh": false
             }
         },
         {
@@ -92,8 +98,7 @@
             "path": "pages/acquiesce/acquiesce",
             "style": {
                 "navigationBarTitleText": "每日推荐",
-                "enablePullDownRefresh": false,
-                "navigationStyle": "custom"
+                "enablePullDownRefresh": false
             }
         },
         {
@@ -103,7 +108,31 @@
                 "enablePullDownRefresh": false,
                 "navigationStyle": "custom"
             }
-        }
+        },
+		{
+			"path": "pages/blogs/components/recommend/detail/detail",
+			"style": {
+			    "navigationBarTitleText": "搜索结果",
+			    "enablePullDownRefresh": false
+			}
+		},
+		{
+			"path" : "pages/mv/mv",
+			"style" : 
+			{
+				"navigationBarTitleText" : "MV",
+				"enablePullDownRefresh" : false
+            }
+        },
+        {
+			"path" : "pages/comment/comment",
+			"style" : 
+			{
+				"navigationBarTitleText" : "评论",
+				"enablePullDownRefresh" : false,
+				"navigationStyle": "custom"
+			}
+		}
     ],
     "tabBar": {
         "color": "#666d77",

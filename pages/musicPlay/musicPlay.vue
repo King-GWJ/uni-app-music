@@ -5,30 +5,46 @@
 	import {useMusicstore} from '../../store/music.js'
     import Curplay from "../../components/showlist/curplay.vue"
 	import Share from "../../components/showlist/share.vue"
-	import Lyric from "../../components/showlist/lyric.vue" 
-	
+	import Lyric from "../../components/showlist/lyric.vue"
+    import {reLaunch} from "../../base/utils";
+
 	const useStore = useMusicstore() 
 	const showLyric=ref(false) //歌词显示隐藏
 	const showPlay=ref(false)  //歌曲信息显示隐藏
 	const shareShow=ref(false) //分享显示隐藏
+	const isCollect=ref(false) //添加收藏
+    
 	
-
-	
-	
+	 uni.hideTabBar()
 	
 	//切换歌曲
 	const subtract = (num) => { // 上一首/下一首
 		useStore.musicSubtract(num)
 	}
-    
-	//返回首页
-	const Backprve=()=>{
-		uni.switchTab({
-			url: '/pages/index/index'
-		})
-	}
 	
+    //点击收藏
+	const Collect=()=>{
+		isCollect.value=!isCollect.value
+	}
 
+    //返回上一页
+	const back=()=>{
+        const launchOptionsSync = uni.getLaunchOptionsSync();
+        reLaunch("/" + launchOptionsSync.path)
+        uni.showTabBar()
+	  
+	 } 
+	// 	onLoad(()=>{
+	// 	const launchOptions = uni.getLaunchOptionsSync();
+	// 	// 打印启动参数
+	// 	console.log("111",launchOptions);
+	// 	// 检查是否有页面跳转传递的参数
+	// 	if (launchOptions.query) {
+	// 	  console.log('From navigateTo or redirectTo:', launchOptions.query);
+	// 	}
+	// })
+	
+	
 </script>
 
 
@@ -37,11 +53,11 @@
 	<view class="musicPlay">
 		<view class="background"><image :src="useStore.musicLove.al.picUrl" ></image></view>
 		<view class="header">
-			<p @click="Backprve">
+			<p @click="back" class="top">
 				<image src="../../icon/songlist/icon-bback.png"></image>
 			</p>
-			<view>{{}}</view>
-			<p @click="shareShow=true">
+			
+			<p @click="shareShow=true" class="top">
 				<image src="../../icon/songlist/icon-fenxiang.png" />
 			</p>
 		</view>
@@ -66,17 +82,18 @@
 				<p class="nameSog"><p class="name">{{useStore.musicLove.name}}  {{useStore.musicLove.alia[0]}}<span>{{useStore.musicLove.pop}}</span> </p></p>
 				<p class="singer">{{useStore.musicLove.ar.map(v=>v.name).join('/')}}</p>
 			</view>
-			<p class="collent">
-				<image src="../../icon/songlist/icon-collent.png" />
+			<p class="collent" @click="Collect()">
+				<image v-if="isCollect"  src="../../icon/songlist/icon-collect.png"></image>
+				<image v-else src="../../icon/songlist/icon-collent.png"></image>
 			</p>
 			<p class="talk">
 				<image src="../../icon/songlist/icon-talk.png" />
 			</p>
 		</view>
-		<view class="volume">
+		<view class="volume" >
 			<view class="time">{{useStore.musicNowTime.points}}:{{useStore.musicNowTime.seconds}}</view>
 			<view class="slider">
-				<slider  class="sliders" min="0" max="100" value="0" disabled="true" block-size="10" activeColor="#1890ff" step></slider>
+				<slider  class="sliders" @sliderChange="schedule(1)" min="0" :max="Number(useStore.musicTime.points) * 60 + Number(useStore.musicTime.seconds)" :value="Number(useStore.musicNowTime.points) * 60 + Number(useStore.musicNowTime.seconds)" disabled="true" block-size="20" activeColor="#1890ff" step></slider>
 			</view>
 			<view class="time">{{useStore.musicTime.points}}:{{useStore.musicTime.seconds}}</view>
 		</view> 
@@ -116,7 +133,7 @@
 		</footer>
 		<Curplay  v-if="showPlay" @click.stop.prevent="showPlay=false"/>
 		<Share v-if="shareShow" @click.stop.prevent="shareShow=false"/>
-		<Lyric v-if="showLyric" @click.stop="showLyric=flase"/>
+		<Lyric v-if="showLyric" @click.stop="showLyric=flase"  />
 	</view>
 </template>
 
@@ -145,7 +162,6 @@
 	
 	.header{
 		height:rpx(40);
-		// background: palevioletred;
 		display: flex;
 		align-items: center;
 		justify-content: space-between;
@@ -161,6 +177,9 @@
 		}
 		.bangdan{
 			flex:1;
+		}
+		.top{
+			margin-top:rpx(20);
 		}
 	}
 	// 蒙层
@@ -184,7 +203,6 @@
 			left: 16%;
 			top: 20%;
 			position: relative;
-			// 旋转
          }
 		 .outerActive{
 			 animation: rotate 2s linear infinite;
@@ -196,6 +214,7 @@
 			 top: 20%;
 			 position: relative;
 		 }
+        
 		 @keyframes rotate {
 		 		  from {
 		 		    transform: rotate(0deg);
@@ -215,7 +234,6 @@
 			top: 50%;
 			left: 50%;
 			transform: translate(-50%,-50%);
-			
 		}
 		
         .backImage{
@@ -255,7 +273,7 @@
 						rgba(255, 255, 255, 0.2) 55%,
 						transParent);
 			position: absolute;
-			top: 60%;
+			top: 55%;
 			left: 51%;
 			transform: translate(-50%,-50%);
 			border-radius: 50%;
@@ -269,7 +287,7 @@
 			left: 50%;
 			transform: translate(-50%,-50%);
 			box-shadow: 0 1px 3px 2px lightslategrey;
-			z-index: 3;
+			z-index: 5;
 			image{
 				width: rpx(160);
 				height: rpx(160);
@@ -433,8 +451,7 @@
 		height: rpx(140);
 		position: absolute;
 		top: rpx(55);
-		right: rpx(115);
-
+		right: rpx(116);
 		image {
 			width: rpx(90);
 			height:rpx(150);

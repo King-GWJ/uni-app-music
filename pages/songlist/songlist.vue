@@ -43,7 +43,7 @@
     
 	//显示隐藏歌曲信息
 	const itemDetail=(f,t)=>{
-		
+		event.stopPropagation()
 		console.log(f)
 		console.log(!f)
 		songDetail.value=t
@@ -64,6 +64,11 @@
 	//   return songList.copyright>0 ?  '../../icon/songlist/icon-vipv.png' : ''
 	// })
 	
+	
+	
+	
+	
+	
 
 </script>
 
@@ -71,12 +76,13 @@
 	<view class="musiclist">
 		<view class="header">
 			<image :src="songList.coverImgUrl"></image>
+			<view class="wy"><image src="../../icon/songlist/icon-wyy.png"></image>网易云音乐</view>
 			<view class="search">
-				<!-- <view class="back" @click="backPage"><image src="../../icon/songlist/icon-leftt.png"></image></view>
+				<view class="back" @click="backPage"><image src="../../icon/songlist/icon-lefe.png"></image></view>
 				<view class="serchlogo">
 					<image class="ser" src="../../icon/songlist/icon-sousuo.png"></image>
-					<image src="../../icon/songlist/icon-24gf-ellipsisVertical.png"></image>
-				</view>	 -->
+					<image class="ser" src="../../icon/songlist/icon-24gf-ellipsisVertical.png"></image>
+				</view>	
 			</view>
 		</view>
 		<view class="nav">
@@ -124,9 +130,10 @@
 				</view>
 			</view>
 			<!-- 底部 -->
-			<Showlist v-if="useStore.musicLove.length!==0" :clickItem="itemSong"/>
+			
 		<!-- 每首歌曲右侧设置... -->
 		</view>
+		<Showlist class="123" :clickItem="itemSong"/>
 		<Setting v-if="float"  @click.stop="float=false" :itemSong="itemSong"/>
 		
 	</view>
@@ -143,11 +150,26 @@
 	   position: relative;
    }
    .header{
-	   height:30%;
+	   height:36%;
 	   position:relative;
 	   image{
 		   width:100%;
 		   height:100%;
+	   }
+	   .wy{
+		   font-size:rpx(13);
+		   position: absolute;
+		   top:30%;
+		   left:50%;
+		   transform: translate(-50%,-50%);
+		   color:#fff;
+		   display: flex;
+		   align-items: center;
+		   image{
+			   width:rpx(18);
+			   height:rpx(18);
+			   margin-right:rpx(5);
+		   }
 	   }
 	   .search{
 		   height:rpx(35);
@@ -171,15 +193,17 @@
 			   margin:0 10px;
 		   }
 		   image{
-			   width:rpx(30);
-			   height:rpx(30);
+			   width:rpx(29);
+			   height:rpx(29);
 		   }
 		   
 	   }
 	   
    }
    .main{
-	   height:67%;
+	   // height:70%;
+	   flex: 1;
+	   overflow: auto;
 	   .bofang{
 		   height:26%;
 		   position: relative;
@@ -256,8 +280,7 @@
 		   }
 	   }
 	   .list{
-		   height:68%;
-		   overflow: hidden;
+		   height:74%;
 		   overflow-y: auto;
 		   .item{
 			   height:rpx(55);
@@ -315,7 +338,7 @@
    .nav{
 	   position: absolute;
 	   left:50%;
-	   top:30%;
+	   top:36%;
 	   transform: translate(-50%,-50%);
 	   width:rpx(280);
 	   height:rpx(40);

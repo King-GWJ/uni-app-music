@@ -18,6 +18,7 @@
 				</view>
 			</view>
 		</view>
+		<musicBar></musicBar>
 	</view>
 </template>
 

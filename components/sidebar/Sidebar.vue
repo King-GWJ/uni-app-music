@@ -1,9 +1,11 @@
 <script setup>
     import {onShow} from '@dcloudio/uni-app'
     import {defineExpose, ref} from "vue";
-    import {navigateTo} from '/base/utils'
+    import {navigateTo, switchTab} from '/base/utils'
     import {useUserStore} from "../../store/user";
     import {logoutApi} from "../../base/api";
+    import sidebarData from "/base/data/sidebarData";
+
 
     const userStore = useUserStore()
 
@@ -11,12 +13,13 @@
     const showLeft = ref(null)
     const isLogin = ref(false)
     const pageLogin = '/pages/login/login'
+    const pageMine = '/pages/mine/mine'
 
     const curCookie = uni.getStorageSync("curCookie");
 
     onShow(() => {
         isLogin.value = !!curCookie;
-        if (!profile.value ) {
+        if (!profile.value) {
             profile.value = userStore.setProfileData()
         }
     })
@@ -36,40 +39,74 @@
     const getLogout = () => {
         logoutApi().then(res => {
             if (res.code === 200) {
-                uni.setStorageSync('curCookie', "")
-                uni.setStorageSync('profile', "")
+                uni.removeStorageSync("curCookie")
+                uni.removeStorageSync("profile")
                 isLogin.value = false
                 closeDrawer()
             }
         })
     }
+
+    //去登录
+    const getLogin = () => {
+        if (isLogin.value) {
+            switchTab(pageMine)
+        } else {
+            navigateTo(pageLogin)
+        }
+        closeDrawer()
+    }
 </script>
 
 <template>
     <uni-drawer ref="showLeft" mode="left" :width="300">
-        <view class="close">
-            <view class="user" v-show="isLogin">
-                <image :src="profile?.avatarUrl" mode="widthFix" class="user-img"></image>
-                <view class="user-name">
-                    {{ profile?.nickname }}
+        <view class="drawer">
+            <view class="header">
+                <view class="user">
+                    <image :src="profile ? profile.avatarUrl :'/icon/icon-avatar.png'" mode="widthFix" class="user-img"></image>
+                    <view class="user-name"
+                          @click="getLogin()">
+                        <text>
+                            {{ profile ? profile.nickname : '立即登录' }}
+                        </text>
+                        <uni-icons type="right"></uni-icons>
+                    </view>
                 </view>
             </view>
-            <button v-show="!isLogin" @click="()=>{
-                        navigateTo(pageLogin)
-                        closeDrawer()
-                    }">
-                <text class="word-btn-white">登录</text>
-            </button>
-
-            <button v-show="isLogin" @click="getLogout">
-                <text class="word-btn-white">退出登录</text>
-            </button>
+            <view class="main">
+<!--                <uni-card :is-shadow="true" :isFull="false" v-for="(value ,index) in sidebarData" :key="index">-->
+<!--                    <view class="view" v-for="item in value" :key="item.key">-->
+<!--                        <image :src="item.icon" mode="widthFix"></image>-->
+<!--                        <text :style="{color: item.color}">{{ item.title }}</text>-->
+<!--                    </view>-->
+<!--                </uni-card>-->
+                <uni-card :is-shadow="true" :isFull="false" v-if="isLogin">
+                    <view class="view">
+                        <image src="/icon/icon-toggle.png" mode="widthFix"></image>
+                        <text>切换账号</text>
+                    </view>
+                    <view class="view"
+                          @click="getLogout()"
+                    >
+                        <image src="/icon/icon-switch.png" mode="widthFix"></image>
+                        <text style="color: #FF0000">退出登录</text>
+                    </view>
+                </uni-card>
+            </view>
         </view>
     </uni-drawer>
 </template>
 
 <style scoped lang="scss">
-    .close {
+    .drawer {
+        width: 100%;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        background-color: #f7f7f7;
+    }
+
+    .header {
         width: 100%;
         display: flex;
         flex-direction: column;
@@ -77,18 +114,39 @@
 
         .user {
             display: flex;
-            flex-direction: column;
-            justify-content: flex-start;
             align-items: center;
 
             .user-img {
-                width: 100rpx;
-                height: 100rpx;
+                width: 50rpx;
+                height: 50rpx;
                 margin: 15rpx;
-                background: $theme-color;
                 border-radius: 50%;
+            }
+
+            .user-name {
+                font-size: 14px;
+                display: flex;
+                align-items: center;
             }
         }
     }
-
+    .main{
+        flex: 1;
+        overflow: hidden;
+        overflow-y: scroll;
+        color: #666d77;
+        image{
+            width: 40rpx;
+            height: 40rpx;
+            margin-right: 10rpx;
+        }
+        .view{
+            display: flex;
+            align-items: center;
+            margin-top: 18rpx;
+            &:first-child{
+                margin-top: 0;
+            }
+        }
+    }
 </style>

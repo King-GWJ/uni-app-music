@@ -1,19 +1,26 @@
-import { defineStore } from "pinia"
-import { computed , watch , ref} from "vue"
-import { songDetailApi , songUrlApi} from "../base/api/index.js"
+import {
+	defineStore
+} from "pinia"
+import {
+	watch,
+	ref
+} from "vue"
+import {
+	songUrlApi,
+	mvDetailApi,
+	songDetailApi,
+	mvUrlApi,
+	mvInfoApi
+} from "../base/api/index.js"
 
-export const useMusicstore=defineStore("musicStore",()=>{
-	
+export const useMusicstore = defineStore("musicStore", () => {
+
 	//音频对象
-	const audio=uni.createInnerAudioContext()
-	//当前播放列表
-	const curPlaylist=ref([])
-	//当前播放歌曲下标
-	const curIndex=ref(0)
+	const audio = uni.createInnerAudioContext()
 	//是否在播放
-	const isplay=ref(false)
+	const isplay = ref(false)
 	//歌单例表
-	const songList=ref([])
+	const songList = ref([])
 	//切换页面时候的全部音乐列表
 	const musicList = ref([])
 	//切换页面时候选择的音乐数据
@@ -40,15 +47,39 @@ export const useMusicstore=defineStore("musicStore",()=>{
 	const musicHistory = ref([])
 	// 音乐类型
 	const musicType = ref('')
-
-
+	// MV
+	const musicLookMv = ref('')
+	// 歌曲详情
+	const musicDetails = ref(null)
+	// 歌曲列表ID
+	const musicListId = ref(null)
 	
+	// 调接口播放音乐
+	const musicApi = () => {
+		songUrlApi(musicList.value[musicIndex.value].id,'standard').then(res => {
+			musicBack.value = res.data[0].url
+			audio.src = musicBack.value
+			audio.autoplay = true
+			audio.loop = true
+			isplay.value = true
+		})
+	}
+	
+	// 清除定时器，音乐播放时间归零
+	const musicTimerRemove = () => {
+		clearInterval(musicTimer.value)
+		musicNowTime.value.seconds = '00'
+		musicNowTime.value.points = '00'
+		musicTime.value.seconds = '00'
+		musicTime.value.points = '00'
+	}
+
 	// 获取全部音乐，当前音乐，当前音乐下标
 	const musicAllList = (l,t,i,n) => { 
-		musicList.value = l
-		musicLove.value = t
-		musicIndex.value = i
-		musicType.value = n
+		musicList.value = l//当前的歌单列表数据
+		musicLove.value = t//当前选中的item
+		musicIndex.value = i//当前选中的index
+		musicType.value = n//历史播放记录存储标识
 		clearInterval(musicTimer.value)
 		const arr = musicHistory.value.find(item => item.name === musicType.value)
 		if(arr){
@@ -63,9 +94,10 @@ export const useMusicstore=defineStore("musicStore",()=>{
 				name: musicType.value,
 				music: [musicLove.value]
 			})
+			
 		}
 	}
-	
+
 	// 搜索调这个方法
 	const musicSearch = (t,i) => {
 		// 搜索的音乐push到musicList全部数组里面 并且放在数组第一个位置
@@ -79,80 +111,37 @@ export const useMusicstore=defineStore("musicStore",()=>{
 			musicLove.value = musicList.value[index]
 			musicIndex.value = index
 		}
-		songUrlApi(musicList.value[musicIndex.value].id,'standard').then(res => {
-			musicBack.value = res.data[0].url
-			audio.src=musicBack.value
-			audio.autoplay = true
-			audio.loop = true
-		})
-		clearInterval(musicTimer.value)
-		musicNowTime.value.seconds = '00'
-		musicNowTime.value.points = '00'
-		musicTime.value.seconds = '00'
-		musicTime.value.points = '00'
+		musicTimerRemove()
+		musicApi()
 	}
 	
 	// 监听音乐数组改变获取音乐播放的rul
-	const musicUrlList = watch(musicList.value.length,(newValue,oldValue) => {
-		console.log(123);
+	const musicUrlList =watch(musicLove,(newValue,oldValue) => {
 		musicLove.value = musicList.value[musicIndex.value]
-		if(!musicHistory.value.find(item => item.name === musicType.value)){
-			musicHistory.value.push({
-				name: musicType.value,
-				music: [musicLove.value]
-			})
-		}else{
-			const index = musicHistory.value.findIndex(item => item.name === musicType.value.find)
-			if(!musicType.value[index].find(item => item.id === musicLove.value.id)){
-				musicType.value[index].music.push(musicLove.value)
-			}
-		}
-		console.log(musicType.value);
-		clearInterval(musicTimer.value)
-		musicNowTime.value.seconds = '00'
-		musicNowTime.value.points = '00'
-		musicTime.value.seconds = '00'
-		musicTime.value.points = '00'
-		songUrlApi(musicList.value[musicIndex.value].id,'standard').then(res => {
-			musicBack.value = res.data[0].url
-			audio.src=musicBack.value
-			audio.autoplay = true
-			audio.loop = true
-			isplay.value = true
-		})
+		musicApi()
+		musicTimerRemove()
 	})
 	
 	// 监听当前播放音乐下标改变获取rul
 	const musicUrlIndex = watch(musicIndex,(newValue,oldValue) => {
 		musicLove.value = musicList.value[musicIndex.value]
-		clearInterval(musicTimer.value)
-		musicNowTime.value.seconds = '00'
-		musicNowTime.value.points = '00'
-		musicTime.value.seconds = '00'
-		musicTime.value.points = '00'
-		songUrlApi(musicList.value[musicIndex.value].id,'standard').then(res => {
-			musicBack.value = res.data[0].url
-			audio.src=musicBack.value
-			audio.autoplay = true
-			audio.loop = true
-			isplay.value = true
-		})
-		isplay.value = true
+		musicTimerRemove()
+		musicApi()
 	})
-	
+
 	// 切换上一首或者下一首  同时判断是不是第一首或者最后一首
 	const musicSubtract = (num) => {
 		clearInterval(musicTimer.value)
 		isplay.value = false
 		musicIndex.value += num
-		if(musicIndex.value < 0){
-			musicIndex.value = musicList.value.length -1
-		}else if(musicIndex.value === musicList.value.length){
+		if (musicIndex.value < 0) {
+			musicIndex.value = musicList.value.length - 1
+		} else if (musicIndex.value === musicList.value.length) {
 			musicIndex.value = 0
 		}
 	}
-	
-	//播放
+
+	//播放 和 暂停
 	const play=()=>{
 		if(!audio.paused){
 			audio.pause()
@@ -164,15 +153,15 @@ export const useMusicstore=defineStore("musicStore",()=>{
 			computeMusic()
 		}
 	}
-	
+
 	//切换播放模式
 	const musicToggle = () => {
 		musicMode.value += 1
-		if(musicMode.value > 3){
+		if (musicMode.value > 3) {
 			musicMode.value = 1
 		}
 	}
-	
+
 	//添加到下一首
 	const musicBehind = (t) => {
 		if(musicList.value.length === 0){
@@ -203,11 +192,7 @@ export const useMusicstore=defineStore("musicStore",()=>{
 				musicNowTime.value.points = b >= 10 ? b + '' : '0' + b
 			}
 			if(musicNowTime.value.seconds === musicTime.value.seconds && musicNowTime.value.points === musicTime.value.points){
-				clearInterval(musicTimer.value)
-				musicNowTime.value.seconds = '00'
-				musicNowTime.value.points = '00'
-				musicTime.value.seconds = '00'
-				musicTime.value.points = '00'
+				musicTimerRemove()
 				if(musicMode.value === 1){
 					// 列表循环
 					audio.loop = false
@@ -224,11 +209,50 @@ export const useMusicstore=defineStore("musicStore",()=>{
 			}
 		},1000)
 	}
+
+	// 定义一个函数，将时间戳转换为年月日格式
+	const timestampToYMD = (timestamp) => {
+		const date = new Date(timestamp);
+		const year = date.getFullYear();
+		const month = String(date.getMonth() + 1).padStart(2, '0');
+		const day = String(date.getDate()).padStart(2, '0');
+		return `${year}.${month}.${day}`;
+	}
 	
-	return{
+	//删除一个历史播放记录
+	const musicHistoryOne = (i,t) => {
+		// i 当前什么类型音乐的下标 t 当前音乐信息
+		const index = musicHistory.value[i].music.findIndex(item => item.id === t.id)
+		musicHistory.value[i].music.splice(index,1)
+	}
+	
+	//删除所有历史播放记录
+	const musicHistoryAll = () => {
+		musicHistory.value = []
+	}
+
+	// mv
+	const musicMv = (item) => {
+		audio.pause()
+		isplay.value = false
+		clearInterval(musicTimer.value)
+		musicDetails.value = item
+		mvDetailApi(item.id).then(res => {
+			console.log('mv播放地址',res);
+			musicLookMv.value = res.data.url
+		})
+		mvUrlApi(item.id).then(res => {
+			console.log('mv数据',res);
+		})
+		mvInfoApi(item.id).then(res => {
+			console.log('mv品论',res);
+		})
+		audio.pause()
+		isplay.value = false
+		clearInterval(musicTimer.value)
+	}
+	return {
 		audio,
-		curPlaylist,
-		curIndex,
 		isplay,
 		play,
 		musicAllList,
@@ -245,5 +269,12 @@ export const useMusicstore=defineStore("musicStore",()=>{
 		musicNowTime,
 		musicHistory,
 		musicType,
+		timestampToYMD,
+		musicHistoryOne,
+		musicHistoryAll,
+		musicMv,
+		musicLookMv,
+		musicDetails,
+		musicListId,
 	}
 })

@@ -2,7 +2,7 @@
 import { ref, watch } from 'vue';
 import { useMusicstore } from '../../../store/music';
 import { useUserStore } from '../../../store/user';
-import { userPlayListApi,playListChange } from '../../../base/api';
+import { userPlayListApi,playListChange,commentApi } from '../../../base/api';
 
 
 	const props = defineProps(['showDialog','detailItem'])
@@ -11,35 +11,42 @@ import { userPlayListApi,playListChange } from '../../../base/api';
 	const userStore = useUserStore()
 	const profile = ref(userStore.profile)
 	const playList = ref([])
+	const totalComment = ref(0)
 	const popup = ref(null)
 	const popup2 = ref(null)
 	const popup3 = ref(null)
+	const popup4 = ref(null)
 	if(!profile.value){
 		profile.value = userStore.setProfileData()
 	}
 	
+	//获取用户歌单列表
 	const getPlayList = async ()=>{
 		const res = await userPlayListApi(profile.value.userId)
 		playList.value = res.playlist
-		console.log(playList.value)
+	}
+	//获取评论
+	const getComment = async ()=>{
+		const res = await commentApi('music',props.detailItem.id)
+		totalComment.value = res.total
 	}
 	
 	getPlayList()
-	// userPlayListApi(profile.value.userId).then(res=>{
-	// 	console.log(res.playlist)
-	// 	playList.value = res.playlist
+	//监听传过来的参数
+	watch(()=>props,()=>{
+		getComment()
+	},
+	{deep:true}
+	)
 		
-	// })
-	
-	
-	
+	//下一首播放
 	const nextPlay = ()=>{
 		musicStore.musicBehind(props.detailItem,props.detailItem.id)
 		popup.value.open()
 		emits('closeDialog')
 	}
 	
-	
+	//收藏
 	const toLike = ()=>{
 		if(!profile.value.userId){
 			popup2.value.open()
@@ -52,22 +59,26 @@ import { userPlayListApi,playListChange } from '../../../base/api';
 			popup3.value.open()
 			emits('closeDialog')
 		}
-		
 	}
 	
+	//收藏到歌单
 	const add = async (item)=>{
 		const res = await playListChange('add',item.id,props.detailItem.id)
-		console.log(res)
-		profile.value = userStore.setProfileData()
+		if(res.body.code===502){
+			popup4.value.open()
+		}
 		getPlayList()
-		// playListChange('add',item.id,props.detailItem.id).then(res=>{
-		// 	console.log(res)
-		// 	getPlayList()
-		// })
 	}
 	
+	//跳转评论
+	const goComment = () =>{
+		uni.navigateTo({
+			url:`/pages/comment/comment?id=${props.detailItem.id}`
+		})
+	}
+	
+	//阻止冒泡
 	const fn = (e)=>{
-		
 		e.stopPropagation()
 	}
 	
@@ -117,8 +128,8 @@ import { userPlayListApi,playListChange } from '../../../base/api';
 				<view class="item">
 					<view class="itemIcon recommend">
 					</view>
-					<view class="itemContent">
-						评论
+					<view class="itemContent" @click="goComment">
+						评论({{totalComment}})
 					</view>
 				</view>
 				<view class="item">
@@ -192,6 +203,9 @@ import { userPlayListApi,playListChange } from '../../../base/api';
 	</uni-popup>
 	<uni-popup class="mesWrap" ref="popup2" type="message">
 		<uni-popup-message class="mes" type="error" message="请登录" :duration="800"></uni-popup-message>
+	</uni-popup>
+	<uni-popup class="mesWrap" ref="popup4" type="message">
+		<uni-popup-message class="mes" type="error" message="歌曲已存在" :duration="800"></uni-popup-message>
 	</uni-popup>
 	<view>
 		<uni-popup ref="popup3" type="bottom" border-radius="10px 10px 0 0" background-color="#fff">
@@ -294,14 +308,15 @@ import { userPlayListApi,playListChange } from '../../../base/api';
 .dialogWrap{
 	position: absolute;
 	width: 100vw;
-	height: rpx(620);
-	background: rgba(0, 0, 0,.2)
+	height: rpx(669);
+	background: rgba(0, 0, 0,.2);
+	z-index: 12;
 }
 .dialog{
 	display: flex;
 	flex-direction: column;
 	position: absolute;
-	z-index: 2;
+	z-index: 3;
 	width: 100%;
 	height: rpx(400);
 	overflow: auto;
@@ -355,68 +370,66 @@ import { userPlayListApi,playListChange } from '../../../base/api';
 
 
 .nextPaly{
-	background: url(../../../icon/nextPlay.svg) no-repeat center;
+	background: url(../../../icon/nextPlay.png) no-repeat center;
 	background-size: rpx(18);
 }
 
 .like{
-	background: url(../../../icon/like.svg) no-repeat center;
+	background: url(../../../icon/like.png) no-repeat center;
 	background-size: contain;
 }
 
 .download{
-	background: url(../../../icon/download.svg) no-repeat center;
+	background: url(../../../icon/download.png) no-repeat center;
 	background-size: contain;
 }
 
 .recommend{
-	background: url(../../../icon/recommend.svg) no-repeat center;
+	background: url(../../../icon/recommend.png) no-repeat center;
 	background-size: contain;
 }
 
 .share{
-	background: url(../../../icon/share.svg) no-repeat center;
+	background: url(../../../icon/share.png) no-repeat center;
 	background-size: rpx(18);
 }
 
 .singer{
-	background: url(../../../icon/singer.svg) no-repeat center;
+	background: url(../../../icon/singer.png) no-repeat center;
 	background-size: contain;
 }
 
-
-
 .albums{
-	background: url(../../../icon/albums.svg) no-repeat center;
+	background: url(../../../icon/albums.png) no-repeat center;
 	background-size: contain;
 }
 
 .cloud{
-	background: url(../../../icon/cloud.svg) no-repeat center;
+	background: url(../../../icon/cloud.png) no-repeat center;
 	background-size: contain;
 }
 .buy{
-	background: url(../../../icon/buy.svg) no-repeat center;
+	background: url(../../../icon/buy.png) no-repeat center;
 	background-size: rpx(18);
 }
 .card{
-	background: url(../../../icon/card.svg) no-repeat center;
+	background: url(../../../icon/card.png) no-repeat center;
 	background-size: contain;
 }
 .music{
 	width: rpx(100);
 	height: rpx(100);
-	background: url(../../../icon/music.svg) no-repeat center;
+	background: url(../../../icon/music.png) no-repeat center;
 	background-size: rpx(45);
 }
 
 .ding{
-	background: url(../../../icon/ding.svg) no-repeat center;
+	background: url(../../../icon/ding.png) no-repeat center;
 	background-size: contain;
 }
 
 .close{
-	background: url(../../../icon/close.svg) no-repeat center;
+	background: url(../../../icon/close.png) no-repeat center;
 	background-size: contain;
 }
 
