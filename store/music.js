@@ -11,7 +11,9 @@ import {
 	songDetailApi,
 	mvUrlApi,
 	mvInfoApi,
-	mvrecommendApi
+	mvrecommendApi,
+	songsApi,
+	lyricApi,
 } from "../base/api/index.js"
 
 export const useMusicstore = defineStore("musicStore", () => {
@@ -31,7 +33,7 @@ export const useMusicstore = defineStore("musicStore", () => {
 	//音乐的url
 	const musicBack = ref('')
 	//播放模式 1顺序播放 2单曲循环 3随机播放
-	const musicMode = ref(2)
+	const musicMode = ref(1)
 	// 播放的计时器
 	const musicTimer = ref(null)
 	// 音乐播放时长
@@ -56,7 +58,8 @@ export const useMusicstore = defineStore("musicStore", () => {
 	const musicListId = ref(null)
 	//MV推荐视频 
 	const musicMvList = ref([])
-	
+	//歌词
+	const musicLyric = ref('')
 	// 调接口播放音乐
 	const musicApi = () => {
 		songUrlApi(musicList.value[musicIndex.value].id,'standard').then(res => {
@@ -65,6 +68,9 @@ export const useMusicstore = defineStore("musicStore", () => {
 			audio.autoplay = true
 			audio.loop = true
 			isplay.value = true
+		})
+		lyricApi(musicList.value[musicIndex.value].id).then(res => {
+			musicLyric.value = res.lrc.lyric
 		})
 	}
 	
@@ -134,7 +140,7 @@ export const useMusicstore = defineStore("musicStore", () => {
 
 	// 切换上一首或者下一首  同时判断是不是第一首或者最后一首
 	const musicSubtract = (num) => {
-		clearInterval(musicTimer.value)
+		musicTimerRemove()
 		isplay.value = false
 		musicIndex.value += num
 		if (musicIndex.value < 0) {
@@ -272,6 +278,14 @@ export const useMusicstore = defineStore("musicStore", () => {
 			musicMvList.value = res.datas
 		})
 	}
+	
+	// 获取推荐歌曲
+	songsApi().then(res => {
+		musicList.value = res.data.dailySongs
+		musicLove.value = res.data.dailySongs[0]
+		musicIndex.value = 0
+	})
+	
 	return {
 		audio,
 		isplay,
@@ -299,5 +313,7 @@ export const useMusicstore = defineStore("musicStore", () => {
 		musicListId,
 		musicMvList,
 		musicTransform,
+		musicLyric,
+		
 	}
 })
