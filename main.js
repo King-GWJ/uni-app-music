@@ -7,6 +7,7 @@ export function createApp() {
     const app = createSSRApp(App)
     const vConsole = new Vconsole()
     app.use(Pinia.createPinia())
+    app.use(vConsole)
     return {
         app,
         Pinia,
