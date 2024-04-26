@@ -10,7 +10,8 @@ import {
 	mvDetailApi,
 	songDetailApi,
 	mvUrlApi,
-	mvInfoApi
+	mvInfoApi,
+	mvrecommendApi
 } from "../base/api/index.js"
 
 export const useMusicstore = defineStore("musicStore", () => {
@@ -53,6 +54,8 @@ export const useMusicstore = defineStore("musicStore", () => {
 	const musicDetails = ref(null)
 	// 歌曲列表ID
 	const musicListId = ref(null)
+	//MV推荐视频 
+	const musicMvList = ref([])
 	
 	// 调接口播放音乐
 	const musicApi = () => {
@@ -183,6 +186,11 @@ export const useMusicstore = defineStore("musicStore", () => {
 	const computeMusic = () => {
 		musicTime.value.points = Math.floor(audio.duration / 60)  > 10 ? Math.floor(audio.duration / 60) + '' : '0' + Math.floor(audio.duration / 60)
 		musicTime.value.seconds = Math.floor(audio.duration - Number(musicTime.value.points) * 60) > 10 ? Math.floor(audio.duration - Number(musicTime.value.points) * 60) + '' : '0' + Math.floor(audio.duration - Number(musicTime.value.points) * 60)
+		computeTimer()
+	}
+	
+	// 计算当前播放时间
+	const computeTimer = () => {
 		musicTimer.value = setInterval(() => {
 			let a = Number(musicNowTime.value.seconds) + 1
 			musicNowTime.value.seconds = a >= 10 ? a + '' : '0' + a
@@ -208,6 +216,16 @@ export const useMusicstore = defineStore("musicStore", () => {
 				}
 			}
 		},1000)
+	}
+	
+	// 改变当前播放时间
+	const musicTransform = (num) => {
+		const fen = parseInt(num / 60)
+		const miao = num % 60
+		audio.currentTime = num
+		musicNowTime.value.points = fen >= 10 ? fen + '' : '0' + fen
+		musicNowTime.value.seconds = miao >= 10 ? miao + '' : '0' + miao
+		clearInterval(musicTimer.value)
 	}
 
 	// 定义一个函数，将时间戳转换为年月日格式
@@ -250,6 +268,9 @@ export const useMusicstore = defineStore("musicStore", () => {
 		audio.pause()
 		isplay.value = false
 		clearInterval(musicTimer.value)
+		mvrecommendApi().then(res => {
+			musicMvList.value = res.datas
+		})
 	}
 	return {
 		audio,
@@ -276,5 +297,7 @@ export const useMusicstore = defineStore("musicStore", () => {
 		musicLookMv,
 		musicDetails,
 		musicListId,
+		musicMvList,
+		musicTransform,
 	}
 })

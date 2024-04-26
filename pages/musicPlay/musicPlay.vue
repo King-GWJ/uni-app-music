@@ -14,8 +14,9 @@
 	const shareShow=ref(false) //分享显示隐藏
 	const isCollect=ref(false) //添加收藏
     
-	
-	 uni.hideTabBar()
+	onLoad(()=>{
+		uni.hideTabBar()
+	})
 	
 	//切换歌曲
 	const subtract = (num) => { // 上一首/下一首
@@ -32,19 +33,12 @@
         const launchOptionsSync = uni.getLaunchOptionsSync();
         reLaunch("/" + launchOptionsSync.path)
         uni.showTabBar()
+	 }
 	  
-	 } 
-	// 	onLoad(()=>{
-	// 	const launchOptions = uni.getLaunchOptionsSync();
-	// 	// 打印启动参数
-	// 	console.log("111",launchOptions);
-	// 	// 检查是否有页面跳转传递的参数
-	// 	if (launchOptions.query) {
-	// 	  console.log('From navigateTo or redirectTo:', launchOptions.query);
-	// 	}
-	// })
-	
-	
+	// 滑动改变播放时间
+	const musicChange = (e) => {
+		useStore.musicTransform(e.detail.value)
+	}
 </script>
 
 
@@ -93,7 +87,7 @@
 		<view class="volume" >
 			<view class="time">{{useStore.musicNowTime.points}}:{{useStore.musicNowTime.seconds}}</view>
 			<view class="slider">
-				<slider  class="sliders" @sliderChange="schedule(1)" min="0" :max="Number(useStore.musicTime.points) * 60 + Number(useStore.musicTime.seconds)" :value="Number(useStore.musicNowTime.points) * 60 + Number(useStore.musicNowTime.seconds)" disabled="true" block-size="20" activeColor="#1890ff" step></slider>
+				<slider  class="sliders" @change="musicChange"  min="0" :max="Number(useStore.musicTime.points) * 60 + Number(useStore.musicTime.seconds)" :value="Number(useStore.musicNowTime.points) * 60 + Number(useStore.musicNowTime.seconds)" show-value block-size="20" activeColor="#1890ff"></slider>
 			</view>
 			<view class="time">{{useStore.musicTime.points}}:{{useStore.musicTime.seconds}}</view>
 		</view> 
@@ -103,7 +97,7 @@
 				<image  v-else-if="useStore.musicMode === 2 " src="../../icon/songlist/icon-danquxunhuan.png" />
 				<image  v-else-if="useStore.musicMode === 3 " src="../../icon/songlist/icon-meiti-suijibofang.png" />
 			</span>
-			<view class="code">
+			<view :class="['code',{codeClick: useStore.musicBack.length < 1}]">
 				<p @click="subtract(-1)">
 					<image src="../../icon/songlist/icon-shangyishou.png" />
 				</p>
@@ -190,7 +184,7 @@
 		width: 100%;
 		height: 100%;
 		background: rgba(0, 0, 0, .2);
-		backdrop-filter: blur(40px);
+		backdrop-filter: blur(80px);
 	}
 	.circle{
 		flex:1;
@@ -273,7 +267,7 @@
 						rgba(255, 255, 255, 0.2) 55%,
 						transParent);
 			position: absolute;
-			top: 55%;
+			top: 52%;
 			left: 51%;
 			transform: translate(-50%,-50%);
 			border-radius: 50%;
@@ -427,6 +421,9 @@
 					height:rpx(27);
 				}
 			}
+		}
+		.codeClick{
+			 pointer-events: none;
 		}
 	}
 	footer{
