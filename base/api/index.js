@@ -414,7 +414,48 @@ export const newCommentApi = (id,type,sortType) =>{
 		data:{
 			id,
 			type,
-			sortType
+			sortType,
+			timestamp: Date.now()
+		}
+	})
+}
+
+//评论点赞
+export const goodApi = (id,cid,t,type)=>{
+	return request({
+		url:'/comment/like',
+		data:{
+			id,
+			cid,
+			t,
+			type,
+			timestamp: Date.now()
+		}
+	})
+}
+
+//发送评论
+export const sendCommentApi = (t,type,id,content,commentId) =>{
+	return request({
+		url:'/comment',
+		data:{
+			t,
+			type,
+			id,
+			content,
+			commentId
+		}
+	})
+}
+
+//楼层评论
+export const floorCommentApi = (parentCommentId,id,type)=>{
+	return request({
+		url:'/comment/floor',
+		data:{
+			parentCommentId,
+			id,
+			type
 		}
 	})
 }

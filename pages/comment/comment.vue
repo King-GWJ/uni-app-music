@@ -5,7 +5,8 @@
 	import {
 		songDetailApi,
 		commentApi,
-		newCommentApi
+		newCommentApi,
+		sendCommentApi
 	} from '../../base/api';
 	import {
 		ref
@@ -20,6 +21,7 @@
 	const total = ref(0)
 	const typeIndex = ref(0)
 	const comments = ref([])
+	const commentVal = ref('')
 
 	onLoad((v) => {
 		id.value = v.id
@@ -31,7 +33,6 @@
 	//新获取评论
 	const getCommend = async () => {
 		const res = await newCommentApi(id.value, 0, typeIndex.value + 1)
-		console.log(res)
 		total.value = res.data.totalCount
 		comments.value = res.data.comments
 	}
@@ -39,29 +40,30 @@
 	//获取歌曲信息
 	const getSongDetail = async () => {
 		const res = await songDetailApi(id.value)
+		console.log(res)
 		src.value = res.songs[0].al.picUrl
 		name.value = res.songs[0].al.name
-		artis.value = res.songs[0].alia[0]
+		artis.value = res.songs[0].ar[0].name
+		
 	}
-
+	
 	//改变评论类型
 	const changeType = (n) => {
-		console.log(n)
 		typeIndex.value = n
 		getCommend()
 	}
-
-
-
-
-
-
+	
+	//发送评论
+	const sendCommend = async () =>{
+		const res = await sendCommentApi(1,0,id.value,commentVal.value)
+		console.log(res)
+		
+	}
 
 	const back = () => {
 		uni.navigateBack()
 	}
 </script>
-
 
 
 <template>
@@ -80,20 +82,20 @@
 					{{name}}
 				</view>
 				<view class="artist">
-					-{{artis}}·
+					-{{artis}}&nbsp;·&nbsp;
 				</view>
 				<view class="like">
 					关注
 				</view>
 			</view>
-			<mainVue :comments="comments" :total="total" :typeIndex="typeIndex" @changeType="changeType"></mainVue>
+			<mainVue @getCommend="getCommend" :id="id" :comments="comments" :total="total" :typeIndex="typeIndex" @changeType="changeType"></mainVue>
 		</view>
 		<view class="footer">
 			<view class="footerHeader">
 			</view>
 			<view class="footerBottom">
-				<input class="inp" type="text" placeholder="听说爱评论的人粉丝多" />
-				<view class="send">
+				<input class="inp" type="text" v-model="commentVal" placeholder="听说爱评论的人粉丝多" />
+				<view class="send" @click="sendCommend">
 					发送
 				</view>
 			</view>
@@ -160,7 +162,7 @@
 
 				.name {
 					color: rgb(51, 51, 52);
-					width: rpx(100);
+					width: rpx(70);
 					white-space: nowrap;
 					overflow: hidden;
 					font-weight: 900;
@@ -168,7 +170,7 @@
 
 				.artist {
 					color: rgb(102, 102, 103);
-					width: rpx(100);
+					width: rpx(70);
 					font-size: rpx(14);
 					white-space: nowrap;
 					overflow: hidden;
@@ -192,9 +194,15 @@
 			.footerBottom {
 				display: flex;
 				justify-content: space-between;
-
+				padding: 0 rpx(20);
+				align-items: center;
+				height: 100%;
 				.inp {
 					background: rgb(242, 243, 244);
+					height: rpx(30);
+					width: rpx(300);
+					border-radius: rpx(50);
+					text-indent: 1em;
 				}
 			}
 		}
