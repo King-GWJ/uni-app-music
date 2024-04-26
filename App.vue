@@ -8,7 +8,8 @@
         // 获取登录状态
         userStore.getProfile()
     })
-
+	
+	
 </script>
 
 <style lang="scss">

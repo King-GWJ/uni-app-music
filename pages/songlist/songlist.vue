@@ -76,6 +76,7 @@
 	<view class="musiclist">
 		<view class="header">
 			<image :src="songList.coverImgUrl"></image>
+			<view class="wy"><image src="../../icon/songlist/icon-wyy.png"></image>网易云音乐</view>
 			<view class="search">
 				<view class="back" @click="backPage"><image src="../../icon/songlist/icon-lefe.png"></image></view>
 				<view class="serchlogo">
@@ -149,11 +150,26 @@
 	   position: relative;
    }
    .header{
-	   height:30%;
+	   height:36%;
 	   position:relative;
 	   image{
 		   width:100%;
 		   height:100%;
+	   }
+	   .wy{
+		   font-size:rpx(13);
+		   position: absolute;
+		   top:30%;
+		   left:50%;
+		   transform: translate(-50%,-50%);
+		   color:#fff;
+		   display: flex;
+		   align-items: center;
+		   image{
+			   width:rpx(18);
+			   height:rpx(18);
+			   margin-right:rpx(5);
+		   }
 	   }
 	   .search{
 		   height:rpx(35);
@@ -322,7 +338,7 @@
    .nav{
 	   position: absolute;
 	   left:50%;
-	   top:30%;
+	   top:36%;
 	   transform: translate(-50%,-50%);
 	   width:rpx(280);
 	   height:rpx(40);

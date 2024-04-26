@@ -1,49 +1,7 @@
 
 <script setup>
-	// import {useUserStore} from '../../store/user.js'
 	
-	// const userStore = useUserStore()
-	// console.log(userStore.getAccount)
-	
-	const list=[
-		{
-			src:"../../icon/songlist/icon-py.png",
-			title:微信
-		},
-		{
-			src:"../../icon/songlist/icon-py.png",
-			title:微信朋友圈
-		},
-		{
-			src:"../../icon/songlist/icon-qq.png",
-			title:QQ好友
-		},
-		{
-			src:"../../icon/songlist/icon-qqspace.png",
-			title:QQ空间
-		},
-		{
-			src:"../../icon/songlist/icon-wangyiyun.png",
-			title:云音乐动态
-		},
-		{
-			src:"../../icon/songlist/icon-xin.png",
-			title:私信
-		},
-		{
-			src:"../../icon/songlist/icon-wb.png",
-			title:微博
-		},
-		{
-			src:"../../icon/songlist/icon-lj.png",
-			title:复制链接
-		},
-		{
-			src:"../../icon/songlist/icon-gd.png",
-			title:更多
-		},
-	]
-	
+
 	
 </script>
 
@@ -98,31 +56,31 @@
 				<view class="all">
 					 <view class="every">
 					 	<view class="Shareto">
-					 		<image src=""></image>
+					 		<image src="../../icon/songlist/i-image1.jpg"></image>
 					 	</view>
 					 	<view class="path">一起听</view>
 					 </view>
 					 <view class="every">
 					 	<view class="Shareto">
-					 		<image src=""></image>
+					 		<image src="../../icon/songlist/image1.webp"></image>
 					 	</view>
 					 	<view class="path">发送至密友桌面</view>
 					 </view>
 					 <view class="every">
 					 	<view class="Shareto">
-					 		<image src=""></image>
+					 		<image src="../../icon/songlist/image5.jpg"></image>
 					 	</view>
 					 	<view class="path">微信状态</view>
 					 </view>
 					 <view class="every">
 					 	<view class="Shareto">
-					 		<image src=""></image>
+					 		<image src="../../icon/songlist/image3.jpg"></image>
 					 	</view>
 					 	<view class="path">歌曲卡片</view>
 					 </view>
 					 <view class="every">
 					 	<view class="Shareto">
-					 		<image src="../../icon/songlist/i-image1.jpg"></image>
+					 		<image src="../../icon/songlist/image4.jpg"></image>
 					 	</view>
 					 	<view class="path">歌曲卡片</view>
 					 </view>
@@ -146,7 +104,7 @@
 		z-index: 2;
 	}
 	.page{
-		margin-top: 85%;
+		margin-top:100%;
 		height:rpx(300);
 		background:#fff;
 		border-radius: rpx(18) rpx(18) 0 0;
@@ -223,7 +181,7 @@
 			display: flex;
 			flex-direction: column;
 			align-items: center;
-			background: blue;
+			// background: blue;
 			.Shareto{
 				width:rpx(93);
 				height:rpx(95);
@@ -233,6 +191,7 @@
 				image{
 					width:100%;
 					height:100%;
+					border-radius: rpx(5);
 				}
 			}
 			.path{

@@ -75,18 +75,18 @@
             <view class="connect">
                 <TabToggle class="toggle" :tabList="tabList" @tabIndexEvent="getTabIndex" />
                 <view v-if="tabIndex === 0" class="view">
-                    <uni-list :border="false" v-if="!isLogin">
-                        <uni-list-chat
-                            title="新建歌单"
-                            :to="pageLogin"
-                            avatar="/icon/icon-add.png"
-                        ></uni-list-chat>
-                    </uni-list>
+<!--                    <uni-list :border="false" v-if="!isLogin">-->
+<!--                        <uni-list-chat-->
+<!--                            title="新建歌单"-->
+<!--                            :to="pageLogin"-->
+<!--                            avatar="/icon/icon-add.png"-->
+<!--                        ></uni-list-chat>-->
+<!--                    </uni-list>-->
 
                     <uni-list :border="false" v-for="(item,index) in playList" :key="index">
                         <uni-list-chat
                             :title="item.name"
-                            to="/pages/acquiesce/acquiesce?id=" + item.id
+                            :to='"/pages/songsList/songsList?id="+item.id+"&title=个人收藏"'
                             :avatar="item.coverImgUrl"
                             :note='item.trackCount+"首"'></uni-list-chat>
                     </uni-list>

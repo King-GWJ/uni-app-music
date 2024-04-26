@@ -15,7 +15,9 @@
 	<view class="history">
 		<view class="swiper">
 			<view class="album"   @click="curIndex=index"   v-for="(item,index)  in  useStore.musicHistory" :key="item.name">
-				<view class="avatar"></view>
+				<view class="avatar">
+					<image :src="item.music[0].al.picUrl"></image>
+				</view>
 				<view class="content">{{item.name}}</view>
 			</view>
 		</view>
@@ -45,7 +47,7 @@
 		.swiper{
 			display:flex;
 			height:rpx(50);
-			padding:0 rpx(5);
+			padding:rpx(6) rpx(5);
 			align-items: center;
 			&::-webkit-scrollbar{height:0px};
 			overflow: hidden;
@@ -64,6 +66,11 @@
 					height:rpx(40);
 					border-radius: rpx(5);
 					background: royalblue;
+					image{
+						width:100%;
+						height:100%;
+						border-radius: rpx(5);
+					}
 				}
 				.content{
 					margin:0 rpx(10);

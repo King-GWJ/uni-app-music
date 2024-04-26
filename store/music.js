@@ -8,6 +8,9 @@ import {
 import {
 	songUrlApi,
 	mvDetailApi,
+	songDetailApi,
+	mvUrlApi,
+	mvInfoApi
 } from "../base/api/index.js"
 
 export const useMusicstore = defineStore("musicStore", () => {
@@ -46,7 +49,11 @@ export const useMusicstore = defineStore("musicStore", () => {
 	const musicType = ref('')
 	// MV
 	const musicLookMv = ref('')
-
+	// 歌曲详情
+	const musicDetails = ref(null)
+	// 歌曲列表ID
+	const musicListId = ref(null)
+	
 	// 调接口播放音乐
 	const musicApi = () => {
 		songUrlApi(musicList.value[musicIndex.value].id,'standard').then(res => {
@@ -69,10 +76,10 @@ export const useMusicstore = defineStore("musicStore", () => {
 
 	// 获取全部音乐，当前音乐，当前音乐下标
 	const musicAllList = (l,t,i,n) => { 
-		musicList.value = l
-		musicLove.value = t
-		musicIndex.value = i
-		musicType.value = n
+		musicList.value = l//当前的歌单列表数据
+		musicLove.value = t//当前选中的item
+		musicIndex.value = i//当前选中的index
+		musicType.value = n//历史播放记录存储标识
 		clearInterval(musicTimer.value)
 		const arr = musicHistory.value.find(item => item.name === musicType.value)
 		if(arr){
@@ -212,7 +219,6 @@ export const useMusicstore = defineStore("musicStore", () => {
 		return `${year}.${month}.${day}`;
 	}
 	
-	
 	//删除一个历史播放记录
 	const musicHistoryOne = (i,t) => {
 		// i 当前什么类型音乐的下标 t 当前音乐信息
@@ -225,11 +231,25 @@ export const useMusicstore = defineStore("musicStore", () => {
 		musicHistory.value = []
 	}
 
-	//mv
-	const musicMv = (id) => {
-		mvDetailApi(id).then(res => {
+	// mv
+	const musicMv = (item) => {
+		audio.pause()
+		isplay.value = false
+		clearInterval(musicTimer.value)
+		musicDetails.value = item
+		mvDetailApi(item.id).then(res => {
+			console.log('mv播放地址',res);
 			musicLookMv.value = res.data.url
 		})
+		mvUrlApi(item.id).then(res => {
+			console.log('mv数据',res);
+		})
+		mvInfoApi(item.id).then(res => {
+			console.log('mv品论',res);
+		})
+		audio.pause()
+		isplay.value = false
+		clearInterval(musicTimer.value)
 	}
 	return {
 		audio,
@@ -254,5 +274,7 @@ export const useMusicstore = defineStore("musicStore", () => {
 		musicHistoryAll,
 		musicMv,
 		musicLookMv,
+		musicDetails,
+		musicListId,
 	}
 })

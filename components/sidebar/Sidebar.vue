@@ -80,13 +80,12 @@
 <!--                        <text :style="{color: item.color}">{{ item.title }}</text>-->
 <!--                    </view>-->
 <!--                </uni-card>-->
-                <uni-card :is-shadow="true" :isFull="false">
+                <uni-card :is-shadow="true" :isFull="false" v-if="isLogin">
                     <view class="view">
                         <image src="/icon/icon-toggle.png" mode="widthFix"></image>
                         <text>切换账号</text>
                     </view>
                     <view class="view"
-                          v-show="isLogin"
                           @click="getLogout()"
                     >
                         <image src="/icon/icon-switch.png" mode="widthFix"></image>
