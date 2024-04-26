@@ -7,6 +7,6 @@ export function createApp() {
     app.use(Pinia.createPinia())
     return {
         app,
-        Pinia
+        Pinia,
     }
 }

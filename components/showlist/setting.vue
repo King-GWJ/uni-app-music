@@ -37,12 +37,12 @@
 			<p class="select"><image src="../../icon/songlist/icon-bfang.png"/>下一首播放</p>
 			<p class="select"><image src="../../icon/songlist/icon-tianjia.png"/>收藏到歌单</p>
 			<p class="select"><image src="../../icon/songlist/icon-load.png"/>下载</p>
-			<p class="select"><image src="../../icon/songlist/icon-xiaoxi.png"/>评论（568）</p>
+			<p class="select"><image src="../../icon/songlist/icon-xiaoxi.png"/>评论（{{data.trackCount}}）</p>
 			<p class="select"><image src="../../icon/songlist/icon-fx.png"/>分享</p>
 			<p class="select"><image src="../../icon/songlist/icon-singer.png"/>歌手：{{data.ar.map(item=>item.name).join('/')}}</p>
 			<p class="select"><image src="../../icon/songlist/icon-create.png"/>创作者：</p>
 			<p class="select"><image src="../../icon/songlist/icon-zhuanji.png"/>专辑：{{data.al.name}}</p>
-		    <p class="select"><image src="../../icon/songlist/icon-pu.png"/>求谱/上传乐谱：{{data.alia[0]}}</p>
+		    <p class="select"><image src="../../icon/songlist/icon-pu.png"/>求谱/上传乐谱{{data.alia[0]}}</p>
 			<p class="select"><image src="../../icon/songlist/icon-create.png"/>设为铃声</p>
 			<p class="select"><image src="../../icon/songlist/icon-cart.png"/>单曲购买</p>
 			<p class="select"><image src="../../icon/songlist/icon-car.png"/>音乐礼品卡</p>

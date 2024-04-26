@@ -73,7 +73,7 @@ import { userPlayListApi,playListChange,commentApi } from '../../../base/api';
 	//跳转评论
 	const goComment = () =>{
 		uni.navigateTo({
-			url:'/pages/comment/comment'
+			url:`/pages/comment/comment?id=${props.detailItem.id}`
 		})
 	}
 	

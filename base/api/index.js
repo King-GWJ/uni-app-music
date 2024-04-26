@@ -407,9 +407,21 @@ export const mvInfoApi = (id) => {
 	})
 }
 
+
 // mv推荐视频列表
 export const mvrecommendApi = (id) => {
 	return request({
 		url: '/video/timeline/recommend',
+    })
+}    
+//新版评论
+export const newCommentApi = (id,type,sortType) =>{
+	return request({
+		url:'/comment/new',
+		data:{
+			id,
+			type,
+			sortType
+		}
 	})
 }
