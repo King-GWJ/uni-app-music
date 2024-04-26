@@ -82,6 +82,12 @@
 			<mainVue :comments="comments" :total="total" :typeIndex="typeIndex" @changeType="changeType"></mainVue>
 		</view>
 		<view class="footer">
+			<view class="footerHeader">
+				
+			</view>
+			<view class="footerBottom">
+				<input type="text" placeholder="听说爱评论的人粉丝多"/>
+			</view>
 			底部
 		</view>
 	</view>
@@ -159,6 +165,9 @@
 	}
 	.footer{
 		height: rpx(70);
+		background: white;
+		border-top: 1px solid rgb(233,233,233);
+		
 	}
 }
 
