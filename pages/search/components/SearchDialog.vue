@@ -2,7 +2,7 @@
 import { ref, watch } from 'vue';
 import { useMusicstore } from '../../../store/music';
 import { useUserStore } from '../../../store/user';
-import { userPlayListApi,playListChange,commentApi } from '../../../base/api';
+import { userPlayListApi,playListChange,commentApi,songDetailApi } from '../../../base/api';
 
 
 	const props = defineProps(['showDialog','detailItem'])
@@ -12,6 +12,7 @@ import { userPlayListApi,playListChange,commentApi } from '../../../base/api';
 	const profile = ref(userStore.profile)
 	const playList = ref([])
 	const totalComment = ref(0)
+	const imgUrl = ref('')
 	const popup = ref(null)
 	const popup2 = ref(null)
 	const popup3 = ref(null)
@@ -19,6 +20,14 @@ import { userPlayListApi,playListChange,commentApi } from '../../../base/api';
 	if(!profile.value){
 		profile.value = userStore.setProfileData()
 	}
+	
+	//获取歌曲详情
+	const getSong = async ()=>{
+		const res = await songDetailApi(props.detailItem.id)
+		imgUrl.value = res.songs[0].al.picUrl
+	}
+	
+	
 	
 	//获取用户歌单列表
 	const getPlayList = async ()=>{
@@ -34,7 +43,11 @@ import { userPlayListApi,playListChange,commentApi } from '../../../base/api';
 	getPlayList()
 	//监听传过来的参数
 	watch(()=>props,()=>{
-		getComment()
+		if(props.showDialog===true){
+			getComment()
+			getSong()
+		}
+		
 	},
 	{deep:true}
 	)
@@ -93,7 +106,7 @@ import { userPlayListApi,playListChange,commentApi } from '../../../base/api';
 	<view class="dialogWrap" v-if="showDialog" @click="emits('closeDialog')">
 		<view class="dialog" @click="fn">
 			<view class="header">
-				<image class="img" :src="props.detailItem.artists[0].img1v1Url" mode=""></image>
+				<image class="img" :src="imgUrl" mode=""></image>
 				<view class="info">
 					<view class="name">
 						{{props.detailItem.name}}
