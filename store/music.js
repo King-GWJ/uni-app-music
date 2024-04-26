@@ -51,6 +51,8 @@ export const useMusicstore = defineStore("musicStore", () => {
 	const musicLookMv = ref('')
 	// 歌曲详情
 	const musicDetails = ref(null)
+	// 歌曲列表ID
+	const musicListId = ref(null)
 	
 	// 调接口播放音乐
 	const musicApi = () => {
@@ -217,7 +219,6 @@ export const useMusicstore = defineStore("musicStore", () => {
 		return `${year}.${month}.${day}`;
 	}
 	
-	
 	//删除一个历史播放记录
 	const musicHistoryOne = (i,t) => {
 		// i 当前什么类型音乐的下标 t 当前音乐信息
@@ -274,5 +275,6 @@ export const useMusicstore = defineStore("musicStore", () => {
 		musicMv,
 		musicLookMv,
 		musicDetails,
+		musicListId,
 	}
 })
