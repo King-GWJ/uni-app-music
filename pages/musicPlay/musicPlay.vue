@@ -36,17 +36,15 @@
 	
     //返回上一页
 	const back=()=>{
-        const launchOptionsSync = uni.getLaunchOptionsSync();
-        reLaunch("/" + launchOptionsSync.path)
-        uni.showTabBar()
+        // const launchOptionsSync = uni.getLaunchOptionsSync();
+        // reLaunch("/" + launchOptionsSync.path)
+        // uni.showTabBar()
+		uni.switchTab({
+			url: `/pages/index/index`
+		})
 	 }
 	 
-   
-    console.log(useStore.musicLove)
-   
-	 
 </script>
-
 
 
 <template>
@@ -68,7 +66,7 @@
 				</view>
 				<!-- CD -->
 				<view class="cd">
-					<view class="fixed"><image src="../../icon/songlist/needle-ab.png"></image></view>
+					<view :class="[useStore.isplay ? 'fixActive' : 'fixed']"><image src="../../icon/songlist/needle-ab.png"></image></view>
 					<view  :class="[useStore.isplay?'outerActive':'outer']">
 						<view class="cirle">
 							<view class="sun">
@@ -188,16 +186,41 @@
 		}
 		.cd{
 			flex:1;
-			position: relative;
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			// position: relative;
 			// 压唱片
 			.fixed{
-				width: rpx(96);
-				height: rpx(140);
+				width: rpx(95);
+				height: rpx(110);
 				position: absolute;
-				top:20%;
-				left:53%;
+				top:6%;
+				left:50%;
 				transform: translate(-50%,-50%);
 				z-index: 1;
+				transform: rotate(-95deg) scaleX(-1)  scale(1.2) ;
+				image {
+					width: rpx(90);
+					height:rpx(138);
+					position: absolute;
+					top: 0;
+					left: 30%;
+					transform-origin: rpx(10) rpx(110);
+					transform: rotate(-10deg);
+				}
+					
+			}
+			
+			.fixActive{
+				width: rpx(95);
+				height: rpx(110);
+				position: absolute;
+				top:8%;
+				left:49%;
+				transform: translate(-50%,-50%);
+				z-index: 1;
+				transform: rotate(-78deg) scaleX(-1)  scale(1.2) ;
 				image {
 					width: rpx(90);
 					height:rpx(138);
@@ -208,25 +231,35 @@
 					transform: rotate(-10deg);
 				}
 			}
+			.outerActive{
+				 width:rpx(240);
+				 height:rpx(240);
+				 animation: rotate 2s linear infinite;
+				 border-radius: 50%;
+				 background: rgba(200, 200, 200, 0.5);
+				 position: absolute;
+				 box-shadow: 0 1px 2px 2px #DCDCDC;
+				 display: flex;
+				 justify-content: center;
+				 align-items: center;
+			}
 			.outer{
-				position: absolute;
 				width:rpx(240);
 				height:rpx(240);
-				left:50%;
-				top:50%;
-				transform: translate(-50%,-50%);
+				display: flex;
+				justify-content: center;
+				align-items: center;
 				border-radius: 50%;
 				background: rgba(200, 200, 200, 0.5);
-				// box-shadow: 0 1px 2px 2px #DCDCDC;
 				position: relative;
 			}
 			.cirle{
 				width:rpx(220);
 				height:rpx(220);
 				background: repeating-radial-gradient(black, black rpx(3), #1c1c1c rpx(8));
-				left:50%;
-				top:50%;
-				transform: translate(-50%,-50%);
+				display: flex;
+				justify-content: center;
+				align-items: center;
 				border-radius: 50%;
 				position: relative;
 				.sun{
@@ -261,18 +294,7 @@
 				
 			}
 			// 旋转
-			.outerActive{
-				 animation: rotate 2s linear infinite;
-				 width:rpx(240);
-				 height:rpx(240);
-				 border-radius: 50%;
-				 background: rgba(200, 200, 200, 0.5);
-				 position: absolute;
-				 left: 18%;
-				 top: 16.5%;
-				 box-shadow: 0 1px 2px 2px #DCDCDC;
-				 // position: relative;
-			}
+			
 			@keyframes rotate {
 				  from {
 					transform: rotate(0deg);
@@ -304,7 +326,6 @@
 				-webkit-box-ordinal: vertical;
 				.song{
 					display: flex;
-					width:rpx(200);
 					padding:0 rpx(5) 0 0;
 					overflow:hidden;
 					white-space: nowrap;
