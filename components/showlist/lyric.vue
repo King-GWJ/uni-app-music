@@ -32,6 +32,16 @@
     lyricGc.value = lyric.map(v => 
 		v.slice(11)
 	)
+	// 拖拽播放进度
+	const musicChange = (e) => {
+		console.log(e.detail.value);
+		useStore.musicTransform(e.detail.value)
+	}
+	
+	
+	const changeTab=(e)=>{
+		curIndex.value=e.detail.current
+	}
 	
 </script>
 
@@ -58,7 +68,7 @@
 					<view :class="['text',{active:curIndex===index}]" @click="curIndex=index" v-for="(item,index) in list" :key="item">{{item}}</view>
 				</view>
 			</view>
-			<swiper class="swiper" >
+			<swiper class="swiper" :current="curIndex" @change="changeTab" >
 				<swiper-item  > 
 					<view class="swiper-item uni-bg-red">
 						<ul>
