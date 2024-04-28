@@ -42,8 +42,8 @@
 		</view>
 		<view class="songs" v-for="song in useStore.musicHistory[curIndex]?.music">
 			<view class="item">{{song.name}}</view>
-			·
-			<view class="name">{{song.ar.map(item=>item.name).join('/')}}</view>
+			<!-- ·
+			<view class="name">{{song.artists.map(item=>item.name)}}</view> -->
 		</view>
 		<!-- 提示弹窗 -->
 		<view class="pop" v-if="showPop" >
@@ -121,7 +121,7 @@
 			}
 		}
 		.songs{
-			height:rpx(290);
+			height:rpx(40);
 			overflow:hidden;
 			overflow-y: auto;
 			display: flex;

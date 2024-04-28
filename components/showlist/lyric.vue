@@ -1,13 +1,19 @@
 
 <script setup>
 	import { onLoad } from '@dcloudio/uni-app'
-	import { lyricApi } from '../../base/api/index.js'
+	import Share from "../../components/showlist/share.vue"
+	 import Curplay from "../../components/showlist/curplay.vue"
 	import { useMusicstore } from '../../store/music.js'
 	import { useUserStore } from '../../store/user.js'
+	import {ref} from  'vue'
 	
-	const lista=ref(['歌词','百科'])
+	const list=ref(['歌词','百科'])
 	const useStore=useMusicstore ()
+	const shareShow=ref(false) //分享显示隐藏
+	const isCollect=ref(false) //添加收藏
+	const showPlay=ref(false) 
 	const curIndex=ref(0)  //当前下标
+	const lyricGc=ref()
 	
 	//返回上一页
 	const Backprve=()=>{
@@ -15,109 +21,113 @@
 			delta: 1
 		});
 	}
+
+    //点击收藏
+    const Collect=()=>{
+    	isCollect.value=!isCollect.value
+    }
 	
-	// const useStore=useUserStore()
-	// console.log( useStore.profile)
-	
-	
-	// onLoad((options)=>{
-	// 	console.log(options.id)
-	// 	lyricApi(options.id).then(res =>{
-	// 		console.log(res)
-	// 	})
-	// })
-	
-	
+	//获取歌词数据
+	const lyric=useStore.musicLyric.split('\n')
+    lyricGc.value = lyric.map(v => 
+		v.slice(11)
+	)
 	
 </script>
 
 
-
-
-
 <template>
-	<view class="lyric">
+	<view class="lyric" >
 		<!-- 顶部 -->
-		<view class="header">
-			<p class="img">
+		<view class="header" @click.stop="">
+			<p class="img" @click="Backprve">
 				<image src="../../icon/songlist/icon-bback.png"></image>
 			</p>
 			<view class="title">
-				<view>{{123}}</view>
-				<view>{{123}}</view>
+				<view>{{useStore.musicLove.name}}</view>
+				<!-- <view>{{123}}</view> -->
 			</view>
-			<p  class="img">
+			<p  class="img" @click="shareShow=true">
 				<image src="../../icon/songlist/icon-fenxiang.png" />
 			</p>
 		</view>
 		<!-- 歌词 -->
 		<view class="lyricContent">
-			<view class="nav">
+			<view class="nav"  @click.stop="">
 				<view class="geci">
-					<view class="text" v-for="(item,index) in lista" :key="item">999</view>
+					<view :class="['text',{active:curIndex===index}]" @click="curIndex=index" v-for="(item,index) in list" :key="item">{{item}}</view>
 				</view>
 			</view>
-			<swiper class="swiper" circular :indicator-dots="indicatorDots" :autoplay="autoplay" :interval="interval"
-				>
-				<swiper-item>
-					<view class="swiper-item uni-bg-red">A</view>
+			<swiper class="swiper" >
+				<swiper-item  > 
+					<view class="swiper-item uni-bg-red">
+						<ul>
+							<li :class="curIndex===index" v-for="(item,index) in lyricGc" :key="item" >{{item}}</li>
+						</ul>
+					</view>
 				</swiper-item>
 				<swiper-item>
-					<view class="swiper-item uni-bg-green">B</view>
+					<view class="swiper-item uni-bg-green">
+						<view class="music baik"></view>
+						<view class="music song"></view>
+						<view class="songList"></view>
+						<view class="boke"></view>
+					</view>
 				</swiper-item>
 			</swiper>		
 		</view>
 		<!-- 添加收藏 -->
-		<view class="collect">
-			<p class="click">
-				<image src="../../icon/songlist/icon-collent.png" />
-			</p>
-			<p class="talk">
-				<image src="../../icon/songlist/icon-sh.png" />
-			</p>
+		<view class="playLogo" @click.stop="">
+			 <view class="collect">
+			 	<view class="col" @click="Collect()">
+			 		<image v-if="isCollect"  src="../../icon/songlist/icon-collect.png"></image>
+			 		<image v-else src="../../icon/songlist/icon-collent.png"></image>
+			 	</view>
+			 	<p class="talk">
+			 		<image src="../../icon/songlist/icon-sh.png" />
+			 	</p>
+			 </view>
+			 <view class="volume" >
+			 	<view class="time">{{useStore.musicNowTime.points}}:{{useStore.musicNowTime.seconds}}</view>
+				<view class="slider">
+					<slider  class="sliders" @change="musicChange"  min="0" :max="Number(useStore.musicTime.points) * 60 + Number(useStore.musicTime.seconds)" :value="Number(useStore.musicNowTime.points) * 60 + Number(useStore.musicNowTime.seconds)"  block-size="12" activeColor="#1890ff"></slider>
+				</view>
+				<view class="time">{{useStore.musicTime.points}}:{{useStore.musicTime.seconds}}</view>
+			 </view> 
+			 <!-- 播放 -->
+			 <view class="play">
+			 	<view class="mode" @click="useStore.musicToggle()">
+			 		<image  v-if="useStore.musicMode === 1 " src="../../icon/songlist/icon-liebiaoxunhuan.png" />
+			 		<image  v-else-if="useStore.musicMode === 2 " src="../../icon/songlist/icon-danquxunhuan.png" />
+			 		<image  v-else-if="useStore.musicMode === 3 " src="../../icon/songlist/icon-meiti-suijibofang.png" />
+			 	</view>
+			 	<!-- 切换 -->
+			 	<view :class="['code',{codeClick: useStore.musicBack.length < 1}]">
+			 		<image @click="subtract(-1)"  src="../../icon/songlist/icon-shangyishou.png"></image>
+			 		<view @click="useStore.play()">
+			 			<image v-if="useStore.isplay"  src="../../icon/songlist/icon-a.png" />
+			 			<image v-else src="../../icon/songlist/icon-bofang.png" />
+			 		</view>
+			 		<image   @click="subtract(1)" src="../../icon/songlist/icon-nn.png"></image>
+			 	</view>
+			 	<span @click="showPlay=true">
+			 		<image src="../../icon/songlist/icon-liebiao.png" />
+			 	</span>
+			 </view>
+			 <footer>
+			 	<p>
+			 		<image src="../../icon/songlist/icon-qiehuan.png" />
+			 	</p>
+			 	<p>
+			 		<image src="../../icon/songlist/icon-xiazai.png" />
+			 	</p>
+			 	<p >
+			 		<image src="../../icon/songlist/icon-shenglve.png" />
+			 	</p>
+			 </footer>
 		</view>
-		<view class="volume" >
-			<view class="time"></view>
-			<view class="slider">
-				<slider  class="sliders" @sliderChange="schedule(1)" disabled="true" block-size="20" activeColor="#1890ff" step></slider>
-			</view>
-			<view class="time"></view>
-		</view> 
-		<!-- 播放 -->
-		<view class="play">
-			<span>
-				<image src="../../icon/songlist/icon-xxh.png" />
-				<!-- <image src="../../icon/songlist/icon-danquxunhuan.png" />
-				<image src="../../icon/songlist/icon-meiti-suijibofang.png" /> -->
-			</span>
-			<!-- 切换 -->
-			<view class="code">
-				<p>
-					<image src="../../icon/songlist/icon-shangyishou.png" />
-				</p>
-		
-				<p>
-					<image src="../../icon/songlist/icon-a.png" />
-				</p>
-				<p>
-					<image src="../../icon/songlist/icon-next.png" />
-				</p>
-			</view>
-			<span>
-				<image src="../../icon/songlist/icon-liebiao.png" />
-			</span>
-		</view>
-		<footer>
-			<p>
-				<image src="../../icon/songlist/icon-qiehuan.png" />
-			</p>
-			<p>
-				<image src="../../icon/songlist/icon-xiazai.png" />
-			</p>
-			<p >
-				<image src="../../icon/songlist/icon-shenglve.png" />
-			</p>
-		</footer>
+		<Share v-if="shareShow" @click.stop.prevent="shareShow=false"/>   //分享页
+		<Curplay  v-if="showPlay" @click.stop.prevent="showPlay=false"/>  //当前和历史播放
 	</view>
 	
 </template>
@@ -125,6 +135,7 @@
 
 
 <style lang="scss" scoped>
+	
 	.lyric{
 		position: fixed;
 		width:100%;
@@ -134,6 +145,9 @@
 		background:#696969;
 		// background:rgba(0,0,0,.5)
 		z-index: 2;
+		color:#D3D3D3;
+		font-size: rpx(14);
+		
 	}
 	image{
 		width:rpx(27);
@@ -169,8 +183,8 @@
 	
 	// <!-- 歌词 -->
 	.lyricContent{
-		margin-top:rpx(20);
-		height:rpx(390);
+		margin-top:rpx(25);
+		height:rpx(370);
 		display: flex;
 		flex-direction: column;
 		.nav{
@@ -198,12 +212,42 @@
 					}
 				}
 			}
-			.swiper{
-				display:flex;
-				justify-content: center;
-				align-items: center;
-			}
+			
 		}
+		.swiper{
+			display:flex;
+			justify-content: center;
+			align-items: center;
+			height:310px;
+			overflow-y: hidden;
+		}
+		// 歌词
+		ul{
+			margin-top:rpx(10);
+			list-style: none;
+			overflow-y: auto;
+			height: 310px;
+			padding:0;
+			margin:0;
+			padding-bottom:rpx(10);
+			li{
+				text-align: center;
+				line-height: rpx(35);
+				transition: opacity 0.5s;
+				.active {
+				  color:#F0E68C; 
+				}
+			}
+			
+		}
+		.music{
+			height:rpx(100);
+			background-color: rgba(200, 200, 200, 0.5)
+		}
+	}
+	.playLogo{
+		display: flex;
+		flex-direction: column;
 	}
 	
 	.collect{
@@ -264,4 +308,5 @@
 			}
 		}
 	}
+	
 </style>
